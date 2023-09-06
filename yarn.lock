@@ -2677,6 +2677,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jose@npm:^4.14.4":
+  version: 4.14.4
+  resolution: "jose@npm:4.14.4"
+  checksum: 2d820a91a8fd97c05d8bc8eedc373b944a0cd7f5fe41063086da233d0473c73fb523912a9f026ea870782bd221f4a515f441a2d3af4de48c6f2c76dac5082377
+  languageName: node
+  linkType: hard
+
 "js-cookie@npm:3.0.1":
   version: 3.0.1
   resolution: "js-cookie@npm:3.0.1"
@@ -3386,6 +3393,7 @@ __metadata:
     autoprefixer: 10.4.15
     eslint: 8.48.0
     eslint-config-next: 13.4.19
+    jose: ^4.14.4
     next: 13.4.19
     postcss: 8.4.29
     react: 18.2.0
