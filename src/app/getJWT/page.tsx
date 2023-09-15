@@ -22,7 +22,7 @@ KQIDAQAB
     "https://desired-mantis-48.clerk.accounts.dev";
   if (token2) {
     const { payload, protectedHeader } = await jose.jwtVerify(
-      token,
+      token2,
       publicKey,
       {
         issuer: issuer,
