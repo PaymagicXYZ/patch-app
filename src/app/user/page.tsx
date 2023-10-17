@@ -18,7 +18,8 @@ export default async function Page() {
             ))}
             {user.externalAccounts.map((account, i) => (
               <li key={i}>
-                {account.provider.split("_")[1]}:{account.username}
+                {account.provider.split("_")[1]}:
+                {account.username ? account.username : account.externalId}
               </li>
             ))}
           </ul>
