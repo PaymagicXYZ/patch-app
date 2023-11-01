@@ -16,12 +16,15 @@ export default async function Page() {
             {user.phoneNumbers.map((tel, i) => (
               <li key={i}>tel:{tel.phoneNumber}</li>
             ))}
-            {user.externalAccounts.map((account, i) => (
-              <li key={i}>
-                {account.provider.split("_")[1]}:
-                {account.username ? account.username : account.externalId}
-              </li>
-            ))}
+            {user.externalAccounts.map((account, i) => {
+              if (!account.provider) return null;
+              return (
+                <li key={i}>
+                  {account.provider.split("_")[1]}:
+                  {account.username ? account.username : account.externalId}
+                </li>
+              );
+            })}
           </ul>
         </div>
         <h1 className="text-xl">User Object:</h1>
