@@ -357,14 +357,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@patchwallet/patch-sdk@npm:^0.0.4":
-  version: 0.0.4
-  resolution: "@patchwallet/patch-sdk@npm:0.0.4"
+"@patchwallet/patch-sdk@npm:^0.0.5":
+  version: 0.0.5
+  resolution: "@patchwallet/patch-sdk@npm:0.0.5"
   dependencies:
-    typescript: "npm:^5.2.2"
+    typescript: "npm:^5.3.3"
   peerDependencies:
     typescript: ^5.0.0
-  checksum: 934194a052791c9beb36215f8c63d7ca1fea4a3ecc36b461bb55e8697bea67c326e613021c198f084350c9a1440e1b5dbdc34264cd3f754c38b28fd892b8273b
+  checksum: 594dbcc2a07b5e9b677b1841d56bcfc0929430520c76308b4b0cba7ac7883e851b17221861f515a6b2e31a2048df75eefd936073964e3d8af170da236334e062
   languageName: node
   linkType: hard
 
@@ -3551,7 +3551,7 @@ __metadata:
   resolution: "patch-integration@workspace:."
   dependencies:
     "@clerk/nextjs": "npm:^4.29.1"
-    "@patchwallet/patch-sdk": "npm:^0.0.4"
+    "@patchwallet/patch-sdk": "npm:^0.0.5"
     "@types/node": "npm:20.10.6"
     "@types/react": "npm:18.2.46"
     "@types/react-dom": "npm:18.2.18"
@@ -4628,7 +4628,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^5.2.2":
+"typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
   bin:
@@ -4648,7 +4648,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^5.2.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A^5.3.3#optional!builtin<compat/typescript>":
   version: 5.3.3
   resolution: "typescript@patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"
   bin:
