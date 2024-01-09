@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import type { UserId } from "@patchwallet/patch-sdk";
 
-import { sendTx } from "@/utils/actions/tx";
 import { SignBtn } from "./SignBtn";
 
 const AccountSelector = ({
@@ -15,11 +14,6 @@ const AccountSelector = ({
   token: string;
 }) => {
   const [selectedAccount, setSelectedAccount] = useState("");
-
-  const handleTx = async () => {
-    const tx = await sendTx(selectedAccount as UserId, token);
-    console.log(tx);
-  };
 
   return (
     <div>
