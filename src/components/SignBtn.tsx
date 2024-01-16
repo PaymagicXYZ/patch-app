@@ -1,5 +1,5 @@
 import { UserId } from "@patchwallet/patch-sdk";
-import { signMsg } from "@/utils/actions/sign";
+import { signMsg } from "@/libs/actions/sign";
 export const SignBtn = ({
   userId,
   token,

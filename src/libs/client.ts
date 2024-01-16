@@ -1,3 +1,4 @@
+import "server-only";
 import Client from "@patchwallet/patch-sdk";
 
 const credentials = {
