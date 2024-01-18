@@ -15,7 +15,7 @@ export async function fetchTokenBalance(userId: UserId, chain: Chain) {
         Authorization: "Basic " + process.env.COVALENT_API_KEY,
       },
     }).then((res) => res.json());
-    return res.data;
+    return res.data.items;
   } else {
     return null;
   }
