@@ -1,17 +1,18 @@
-export interface Chain {
+import { Chain } from "@patchwallet/patch-sdk";
+export interface ChainDetail {
   [chainId: number]: {
     AlchemyChainNetwork: string;
     CovalentChainName: string;
-    chainTag: string;
+    chainTag: Chain;
   };
 }
 
-export const ChainIdForChainName: Chain = {
-  1: {
-    AlchemyChainNetwork: "eth-mainnet",
-    CovalentChainName: "eth-mainnet",
-    chainTag: "eth",
-  },
+export const ChainIdForChainName: ChainDetail = {
+  // 1: {
+  //   AlchemyChainNetwork: "eth-mainnet",
+  //   CovalentChainName: "eth-mainnet",
+  //   chainTag: "eth",
+  // },
   137: {
     AlchemyChainNetwork: "polygon-mainnet",
     CovalentChainName: "matic-mainnet",
@@ -37,16 +38,16 @@ export const ChainIdForChainName: Chain = {
     CovalentChainName: "base-mainnet",
     chainTag: "base",
   },
-  100: {
-    AlchemyChainNetwork: "",
-    CovalentChainName: "gnosis-mainnet",
-    chainTag: "xdai",
-  },
-  56: {
-    AlchemyChainNetwork: "bsc-mainnet",
-    CovalentChainName: "bsc-mainnet",
-    chainTag: "bsc",
-  },
+  // 100: {
+  //   AlchemyChainNetwork: "",
+  //   CovalentChainName: "gnosis-mainnet",
+  //   chainTag: "xdai",
+  // },
+  // 56: {
+  //   AlchemyChainNetwork: "bsc-mainnet",
+  //   CovalentChainName: "bsc-mainnet",
+  //   chainTag: "bsc",
+  // },
   80001: {
     AlchemyChainNetwork: "matic-mumbai",
     CovalentChainName: "matic-mumbai",
@@ -87,6 +88,13 @@ export const getChainNameFromChainTag = (chainTag: ChainTag): ChainName => {
     (key) => ChainIdForChainName[Number(key)].chainTag === chainTag
   );
   return ChainIdForChainName[Number(chainName)].CovalentChainName;
+};
+
+export const getNetworkfromChainTag = (chainTag: ChainTag): Networks => {
+  const network = Object.keys(ChainIdForChainName).find(
+    (key) => ChainIdForChainName[Number(key)].chainTag === chainTag
+  );
+  return ChainIdForChainName[Number(network)].AlchemyChainNetwork;
 };
 
 export const isSupportedChain = (chain: ChainTag): boolean =>
