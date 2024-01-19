@@ -1,7 +1,7 @@
-import { fetchTokenBalance } from "@/libs/fetchTokenBalance";
+import { fetchNFTAssets } from "@/libs/fetchNFTAssets";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 
-export const TokenBalance = async ({
+export const NFTBalance = async ({
   wallet,
   chain,
 }: {
@@ -9,6 +9,6 @@ export const TokenBalance = async ({
   chain: Chain;
 }) => {
   if (!wallet) return <div>Wallet not found</div>;
-  const balance = await fetchTokenBalance(wallet, chain);
+  const balance = await fetchNFTAssets(wallet, chain);
   return <pre>{JSON.stringify({ balance })}</pre>;
 };
