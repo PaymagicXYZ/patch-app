@@ -19,12 +19,12 @@ export const ChainIdForChainName: ChainDetail = {
     chainTag: "matic",
   },
   10: {
-    AlchemyChainNetwork: "optimism-mainnet",
+    AlchemyChainNetwork: "opt-mainnet",
     CovalentChainName: "optimism-mainnet",
     chainTag: "oeth",
   },
   42161: {
-    AlchemyChainNetwork: "arbitrum-mainnet",
+    AlchemyChainNetwork: "arb-mainnet",
     CovalentChainName: "arbitrum-mainnet",
     chainTag: "arb1",
   },
@@ -34,7 +34,7 @@ export const ChainIdForChainName: ChainDetail = {
     chainTag: "linea",
   },
   8453: {
-    AlchemyChainNetwork: "",
+    AlchemyChainNetwork: "base-mainnet",
     CovalentChainName: "base-mainnet",
     chainTag: "base",
   },
@@ -49,7 +49,7 @@ export const ChainIdForChainName: ChainDetail = {
   //   chainTag: "bsc",
   // },
   80001: {
-    AlchemyChainNetwork: "matic-mumbai",
+    AlchemyChainNetwork: "polygon-mumbai",
     CovalentChainName: "matic-mumbai",
     chainTag: "maticmum",
   },
