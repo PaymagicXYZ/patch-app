@@ -21,15 +21,12 @@ export default async function UserDetail() {
         ),
     ] as UserId[];
     const wallets = (await client.resolve(availableWallets)) as string[];
-    const { getToken } = auth();
-    const token = (await getToken({ template: "patchwallet" })) || "";
 
     return (
       <>
         <AccountSelector
           availableWallets={availableWallets}
           wallets={wallets}
-          token={token}
         />
         <ChainSelector />
       </>
