@@ -38,16 +38,16 @@ export const ChainIdForChainName: ChainDetail = {
     CovalentChainName: "base-mainnet",
     chainTag: "base",
   },
-  // 100: {
-  //   AlchemyChainNetwork: "",
-  //   CovalentChainName: "gnosis-mainnet",
-  //   chainTag: "xdai",
-  // },
-  // 56: {
-  //   AlchemyChainNetwork: "bsc-mainnet",
-  //   CovalentChainName: "bsc-mainnet",
-  //   chainTag: "bsc",
-  // },
+  100: {
+    AlchemyChainNetwork: "",
+    CovalentChainName: "gnosis-mainnet",
+    chainTag: "gno",
+  },
+  56: {
+    AlchemyChainNetwork: "",
+    CovalentChainName: "bsc-mainnet",
+    chainTag: "bnb",
+  },
   80001: {
     AlchemyChainNetwork: "polygon-mumbai",
     CovalentChainName: "matic-mumbai",
