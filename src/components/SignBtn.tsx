@@ -1,3 +1,4 @@
+"use client";
 import { UserId } from "@patchwallet/patch-sdk";
 import { signMsg } from "@/libs/actions/sign";
 export const SignBtn = ({
