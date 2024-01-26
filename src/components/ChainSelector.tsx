@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import type { Chain } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
-import { isSupportedChain, supportedChainTags } from "@/utils/chain";
+import { isSupportedChain, supportedShortNames } from "@/utils/chain";
 
 const ChainSelector = () => {
   const router = useRouter();
@@ -28,7 +28,7 @@ const ChainSelector = () => {
         <option value="" disabled>
           Select a wallet
         </option>
-        {supportedChainTags.map((chain, i) => (
+        {supportedShortNames.map((chain, i) => (
           <option key={i} value={chain}>
             {chain}
           </option>

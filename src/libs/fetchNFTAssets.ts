@@ -1,13 +1,13 @@
 import {
-  getChainNameFromChainTag,
-  getNetworkfromChainTag,
+  getChainNameFromShortName,
+  getNetworkfromShortName,
 } from "@/utils/chain";
 import { UserId, Chain } from "@patchwallet/patch-sdk";
 import { client } from "./client";
 
 export const fetchNFTAssets = async (userId: UserId, chain: Chain) => {
   const address = await client.resolve(userId);
-  const network = getNetworkfromChainTag(chain);
+  const network = getNetworkfromShortName(chain);
   if (network) {
     const ownedAssetsURL = `https://${network}.g.alchemy.com/nft/v3/${process.env.ALCHEMY_API_KEY}/getNFTsForOwner?owner=${address}&withMetadata=true&excludeFilters\[\]=SPAM`;
     return fetch(ownedAssetsURL)
@@ -16,7 +16,7 @@ export const fetchNFTAssets = async (userId: UserId, chain: Chain) => {
         return data.ownedNfts;
       });
   } else {
-    const chainName = getChainNameFromChainTag(chain);
+    const chainName = getChainNameFromShortName(chain);
     const nftURL = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/`;
     const data = await fetch(nftURL, {
       headers: {

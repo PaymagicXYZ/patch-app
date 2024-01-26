@@ -3,7 +3,7 @@ export interface ChainDetail {
   [chainId: number]: {
     AlchemyChainNetwork: string;
     CovalentChainName: string;
-    chainTag: Chain;
+    shortName: Chain;
   };
 }
 
@@ -11,47 +11,47 @@ export const ChainIdForChainName: ChainDetail = {
   // 1: {
   //   AlchemyChainNetwork: "eth-mainnet",
   //   CovalentChainName: "eth-mainnet",
-  //   chainTag: "eth",
+  //   shortName: "eth",
   // },
   137: {
     AlchemyChainNetwork: "polygon-mainnet",
     CovalentChainName: "matic-mainnet",
-    chainTag: "matic",
+    shortName: "matic",
   },
   10: {
     AlchemyChainNetwork: "opt-mainnet",
     CovalentChainName: "optimism-mainnet",
-    chainTag: "oeth",
+    shortName: "oeth",
   },
   42161: {
     AlchemyChainNetwork: "arb-mainnet",
     CovalentChainName: "arbitrum-mainnet",
-    chainTag: "arb1",
+    shortName: "arb1",
   },
   59144: {
     AlchemyChainNetwork: "",
     CovalentChainName: "linea-mainnet",
-    chainTag: "linea",
+    shortName: "linea",
   },
   8453: {
     AlchemyChainNetwork: "base-mainnet",
     CovalentChainName: "base-mainnet",
-    chainTag: "base",
+    shortName: "base",
   },
   100: {
     AlchemyChainNetwork: "",
     CovalentChainName: "gnosis-mainnet",
-    chainTag: "gno",
+    shortName: "gno",
   },
   56: {
     AlchemyChainNetwork: "",
     CovalentChainName: "bsc-mainnet",
-    chainTag: "bnb",
+    shortName: "bnb",
   },
   80001: {
     AlchemyChainNetwork: "polygon-mumbai",
     CovalentChainName: "matic-mumbai",
-    chainTag: "maticmum",
+    shortName: "maticmum",
   },
 };
 export const supportedNetworks = Object.values(ChainIdForChainName).map(
@@ -63,13 +63,13 @@ export const supportedChainNames = Object.values(ChainIdForChainName).map(
 export const supportedChainIds = Object.keys(ChainIdForChainName).map(
   (chainIdStr) => Number(chainIdStr)
 );
-export const supportedChainTags = Object.values(ChainIdForChainName).map(
-  (chain) => chain.chainTag
+export const supportedShortNames = Object.values(ChainIdForChainName).map(
+  (chain) => chain.shortName
 );
 export type Networks = (typeof supportedNetworks)[number];
 export type ChainName = (typeof supportedChainNames)[number];
 export type ChainId = (typeof supportedChainIds)[number];
-export type ChainTag = (typeof supportedChainTags)[number];
+export type ShortName = (typeof supportedShortNames)[number];
 export const getNetworkFromChainId = (chainId: ChainId): Networks =>
   ChainIdForChainName[chainId].AlchemyChainNetwork;
 
@@ -83,19 +83,19 @@ export const getChainIdFromNetwork = (network: Networks): ChainId => {
   return Number(chainId);
 };
 
-export const getChainNameFromChainTag = (chainTag: ChainTag): ChainName => {
+export const getChainNameFromShortName = (shortName: ShortName): ChainName => {
   const chainName = Object.keys(ChainIdForChainName).find(
-    (key) => ChainIdForChainName[Number(key)].chainTag === chainTag
+    (key) => ChainIdForChainName[Number(key)].shortName === shortName
   );
   return ChainIdForChainName[Number(chainName)].CovalentChainName;
 };
 
-export const getNetworkfromChainTag = (chainTag: ChainTag): Networks => {
+export const getNetworkfromShortName = (shortName: ShortName): Networks => {
   const network = Object.keys(ChainIdForChainName).find(
-    (key) => ChainIdForChainName[Number(key)].chainTag === chainTag
+    (key) => ChainIdForChainName[Number(key)].shortName === shortName
   );
   return ChainIdForChainName[Number(network)].AlchemyChainNetwork;
 };
 
-export const isSupportedChain = (chain: ChainTag): boolean =>
-  supportedChainTags.includes(chain);
+export const isSupportedChain = (chain: ShortName): boolean =>
+  supportedShortNames.includes(chain);
