@@ -12,7 +12,7 @@ export default function Home() {
               className="cursor-pointer"
               width={168} />
       <WalletBanner type="about"></WalletBanner>
-      <p className="mt-[18px] text-center text-sm text-gray-600 md:w-[475px]">
+      <p className="mt-4 text-center text-sm text-gray-600 md:w-[475px]">
               Use your Twitter, Email, or Phone as your personal crypto wallet
               without the complexity. Let anyone send you tokens via your social
               handle.
