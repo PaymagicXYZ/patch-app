@@ -4,7 +4,7 @@ import { auth, UserButton, SignInButton } from "@clerk/nextjs";
 export default function Nav() {
   const { userId } = auth();
   return (
-    <nav className="flex flex-row items-right p-2">
+    <nav className="flex flex-row items-end p-2">
       {userId ? (
         <UserButton afterSignOutUrl="/" />
       ) : (
