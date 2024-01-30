@@ -4,7 +4,7 @@ import Image from "next/image";
 import walletLogo from "../../public/wallet_logo.svg";
 import { Input } from "@/components/ui/input";
 import { SelectSocialProvider } from "@/components/SelectSocialProvider";
-import { SearchUser } from "@/components/Search";
+import { SearchUser } from "@/components/UserLookupForm";
 
 export default function Home() {
   return (

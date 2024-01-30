@@ -57,9 +57,9 @@ export const SearchUser = ({className, ...props}: InputProps) => {
   const queryString = searchParams.get('query')?.toString()
 
     return (
-        <div className="flex w-full gap-2 md:w-4/6 md:max-w-[560px]">
-            <Input defaultValue={queryString} onChange={(e) => handleSearch(e.target.value)} leftButton={<SelectSocialProvider onChange={handleSelect} />} type="text" placeholder="Enter your Twitter handle" className={cn("mt-4 w-[360px] border border-background-700 bg-gray-950 focus:border focus:bg-gray-1000", className)} {...props} />
-            <Button onClick={handleOnSubmit} disabled={!queryString}>Look up wallet</Button>
-        </div>
+      <div className="flex w-full gap-2 md:w-4/6 md:max-w-[560px]">
+          <Input defaultValue={queryString} onChange={(e) => handleSearch(e.target.value)} leftButton={<SelectSocialProvider onChange={handleSelect} />} type="text" placeholder="Enter your Twitter handle" className={cn("mt-4 w-[360px] border border-background-700 bg-gray-950 focus:border focus:bg-gray-1000", className)} {...props} />
+          <Button onClick={handleOnSubmit} disabled={!queryString} className="bg-orange-100 text-gray-1000">Look up wallet</Button>
+      </div>
     )
 }
