@@ -60,8 +60,8 @@ export const SearchUser = ({className, ...props}: InputProps) => {
 
     return (
       <div className="flex w-full gap-2 md:w-4/6 md:max-w-[560px]">
-          <Input defaultValue={queryString} onChange={(e) => handleSearch(e.target.value)} leftButton={<SelectSocialProvider onChange={handleSelect} />} type="text" placeholder={lookupProviderDetails.placeholder} className={cn("mt-4 w-[360px] border border-background-700 bg-gray-950 focus:border focus:bg-gray-1000", className)} {...props} />
-          <Button onClick={handleOnSubmit} disabled={!queryString} className="bg-orange-100 text-gray-1000">Look up wallet</Button>
+          <Input defaultValue={queryString} onChange={(e) => handleSearch(e.target.value)} leftButton={<SelectSocialProvider onChange={handleSelect} />} type="text" placeholder={lookupProviderDetails.placeholder} className={cn("mt-4 w-[360px] border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000", className)} {...props} />
+          <Button onClick={handleOnSubmit} disabled={!queryString} className="rounded-lg bg-orange-100 text-gray-1000">Look up wallet</Button>
       </div>
     )
 }
