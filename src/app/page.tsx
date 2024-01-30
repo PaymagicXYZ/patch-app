@@ -2,6 +2,8 @@ import WalletBanner from "@/components/WalletBanner";
 import Link from "next/link";
 import Image from "next/image";
 import walletLogo from "../../public/wallet_logo.svg";
+import { Input } from "@/components/ui/input";
+import { SelectSocialProvider } from "@/components/SelectSocialProvider";
 
 export default function Home() {
   return (
@@ -16,7 +18,9 @@ export default function Home() {
               Use your Twitter, Email, or Phone as your personal crypto wallet
               without the complexity. Let anyone send you tokens via your social
               handle.
-            </p>
+      </p>
+      <Input leftButton={<SelectSocialProvider />} type="text" placeholder="Enter your Twitter handle" className="mt-4 w-[475px] border border-background-700 bg-gray-950 focus:border focus:bg-gray-1000" />
     </main>
   );
 }
+
