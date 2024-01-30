@@ -20,7 +20,7 @@ function WalletBanner({ type }: { type: "about" | "claim" }) {
 
 const AnimatedText = ({ text, delay }: { text: string; delay?: string }) => {
     return (
-        <span className={clsx("absolute animate-topToBottom overflow-hidden text-4xl font-normal leading-[3rem] text-gray-100 opacity-0 md:text-5xl", {
+        <span className={clsx("absolute animate-top-to-bottom overflow-hidden text-4xl font-normal leading-[3rem] text-gray-100 opacity-0 md:text-5xl", {
             'animation-delay-[2500ms]': delay === '2500',
             'animation-delay-[5000ms]': delay === '5000',
             'animation-delay-[7500ms]': delay === '7500',
