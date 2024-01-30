@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { SocialNetwork } from "@patchwallet/patch-sdk";
+import { Address, SocialNetwork } from "@patchwallet/patch-sdk";
 
 export const TWITTER = "twitter";
 export const GITHUB = "github";
@@ -15,11 +15,14 @@ export type User = {
   userId: UserId;
 };
 
+export type SupportedSocialNetworkIds = Exclude<SocialNetwork, "discord">
 
-export type SocialNetworkListItem = {
-  id: SocialNetwork
+export type SupportedSocialNetworksDetails = Record<SupportedSocialNetworkIds, SupportedSocialNetworkDetails>
+export type SupportedSocialNetworkDetails = {
+  id: SupportedSocialNetworkIds
   name: "Twitter" | "Github" | "Email" | "Phone" | "Passphrase" | "Farcaster";
-  icon: ReactNode;
+  iconSrc: string;
+  iconAlt: string;
   label:
     | "Twitter"
     | "Github"
