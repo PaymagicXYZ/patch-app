@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-select", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.0"],\
+          ["@radix-ui/react-separator", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.3"],\
           ["@radix-ui/react-slot", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.2"],\
           ["@types/node", "npm:20.10.6"],\
           ["@types/react", "npm:18.2.46"],\
@@ -1110,6 +1111,34 @@ const RAW_RUNTIME_STATE =
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"],\
           ["react-remove-scroll", "virtual:9611d827c0aa22d4662afe7017750f512f7d6d747d5daecad6de7b9c7f1d7e4079c7925a94c1908b655d4a113bb100f07964e2c9b61bf33800d7a2d96f222e9d#npm:2.5.5"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@radix-ui/react-separator", [\
+      ["npm:1.0.3", {\
+        "packageLocation": "../../../.yarn/berry/cache/@radix-ui-react-separator-npm-1.0.3-a8fd4c57de-10c0.zip/node_modules/@radix-ui/react-separator/",\
+        "packageDependencies": [\
+          ["@radix-ui/react-separator", "npm:1.0.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.3", {\
+        "packageLocation": "./.yarn/__virtual__/@radix-ui-react-separator-virtual-8560d9ffaa/4/.yarn/berry/cache/@radix-ui-react-separator-npm-1.0.3-a8fd4c57de-10c0.zip/node_modules/@radix-ui/react-separator/",\
+        "packageDependencies": [\
+          ["@radix-ui/react-separator", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.3"],\
+          ["@babel/runtime", "npm:7.23.9"],\
+          ["@radix-ui/react-primitive", "virtual:59dfc0bcb4e141781b672c7ce48ce3514df05dadbbe174bf539af511047f18f6a838db74966e9ad94645ff8087d39e43ec1faa005bdcef8bb986d8f0221c1f18#npm:1.0.3"],\
+          ["@types/react", "npm:18.2.46"],\
+          ["@types/react-dom", "npm:18.2.18"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"]\
         ],\
         "packagePeers": [\
           "@types/react-dom",\
@@ -5159,6 +5188,7 @@ const RAW_RUNTIME_STATE =
           ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-select", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.0"],\
+          ["@radix-ui/react-separator", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.3"],\
           ["@radix-ui/react-slot", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.2"],\
           ["@types/node", "npm:20.10.6"],\
           ["@types/react", "npm:18.2.46"],\

@@ -6,7 +6,7 @@ import { Input, InputProps } from "./ui/input"
 import { cn, getSupportedLookupNetworks } from "@/utils";
 import { Button } from "./ui/button";
 import { useDebouncedCallback } from 'use-debounce';
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { UserContext } from "@/context/user-provider";
 import { SupportedSocialNetworkIds } from "@/types";
 
@@ -59,7 +59,7 @@ export const SearchUser = ({className, ...props}: InputProps) => {
   const queryString = searchParams.get('query')?.toString()
 
     return (
-      <div className="flex w-full gap-2 md:w-4/6 md:max-w-[560px]">
+      <div className="flex w-full gap-2 sm:w-4/6 sm:max-w-[520px]">
           <Input defaultValue={queryString} onChange={(e) => handleSearch(e.target.value)} leftButton={<SelectSocialProvider onChange={handleSelect} />} type="text" placeholder={lookupProviderDetails.placeholder} className={cn("mt-4 w-[360px] border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000", className)} {...props} />
           <Button onClick={handleOnSubmit} disabled={!queryString} className="rounded-lg bg-orange-100 text-gray-1000">Look up wallet</Button>
       </div>
