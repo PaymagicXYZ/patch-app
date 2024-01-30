@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { SocialNetwork } from "@patchwallet/patch-sdk";
 
 export const TWITTER = "twitter";
 export const GITHUB = "github";
@@ -16,7 +17,7 @@ export type User = {
 
 
 export type SocialNetworkListItem = {
-  id: "twitter" | "github" | "email" | "tel" | "passphrase" | "farcaste";
+  id: SocialNetwork
   name: "Twitter" | "Github" | "Email" | "Phone" | "Passphrase" | "Farcaster";
   icon: ReactNode;
   label:

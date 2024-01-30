@@ -9,7 +9,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, leftButton, ...props }, ref) => {
     return (
-      <div className="relative flex h-10 items-end">
+      <div className={cn("relative flex h-10 items-end flex-1")}>
         {leftButton && (
           <div className="absolute inset-y-0 left-0 flex items-center pl-2">
             {leftButton}

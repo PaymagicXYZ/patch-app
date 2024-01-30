@@ -20,7 +20,9 @@ export default function Home() {
               without the complexity. Let anyone send you tokens via your social
               handle.
       </p>
-      <SearchUser />
+      <div className="flex w-full justify-center pt-9" >
+        <SearchUser className="w-full md:w-3/4" />
+      </div>
   </main>
   );
 }
