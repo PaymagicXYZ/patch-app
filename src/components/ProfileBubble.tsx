@@ -1,12 +1,8 @@
-// import { TWITTER } from "../stores/constants";
 import { parseUserId } from "@/utils/checkUserId";
 import { UserId } from "@patchwallet/patch-sdk";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-// import { UserId } from "types";
-// import { ConfirmArrow } from "ui";
-import { useRouter } from "next/router";
-// import { useMediaQuery } from "../hooks";
 
 type Props = {
   userId: UserId;
@@ -20,7 +16,7 @@ function ProfileBubble({ userId, name, imageUrl }: Props) {
   return (
     <Link
     href={`/${userId}`}
-      className="relative flex-1 flex-col items-center rounded-xl border-[1px] border-gray-800 bg-gray-900 px-8 py-4 md:w-auto md:px-7 md:py-5"
+      className="relative flex-1 flex-col items-center rounded-xl border-[1px] border-gray-800 bg-gray-900 px-5 py-4 md:w-auto md:px-7 md:py-5"
     >
       <div className="flex gap-2">
         <div className="flex md:absolute md:inset-x-0 md:-top-3 md:m-auto md:justify-center">
@@ -32,6 +28,7 @@ function ProfileBubble({ userId, name, imageUrl }: Props) {
           className="h-12 w-12 rounded-full md:h-6 md:w-6"
           />
         </div>
+        <ArrowRight size={20} className="absolute right-0 top-0 m-[6px] text-gray-700" />
         <div className="m-auto flex flex-1 flex-col items-start justify-center gap-1 md:items-center">
           <div className="mb-1 flex gap-1">
             <p

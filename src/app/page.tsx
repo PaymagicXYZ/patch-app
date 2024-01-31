@@ -10,9 +10,8 @@ import dottedLineRight from "../../public/dotted_line_right.svg";
 import { Separator } from "@/components/ui/separator";
 
 export default function Home() {
-  const isMobile = false
   return (
-    <main className="mx-2 mt-10 flex flex-col items-center">
+    <main className="m-5 flex flex-col items-center">
       <Image src={walletLogo}
               alt="PatchWallet"
               className="cursor-pointer"
@@ -27,54 +26,41 @@ export default function Home() {
         <SearchUser className="w-full md:w-3/4" />
       </div>
       <div className="mx-6">
-        <div className="mt-3 md:flex">
-          {isMobile && (
-            <div className="flex justify-center">
-              <p className="mb-[-27px] mt-12 w-10/12 text-center text-[15px] text-gray-400 md:mb-[-13px] md:mr-4 md:mt-0 md:w-[148px] md:text-right">
-                Accept tokens & NFTs via your social handle and withdraw
-                to your external crypto wallet anytime
-              </p>
-            </div>
-          )}
-          {!isMobile && (
-            <div className="flex w-full items-end">
-              <p className="mb-[-13px] mr-4 w-[148px] text-right text-[15px] text-gray-400">
+        <div className="mt-3 flex flex-col-reverse items-center lg:flex-row">
+            <div className="relative flex justify-center self-center md:flex-1 lg:-bottom-2 lg:-left-4 lg:w-full lg:items-end lg:self-end">
+              <span className="mb-2 mt-10 w-full text-center text-[15px] text-gray-400 lg:mb-[-13px] lg:mr-4 lg:mt-0 lg:w-[148px] lg:text-right">
                 Search for any social profile’s wallet
-              </p>
+              </span>
               <Image
                 src={dottedLineLeft}
                 alt="dotted_line_left"
-                className="mb-[-65px] mr-20"
+                className="mb-[-65px] mr-20 hidden lg:block"
               />
             </div>
-          )}
-          <Image
-            src={socialLogoCenter}
-            alt="social_logos"
-            className="shrink-0"
-          />
-          {isMobile && (
-            <div className="flex justify-center">
-              <p className="mb-11 mt-10 w-5/12 text-center text-[15px] text-gray-400 md:mb-[-13px] md:mr-4 md:mt-0 md:w-[148px] md:text-right">
-                Search for any social profile’s wallet
-              </p>
-            </div>
-          )}
-          {!isMobile && (
-            <div className="flex w-full items-center">
+            <Image
+              src={socialLogoCenter}
+              alt="social_logos"
+              className="hidden shrink-0 self-center md:block"
+            />
+          <div className="flex justify-center md:hidden md:flex-1">
+            <Image
+                src={socialLogoCenter}
+                alt="social_logos"
+              />
+          </div>
+            <div className="flex w-10/12 items-center justify-center md:flex-1 md:justify-start">
               <Image
                 src={dottedLineRight}
                 alt="dotted_line_right"
-                className="mr-4 mt-[68px]"
+                className="mr-4 mt-[68px] hidden lg:block"
               />
-              <p className="w-[244px] text-[15px] text-gray-400">
+              <span className="mx-auto mt-8 lg:mt-0 -mb-8 w-full text-center text-[15px] text-gray-400 lg:w-[244px]">
                 Accept tokens & NFTs via your social handle and withdraw
                 to your external crypto wallet anytime
-              </p>
+              </span>
             </div>
-          )}
         </div>
-        <div className="w-full flex flex-col items-center justify-center">
+        <div className="flex w-full flex-col items-center justify-center">
           <div className="mt-6 flex w-full flex-col flex-wrap justify-center gap-4 md:max-w-[680px] md:flex-row md:flex-nowrap">
             <ProfileBubble
               userId="github:gvanrossum"
@@ -93,7 +79,7 @@ export default function Home() {
             />
           </div>
           <div className="mx-auto md:w-[680px]">
-          <Separator className="bg-gray-900 h-0.5 md:mt-14 mb-9" />
+          <Separator className="mb-12 h-0.5 bg-gray-900 mt-12 md:mt-14" />
             <div className="flex flex-wrap gap-3 text-gray-200 md:flex-nowrap">
               <Feature btnHref={process.env.NEXT_PUBLIC_SOCIAL_DROP_HOST ?? "http://localhost:3001"} btnTitle="Setup an airdrop" desc="Send an airdrop to your followers, friends, and fans just
                   by using their social handle (Twitter/Email/Github)" title="Create Social Airdrop"/>
