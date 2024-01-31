@@ -1,15 +1,15 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import type { Chain } from "@patchwallet/patch-sdk";
-import { useRouter, usePathname } from "next/navigation";
-import { isSupportedChain, supportedShortNames } from "@/utils/chain";
+'use client';
+import React, { useState, useEffect } from 'react';
+import type { Chain } from '@patchwallet/patch-sdk';
+import { useRouter, usePathname } from 'next/navigation';
+import { isSupportedChain, supportedShortNames } from '@/utils/chain';
 
 const ChainSelector = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedChain, setSelectedChain] = useState<Chain>("matic");
-  const user = pathname.split("/")[2];
-  const chain = pathname.split("/")[3];
+  const [selectedChain, setSelectedChain] = useState<Chain>('matic');
+  const user = pathname.split('/')[2];
+  const chain = pathname.split('/')[3];
   useEffect(() => {
     if (isSupportedChain(chain)) {
       setSelectedChain(chain as Chain);
@@ -21,7 +21,7 @@ const ChainSelector = () => {
       <select
         value={selectedChain}
         onChange={(e) => {
-          setSelectedChain((e.target.value as Chain) || "");
+          setSelectedChain((e.target.value as Chain) || '');
           router.push(`/user/${user}/${e.target.value}`);
         }}
       >

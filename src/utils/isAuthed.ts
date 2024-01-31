@@ -1,5 +1,5 @@
-import { User } from "@clerk/nextjs/server";
-import { UserId } from "@patchwallet/patch-sdk";
+import { User } from '@clerk/nextjs/server';
+import { UserId } from '@patchwallet/patch-sdk';
 
 export default function isAuthed(userId: UserId, user: User): boolean {
   const availableWallets = [
@@ -7,12 +7,7 @@ export default function isAuthed(userId: UserId, user: User): boolean {
     ...user.phoneNumbers.map((tel) => `tel:${tel.phoneNumber}`),
     ...user.externalAccounts
       .filter((account) => account.provider)
-      .map(
-        (account) =>
-          `${account.provider.split("_")[1]}:${
-            account.username || account.externalId
-          }`
-      ),
+      .map((account) => `${account.provider.split('_')[1]}:${account.username || account.externalId}`),
   ] as UserId[];
   return availableWallets.includes(userId);
 }

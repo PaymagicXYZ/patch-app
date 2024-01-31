@@ -1,5 +1,5 @@
-import "server-only";
-import Client from "@patchwallet/patch-sdk";
+import 'server-only';
+import Client from '@patchwallet/patch-sdk';
 
 const credentials = {
   clientId: process.env.CLIENT_ID!,

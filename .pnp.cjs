@@ -46,6 +46,7 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.317.0"],\
           ["next", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:14.0.4"],\
           ["postcss", "npm:8.4.29"],\
+          ["prettier-plugin-organize-imports", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.2.4"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"],\
           ["react-hook-form", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:7.49.3"],\
@@ -5203,6 +5204,7 @@ const RAW_RUNTIME_STATE =
           ["lucide-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.317.0"],\
           ["next", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:14.0.4"],\
           ["postcss", "npm:8.4.29"],\
+          ["prettier-plugin-organize-imports", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.2.4"],\
           ["react", "npm:18.2.0"],\
           ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"],\
           ["react-hook-form", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:7.49.3"],\
@@ -5474,6 +5476,40 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/prelude-ls-npm-1.2.1-3e4d272a55-10c0.zip/node_modules/prelude-ls/",\
         "packageDependencies": [\
           ["prelude-ls", "npm:1.2.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["prettier-plugin-organize-imports", [\
+      ["npm:3.2.4", {\
+        "packageLocation": "../../../.yarn/berry/cache/prettier-plugin-organize-imports-npm-3.2.4-70edab96d4-10c0.zip/node_modules/prettier-plugin-organize-imports/",\
+        "packageDependencies": [\
+          ["prettier-plugin-organize-imports", "npm:3.2.4"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.2.4", {\
+        "packageLocation": "./.yarn/__virtual__/prettier-plugin-organize-imports-virtual-28fb06b845/4/.yarn/berry/cache/prettier-plugin-organize-imports-npm-3.2.4-70edab96d4-10c0.zip/node_modules/prettier-plugin-organize-imports/",\
+        "packageDependencies": [\
+          ["prettier-plugin-organize-imports", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.2.4"],\
+          ["@types/prettier", null],\
+          ["@types/typescript", null],\
+          ["@types/volar__vue-language-plugin-pug", null],\
+          ["@types/volar__vue-typescript", null],\
+          ["@volar/vue-language-plugin-pug", null],\
+          ["@volar/vue-typescript", null],\
+          ["prettier", null],\
+          ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"]\
+        ],\
+        "packagePeers": [\
+          "@types/prettier",\
+          "@types/typescript",\
+          "@types/volar__vue-language-plugin-pug",\
+          "@types/volar__vue-typescript",\
+          "@volar/vue-language-plugin-pug",\
+          "@volar/vue-typescript",\
+          "prettier",\
+          "typescript"\
         ],\
         "linkType": "HARD"\
       }]\
