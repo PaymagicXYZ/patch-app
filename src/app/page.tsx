@@ -27,24 +27,7 @@ export default function Home() {
         </Suspense>
       </div>
       <div className="mx-6">
-        <div className="mt-3 flex flex-col-reverse items-center lg:flex-row">
-          <div className="relative flex justify-center self-center md:flex-1 lg:-bottom-2 lg:-left-4 lg:w-full lg:items-end lg:self-end">
-            <span className="mb-2 mt-10 w-full text-center text-[15px] text-gray-400 lg:mb-[-13px] lg:mr-4 lg:mt-0 lg:w-[148px] lg:text-right">
-              Search for any social profile’s wallet
-            </span>
-            <Image src={dottedLineLeft} alt="dotted_line_left" className="mb-[-65px] mr-20 hidden lg:block" />
-          </div>
-          <Image src={socialLogoCenter} alt="social_logos" className="hidden shrink-0 self-center md:block" />
-          <div className="flex justify-center md:hidden md:flex-1">
-            <Image src={socialLogoCenter} alt="social_logos" />
-          </div>
-          <div className="flex w-10/12 items-center justify-center md:flex-1 md:justify-start">
-            <Image src={dottedLineRight} alt="dotted_line_right" className="mr-4 mt-[68px] hidden lg:block" />
-            <span className="mx-auto -mb-8 mt-8 w-full text-center text-[15px] text-gray-400 lg:mt-0 lg:w-[244px]">
-              Accept tokens & NFTs via your social handle and withdraw to your external crypto wallet anytime
-            </span>
-          </div>
-        </div>
+        <CentreSection />
         <div className="flex w-full flex-col items-center justify-center">
           <div className="mt-6 flex w-full flex-col flex-wrap justify-center gap-4 md:max-w-[680px] md:flex-row md:flex-nowrap">
             <ProfileBubble userId="github:gvanrossum" name="Guido van Rossum" imageUrl="/guido.jpeg" />
@@ -75,6 +58,29 @@ export default function Home() {
     </main>
   );
 }
+
+const CentreSection = () => {
+  return (
+    <div className="mt-3 flex flex-col-reverse items-center lg:flex-row">
+    <div className="relative flex justify-center self-center md:flex-1 lg:-bottom-2 lg:-left-4 lg:w-full lg:items-end lg:self-end">
+      <span className="mb-2 mt-10 w-full text-center text-[15px] text-gray-400 lg:mb-[-13px] lg:mr-4 lg:mt-0 lg:w-[148px] lg:text-right">
+        Search for any social profile’s wallet
+      </span>
+      <Image src={dottedLineLeft} alt="dotted_line_left" className="mb-[-65px] mr-20 hidden lg:block" />
+    </div>
+    <Image src={socialLogoCenter} alt="social_logos" className="hidden shrink-0 self-center md:block" />
+    <div className="flex justify-center md:hidden md:flex-1">
+      <Image src={socialLogoCenter} alt="social_logos" />
+    </div>
+    <div className="flex w-10/12 items-center justify-center md:flex-1 md:justify-start">
+      <Image src={dottedLineRight} alt="dotted_line_right" className="mr-4 mt-[68px] hidden lg:block" />
+      <span className="mx-auto -mb-8 mt-8 w-full text-center text-[15px] text-gray-400 lg:mt-0 lg:w-[244px]">
+        Accept tokens & NFTs via your social handle and withdraw to your external crypto wallet anytime
+      </span>
+    </div>
+  </div>
+  )
+};
 
 const Feature = ({ title, desc, btnTitle, btnHref }: { title: string; desc: string; btnTitle: string; btnHref: string }) => {
   return (
