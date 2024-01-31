@@ -1,11 +1,11 @@
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
-import Image from "next/image"
 import { SupportedSocialNetworksDetails } from "@/types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
 export function getSupportedLookupNetworks(isMobile = false): SupportedSocialNetworksDetails {
     return {
         "twitter": {

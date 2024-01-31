@@ -17,7 +17,6 @@ export const useModifyQueryParams = () => {
           return
         }
         replace(`${pathname}?${params.toString()}`);
-        // cb?.(params)
       }
 
       return { modifyQueryParams }

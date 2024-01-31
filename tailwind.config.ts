@@ -87,6 +87,12 @@ const config = {
         950: "#131315",
         1000: "#0A0A0A",
       },
+      twitter: {
+        100: "#1DA1F2"
+      },
+      github: {
+        100: "#28A745"
+      }
     }
   },
   plugins: [
