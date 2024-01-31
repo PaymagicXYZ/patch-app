@@ -1,13 +1,15 @@
 import WalletBanner from "@/components/WalletBanner";
 import Image from "next/image";
 import walletLogo from "../../public/wallet_logo.svg";
-import { SearchUser } from "@/components/UserLookupForm";
+import { UserLookupForm } from "@/components/UserLookupForm";
 import Link from "next/link";
 import ProfileBubble from "@/components/ProfileBubble";
 import socialLogoCenter from "../../public/social_logo_center.svg";
 import dottedLineLeft from "../../public/dotted_line_left.svg";
 import dottedLineRight from "../../public/dotted_line_right.svg";
 import { Separator } from "@/components/ui/separator";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Home() {
   return (
@@ -23,7 +25,10 @@ export default function Home() {
               handle.
       </p>
       <div className="flex w-full justify-center pt-9" >
-        <SearchUser className="w-full md:w-3/4" />
+        {/* It is advisable for components consuming 'useSearchParams' to be wrapped in 'Suspense*', ref- https://nextjs.org/docs/app/api-reference/functions/use-search-params */}
+        <Suspense fallback={<Skeleton className="flex h-9 w-full sm:w-4/6 sm:max-w-[520px]" />}>
+          <UserLookupForm className="w-full md:w-3/4" />
+        </Suspense>
       </div>
       <div className="mx-6">
         <div className="mt-3 flex flex-col-reverse items-center lg:flex-row">

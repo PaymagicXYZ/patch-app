@@ -9,26 +9,21 @@ import Image from "next/image";
 import { useState } from "react";
 import { cn, getSupportedLookupNetworks } from "@/utils";
 import { useSearchParams } from "next/navigation";
-import { SocialNetwork } from "@patchwallet/patch-sdk";
 import { SupportedSocialNetworkIds } from '@/types/'
 
-export function SelectSocialProvider({small, onChange}: {small?: boolean, onChange: (value: string) => void}) {
+export function SelectSocialProvider({ onChange }: {onChange: (value: string) => void}) {
     const searchParams = useSearchParams();
-
-    const socialNetworks =  getSupportedLookupNetworks()
-    
+    const socialNetworks =  getSupportedLookupNetworks()    
     const [selectedProvider, setSelectedProvider] = useState<SupportedSocialNetworkIds>((searchParams.get("provider")?.toString() as SupportedSocialNetworkIds) ?? socialNetworks["twitter"].id)
-    // const selected = socialNetworks[selectedProvider].iconSrc
 
     const handleOnChange = (provider: SupportedSocialNetworkIds) => {
-        onChange(provider)
-        setSelectedProvider(provider)
+      onChange(provider)
+      setSelectedProvider(provider)
     }
 
     return (
     <Select onValueChange={handleOnChange} defaultValue={selectedProvider}>
       <SelectTrigger className="border-none selection:border-none focus:border-none active:border-none" value={selectedProvider}>
-        {/* {socialLogo} */}
         <Image src={socialNetworks[selectedProvider].iconSrc} alt={socialNetworks[selectedProvider].iconAlt} width={24} height={24} />
       </SelectTrigger>
       <SelectContent className="w-40 border-none bg-gray-900">
