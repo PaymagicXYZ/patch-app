@@ -54,7 +54,7 @@ export default function Home() {
                 alt="dotted_line_right"
                 className="mr-4 mt-[68px] hidden lg:block"
               />
-              <span className="mx-auto mt-8 lg:mt-0 -mb-8 w-full text-center text-[15px] text-gray-400 lg:w-[244px]">
+              <span className="mx-auto -mb-8 mt-8 w-full text-center text-[15px] text-gray-400 lg:mt-0 lg:w-[244px]">
                 Accept tokens & NFTs via your social handle and withdraw
                 to your external crypto wallet anytime
               </span>
@@ -79,7 +79,7 @@ export default function Home() {
             />
           </div>
           <div className="mx-auto md:w-[680px]">
-          <Separator className="mb-12 h-0.5 bg-gray-900 mt-12 md:mt-14" />
+          <Separator className="mb-12 mt-12 h-0.5 bg-gray-900 md:mt-14" />
             <div className="flex flex-wrap gap-3 text-gray-200 md:flex-nowrap">
               <Feature btnHref={process.env.NEXT_PUBLIC_SOCIAL_DROP_HOST ?? "http://localhost:3001"} btnTitle="Setup an airdrop" desc="Send an airdrop to your followers, friends, and fans just
                   by using their social handle (Twitter/Email/Github)" title="Create Social Airdrop"/>
