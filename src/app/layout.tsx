@@ -22,9 +22,11 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en">
         <body className={inter.className}>
-          <Nav />
-          {children}
-          <Footer />
+          <div className="flex min-h-screen flex-col">
+            <Nav />
+            {children}
+            <Footer />
+          </div>
         </body>
       </html>
     </ClerkProvider>

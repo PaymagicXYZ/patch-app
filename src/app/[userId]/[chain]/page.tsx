@@ -22,12 +22,12 @@ export default async function Page({
     const { getToken } = auth();
     const token = (await getToken({ template: "patchwallet" })) || "";
     return (
-      <main className="m-4">
+      <main className="flex-1">
         <TokenBalance wallet={userId} chain={chain as Chain} />
         <NFTBalance wallet={userId} chain={chain as Chain} />
         {user && isAuthed(userId, user) && (
           <SignBtn userId={userId} token={token} />
-        )}
+          )}
       </main>
     );
   } else {
