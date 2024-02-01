@@ -15,3 +15,9 @@ export const parseUserId = (userId: UserId): { network: string; handle: string }
   const [network, handle] = userId.split(':');
   return { network, handle };
 };
+
+export const minifyAddress = (address: string, length = 8): string => {
+  if (address)
+    return `${address.slice(0, length + 2)}...${address.slice(-length)}`;
+  else return "";
+};

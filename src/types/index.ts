@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Address, SocialNetwork } from '@patchwallet/patch-sdk';
+import { Address, SocialNetwork, UserId } from '@patchwallet/patch-sdk';
 
 export const TWITTER = 'twitter';
 export const GITHUB = 'github';
@@ -8,7 +8,7 @@ export const TEL = 'tel';
 
 export const socialNetworks = [TWITTER, GITHUB, EMAIL, TEL] as const;
 
-export type UserId = `${SocialNetwork}:${string}`;
+// export type UserId = `${SocialNetwork}:${string}`;
 
 export type User = {
   accountAddress: Address;
@@ -25,4 +25,20 @@ export type SupportedSocialNetworkDetails = {
   iconAlt: string;
   label: 'Twitter' | 'Github' | 'Email' | 'Phone' | 'Passphrase' | 'Farcaster' | '';
   placeholder: string;
+};
+
+export type ResolvedUser = {
+  assignedWallet: boolean;
+  accountAddress: Address;
+  message: string;
+  userId: UserId;
+};
+
+export type SocialProfile = {
+  name: string;
+  description: string;
+  image: string;
+  network: SocialNetwork;
+  handle: string;
+  patchUserId: UserId;
 };

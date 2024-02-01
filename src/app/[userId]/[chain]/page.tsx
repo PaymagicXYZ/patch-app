@@ -1,30 +1,21 @@
-import { currentUser, auth } from '@clerk/nextjs';
-import { TokenBalance } from '@/components/TokenBalance';
-import { NFTBalance } from '@/components/NFTBalance';
-import { isSupportedChain } from '@/utils/chain';
-import isUserId from '@/utils/checkUserId';
-import isAuthed from '@/utils/isAuthed';
-import { Chain } from '@patchwallet/patch-sdk';
-import { redirect } from 'next/navigation';
-import { User } from '@clerk/nextjs/server';
-import { SignBtn } from '@/components/SignBtn';
+import { UserWallet } from '@/components/UserWallet';
+import { Chain, UserId } from '@patchwallet/patch-sdk';
+import { resolveSocialProfile } from '@/libs/actions/resolveSocialProfile';
 
-export default async function Page({ params }: { params: { userId: string; chain: string } }) {
-  const userId = decodeURIComponent(params.userId);
-  const chain = params.chain;
+export default async function Wallet({ params }: { params: { userId: UserId; chain: Chain } }) {
+  const _userId = decodeURIComponent(params.userId);
+  const { address, profile } = await resolveSocialProfile(_userId as UserId);
 
-  if (isUserId(userId) && isSupportedChain(chain)) {
-    const user: User | null = await currentUser();
-    const { getToken } = auth();
-    const token = (await getToken({ template: 'patchwallet' })) || '';
-    return (
-      <main className="flex-1">
-        <TokenBalance wallet={userId} chain={chain as Chain} />
-        <NFTBalance wallet={userId} chain={chain as Chain} />
-        {user && isAuthed(userId, user) && <SignBtn userId={userId} token={token} />}
-      </main>
-    );
-  } else {
-    redirect('/user');
-  }
+  return (
+    <main className="flex-1">
+      {/* <AlphaBanner /> */}
+      <div>
+        <div className="mx-5 md:mx-10 relative h-full flex flex-col">
+          <div className="flex justify-center mt-6 md:mt-[108px] mb-auto ">
+            <UserWallet address={address} profile={profile} chain={params.chain} />
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }

@@ -11,7 +11,8 @@
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
-
+/src/components/components-old/*
+/src/components/ui-old/*
 # testing
 /coverage
 
