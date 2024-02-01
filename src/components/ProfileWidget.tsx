@@ -13,6 +13,7 @@ import { ArrowUp } from 'lucide-react';
 import { GenericDialog } from './GenericDialog';
 import { SignInButton, currentUser } from '@clerk/nextjs';
 import isAuthed from '@/utils/isAuthed';
+import { SendDialogContent } from './SendDialogContent';
 
 async function ProfileWidget({ address, profile, chain }: { address: Address; profile: SocialProfile; chain: Chain }) {
   console.log({ address, profile });
@@ -35,11 +36,15 @@ async function ProfileWidget({ address, profile, chain }: { address: Address; pr
         <AddressTooltip address={address} />
       </div>
       <div className="flex justify-end">
-        <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`}>
-          <div className="mt-4 flex w-full items-center justify-between rounded-xl border-[0.5px] border-gray-800 bg-gray-950 p-2">
-            <ProfileInfo profile={profile} checkMark />
-            <SignInButton redirectUrl={`/${profile.patchUserId}/${chain}`} />
-          </div>
+        <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`} className=''>
+          {auth ? (
+            <SendDialogContent />
+          ) : (
+            <div className="mt-4 flex w-full items-center justify-between rounded-xl border-[0.5px] border-gray-800 bg-gray-950 p-2">
+              <ProfileInfo profile={profile} checkMark />
+              <SignInButton redirectUrl={`/${profile.patchUserId}/${chain}`} />
+            </div>
+          )}
         </GenericDialog>
       </div>
       {/* <AccountActionButtons address={address} profile={profile} /> */}

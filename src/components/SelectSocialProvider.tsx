@@ -5,7 +5,7 @@ import { cn, getSupportedLookupNetworks } from '@/utils';
 import { useSearchParams } from 'next/navigation';
 import { SupportedSocialNetworkIds } from '@/types/';
 
-export function SelectSocialProvider({ onChange }: { onChange: (value: string) => void }) {
+export function SelectSocialProvider({ onChange, name }: { onChange: (value: string) => void; name: string }) {
   const searchParams = useSearchParams();
   const socialNetworks = getSupportedLookupNetworks();
   const [selectedProvider, setSelectedProvider] = useState<SupportedSocialNetworkIds>(
@@ -18,7 +18,7 @@ export function SelectSocialProvider({ onChange }: { onChange: (value: string) =
   };
 
   return (
-    <Select onValueChange={handleOnChange} defaultValue={selectedProvider}>
+    <Select onValueChange={handleOnChange} defaultValue={selectedProvider} name={name}>
       <SelectTrigger className="border-none selection:border-none focus:border-none active:border-none" value={selectedProvider}>
         <Image src={socialNetworks[selectedProvider].iconSrc} alt={socialNetworks[selectedProvider].iconAlt} width={24} height={24} />
       </SelectTrigger>
