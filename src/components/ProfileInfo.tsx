@@ -1,8 +1,9 @@
 // import { TWITTER, TEL, SocialProfile, PASSPHRASE } from "types";
 // import { useIsVerified } from "../hooks";
-import { SocialProfile } from "@/types";
-import Image from "next/image";
-// import ProfileImg from "./ProfileImg";
+import Image from 'next/image';
+import ProfileImg from './components-old/ProfileImg';
+import { SocialProfile } from '@/types';
+import { cn } from '@/utils';
 // import { PhoneNumberUtil, PhoneNumberFormat } from "google-libphonenumber";
 
 // const phoneUtil = PhoneNumberUtil.getInstance();
@@ -15,7 +16,7 @@ import Image from "next/image";
 //   } catch (err) {
 //     console.error(err);
 //   }
-// TODO: fix this
+
 //   if (phoneNumber) {
 //     const formattedPhoneNumber = phoneUtil.format(
 //       phoneNumber,
@@ -33,54 +34,34 @@ type Props = {
   checkMark?: boolean;
 };
 
+// TODO
 function ProfileInfo({ profile, size, small, checkMark }: Props) {
-//   const { isVerified } = useIsVerified(); todo: fix this
-    const isVerified = false;
+  // const { isVerified } = useIsVerified();
+  const { isVerified } = { isVerified: false };
   const shouldShowNetworkLogo = profile?.network !== 'passphrase';
   const formattedHandle =
     profile?.network === 'twitter'
       ? `@${profile?.handle}`
-      : profile?.network === 'tel'
-    //   ? formatPhoneNumber(profile?.handle)
-    //   : profile?.handle;
+      : // : profile?.network === TEL
+        // ? formatPhoneNumber(profile?.handle)
+        profile?.handle;
   return (
     <div className="flex">
-      {/* <ProfileImg size={size} /> */}
-      <div className="flex-col ml-2 gap-1 items-center m-auto">
+      <ProfileImg size={size} imageSrc={profile.image} />
+      <div className="m-auto ml-2 flex-col items-center gap-1">
         <div className="flex justify-between">
-          <div className="flex gap-1 mb-1">
+          <div className="mb-1 flex gap-1">
             {shouldShowNetworkLogo && (
-              <Image
-                className="shrink-0"
-                src={`/${profile?.network}.svg`}
-                alt={profile?.network as string}
-                width={20}
-                height={20}
-              />
+              <Image className="shrink-0" src={`/${profile?.network}.svg`} alt={profile?.network as string} width={20} height={20} />
             )}
-            <p
-              className={`${
-                small ? "text-base" : "text-xl"
-              } text-gray-100 leading-5 overflow-hidden text-ellipsis`}
-            >
+            <p className={cn('overflow-hidden text-ellipsis leading-5 text-gray-100 text-base md:text-xl', { 'text-base': small })}>
               {formattedHandle}
             </p>
-            {isVerified && checkMark && (
-              <Image
-                src="/verified_check.svg"
-                width={20}
-                height={20}
-                alt="Check"
-              />
-            )}
+            {isVerified && checkMark && <Image src="/verified_check.svg" width={20} height={20} alt="Check" />}
           </div>
         </div>
         <div className="flex items-center">
-          <p
-            className={`${small ? "text-sm" : ""} text-gray-600 leading-[16px]`}
-          >
-            {profile?.name}
-          </p>
+          <p className={cn('text-gray-600 leading-[16px] text-sm md:text-base', { 'text-sm': small })}>{profile?.name}</p>
         </div>
       </div>
     </div>

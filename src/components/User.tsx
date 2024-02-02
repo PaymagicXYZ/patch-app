@@ -18,10 +18,10 @@ export default async function UserDetail() {
     const wallets = (await client.resolve(availableWallets)) as string[];
 
     return (
-      <>
+      <div className='w-full'>
         <AccountSelector availableWallets={availableWallets} wallets={wallets} />
         <ChainSelector />
-      </>
+      </div>
     );
   }
 }

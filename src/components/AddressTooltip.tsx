@@ -18,7 +18,7 @@ export const AddressTooltip = ({ address }: { address: Address }) => {
   };
   return (
     <div
-      className="flex space-x-1 rounded-lg border-[0.5px] border-gray-800 bg-gray-600 p-2 py-3"
+      className="flex space-x-1 rounded-lg border-[0.5px] border-gray-800 bg-gray-850 p-2 py-3"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={() => setShowTooltip(false)}
       onClick={handleCopyAddress}

@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Image from 'next/image';
 import { useState } from 'react';
 import { cn, getSupportedLookupNetworks } from '@/utils';
@@ -18,9 +18,11 @@ export function SelectSocialProvider({ onChange, name }: { onChange: (value: str
   };
 
   return (
-    <Select onValueChange={handleOnChange} defaultValue={selectedProvider} name={name}>
+    <Select onValueChange={handleOnChange} defaultValue={"twitter"} name={name}>
       <SelectTrigger className="border-none selection:border-none focus:border-none active:border-none" value={selectedProvider}>
-        <Image src={socialNetworks[selectedProvider].iconSrc} alt={socialNetworks[selectedProvider].iconAlt} width={24} height={24} />
+        <SelectValue>
+          <Image src={socialNetworks[selectedProvider].iconSrc} alt={socialNetworks[selectedProvider].iconAlt} width={24} height={24} />
+        </SelectValue>
       </SelectTrigger>
       <SelectContent className="w-40 border-none bg-gray-900">
         <SelectGroup>
@@ -31,7 +33,7 @@ export function SelectSocialProvider({ onChange, name }: { onChange: (value: str
                 key={_socialNetwork.id}
                 value={_socialNetwork.id}
                 className={cn(
-                  'transition-all focus:rounded-lg text-gray-200 focus:bg-gray-600 py-2 radius focus:text-gray-200 active:bg-gray-800',
+                  'transition-all focus:rounded-lg text-gray-200 focus:bg-gray-600 py-2 radius focus:text-gray-200 active:bg-gray-800 data-[state=active]:bg-gray-800',
                   { 'bg-gray-800 rounded-lg': _socialNetwork.id === selectedProvider },
                 )}
               >

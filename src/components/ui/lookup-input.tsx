@@ -20,7 +20,7 @@ export const LookupInput = ({ onInputChange, onSelectChange, defaultValue, place
       leftButton={<SelectSocialProvider name="provider" onChange={onSelectChange} />}
       type="text"
       placeholder={placeholder}
-      className={cn('mt-4 w-[360px]', className)}
+      className={cn('mt-4', className)}
     />
   );
 };

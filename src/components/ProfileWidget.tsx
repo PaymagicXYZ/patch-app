@@ -1,26 +1,32 @@
 import { Suspense } from 'react';
 import ViewAddressBtn from './components-old/ViewAddressBtn';
-import ProfileInfo from './components-old/ProfileInfo';
-import WidgetContainer from './components-old/WidgetContainer';
+import ProfileInfo from './ProfileInfo';
+import WidgetContainer from './WidgetContainer';
 import { SocialProfile } from '@/types';
 import { Skeleton } from './ui/skeleton';
 import { Address, Chain } from '@patchwallet/patch-sdk';
 import { AddressTooltip } from './AddressTooltip';
 import { TotalBalanceUSD } from './TotalBalance';
 import { GenericDialog } from './GenericDialog';
-import { SignInButton, currentUser } from '@clerk/nextjs';
-import isAuthed from '@/utils/isAuthed';
 import { SendDialogContent } from './SendDialogContent';
 import { Separator } from './ui/separator';
+import { cn } from '@/utils';
 
-async function ProfileWidget({ address, profile, chain }: { address: Address; profile: SocialProfile; chain: Chain }) {
+async function ProfileWidget({
+  address,
+  profile,
+  chain,
+  className,
+}: {
+  address: Address;
+  profile: SocialProfile;
+  chain: Chain;
+  className?: string;
+}) {
   console.log({ address, profile });
   const whatToVerify = profile?.network === 'tel' ? 'phone number' : profile?.network === 'email' ? 'email' : 'social account';
-  const _user = await currentUser();
-  const auth = _user && isAuthed(profile.patchUserId, _user);
-  console.log('USER IS AUTHED', auth);
   return (
-    <WidgetContainer>
+    <WidgetContainer className={cn("", className)}>
       <div className="flex justify-between">
         {address && <ProfileInfo profile={profile} checkMark />}
         <ViewAddressBtn disabled={!address} url={`https://polygonscan.com/address/${address}`} text="Block Explorer" />
@@ -33,17 +39,12 @@ async function ProfileWidget({ address, profile, chain }: { address: Address; pr
         </Suspense>
         <AddressTooltip address={address} />
       </div>
-      <div className="flex justify-end">
+      <div className="mt-7 flex justify-end px-4">
         <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`}>
           <Separator />
-          {auth ? (
-            <SendDialogContent />
-          ) : (
-            <div className="mt-4 flex w-full items-center justify-between rounded-xl border-[0.5px] border-gray-800 bg-gray-950 p-2">
-              <ProfileInfo profile={profile} checkMark />
-              <SignInButton redirectUrl={`/${profile.patchUserId}/${chain}`} />
-            </div>
-          )}
+          <Suspense fallback={<Skeleton className="h-80 w-96" />}>
+            <SendDialogContent profile={profile} chain={chain} />
+          </Suspense>
           <Separator className="mt-4" />
         </GenericDialog>
       </div>

@@ -51,6 +51,7 @@ export const UserLookupClientForm = () => {
         onSelectChange={(value) => modifyQueryParams('provider', value)}
         defaultValue={queryString}
         placeholder={lookupProviderDetails.placeholder}
+        className="w-full"
       />
       <Button onClick={handleOnSubmit} disabled={!queryString} className="rounded-lg bg-orange-100 text-gray-1000">
         Look up wallet
