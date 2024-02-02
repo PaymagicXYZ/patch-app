@@ -1,7 +1,7 @@
 import WalletBanner from '@/components/WalletBanner';
 import Image from 'next/image';
 import walletLogo from '../../public/wallet_logo.svg';
-import { UserLookupForm } from '@/components/UserLookupForm';
+import { UserInput, UserInputClientForm, UserLookupForm } from '@/components/UserLookupForm';
 import Link from 'next/link';
 import ProfileBubble from '@/components/ProfileBubble';
 import socialLogoCenter from '../../public/social_logo_center.svg';
@@ -23,7 +23,7 @@ export default function Home() {
       <div className="flex w-full justify-center pt-9">
         {/* It is advisable for components consuming 'useSearchParams' to be wrapped in 'Suspense*', ref- https://nextjs.org/docs/app/api-reference/functions/use-search-params */}
         <Suspense fallback={<Skeleton className="flex h-9 w-full sm:w-4/6 sm:max-w-[520px]" />}>
-          <UserLookupForm className="w-full md:w-3/4" />
+          <UserInputClientForm  />
         </Suspense>
       </div>
       <div className="mx-6">

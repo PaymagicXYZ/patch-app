@@ -21,6 +21,11 @@ export async function resolveSocialProfile(userId: UserId) {
   };
 }
 
+/**
+ * Fetches user address from the server based on 2 form - provider:username
+ * @param prevState previous form submission state
+ * @param formData current form data
+ */
 export async function fetchUserAddress(prevState: any, formData: FormData) {
   const schema = z.object({
     userId: z.string(),
@@ -32,16 +37,19 @@ export async function fetchUserAddress(prevState: any, formData: FormData) {
   });
 
   const _userId = `${data.provider}:${data.userId}`;
+
   if (isUserId(_userId)) {
     console.log(1);
     const address = (await client.resolve(_userId as UserId)) as Address;
     console.log('ADDRESS', address);
 
-    if (address) {
-      return { address };
-    }
+    return {
+      address,
+      errorMessage: address ? '' : "Profile doesn't exist",
+    };
   }
   return {
     address: '',
+    errorMessage: data.userId && 'Invalid user',
   };
 }

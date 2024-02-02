@@ -1,102 +1,131 @@
 'use client';
 
 import { useSearchParams, useRouter } from 'next/navigation';
-import { SelectSocialProvider } from './SelectSocialProvider';
-import { Input, InputProps } from './ui/input';
 import { cn, getSupportedLookupNetworks } from '@/utils';
 import { Button } from './ui/button';
 import { useDebouncedCallback } from 'use-debounce';
-import { FormEvent, FormEventHandler, memo, useCallback, useContext, useEffect, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { UserContext } from '@/context/user-provider';
 import { SupportedSocialNetworkIds } from '@/types';
 import { useModifyQueryParams } from '@/hooks/useModifyQueryParams';
 import { useFormState, useFormStatus } from 'react-dom';
 import { fetchUserAddress } from '@/libs/actions/resolveSocialProfile';
 import { UserId } from '@patchwallet/patch-sdk';
+import { LoadingSpinner } from './Spinner';
+import { LookupInput } from './ui/lookup-input';
+import { Input } from './ui/input';
 
-// ... (imports)
-
-const initialState = {
-  address: '' as UserId,
-  provider: 'twitter',
-};
-
-interface UserLookupFormProps extends InputProps {
-  type: 'server' | 'client';
-  withSubmitButton?: boolean;
-}
-
-function SubmitButton({ isDisabled }: { isDisabled: boolean }) {
-  const { pending, data } = useFormStatus();
-  console.log("pending button", {data: data?.get('provider'), pending})
-  return (
-    <Button type="submit" aria-disabled={!isDisabled || pending} className="rounded-lg bg-orange-100 text-gray-1000">
-      Look up wallet
-    </Button>
-  );
-}
-
-function UserForm({ type, formRef, handleOnSubmit, queryString, config, className, ...props }: any) {
-  const { pending } = useFormStatus();
-  console.log("pending userform", pending)
-  return (
-    <form action={config[type]?.onSubmit} ref={formRef}>
-      <Input
-        defaultValue={queryString}
-        name="userId"
-        onChange={(e) => (type === 'client' ? config[type]?.onChange('query', e.target.value) : config[type]?.onChange?.())}
-        leftButton={<SelectSocialProvider name="provider" onChange={() => config[type]?.onSelectChange?.()} />}
-        type="text"
-        className={cn('mt-4 w-[360px] border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000', className)}
-        {...props}
-      />
-      {props.withSubmitButton ? <SubmitButton isDisabled={!queryString} /> : <></>}
-      {pending && <div>Loading...</div>}
-      <p>{props.state.address}</p>
-    </form>
-  );
-}
-
-export const UserLookupForm = ({ className, onChange, type = 'client', withSubmitButton = true, ...props }: UserLookupFormProps) => {
+/**
+ * Form to lookup a user's wallet based on query params and client-side routing e.g. in "/home" page
+ */
+export const UserInputClientForm = () => {
   const searchParams = useSearchParams();
   const { push } = useRouter();
   const { chain } = useContext(UserContext);
-  const formRef = useRef<HTMLFormElement>(null);
+  // Note: If the user hasn't selected a provider, it should default to 'twitter'
   const lookupProviderId = (searchParams.get('provider')?.toString() as SupportedSocialNetworkIds) ?? 'twitter';
+  const lookupProviderDetails = getSupportedLookupNetworks()[lookupProviderId];
   const { modifyQueryParams } = useModifyQueryParams();
+
   const withDebounce = useDebouncedCallback(modifyQueryParams, 300);
-  const fireSubmitWithDebounce = useDebouncedCallback(() => formRef.current?.requestSubmit(), 300);
-  const queryString = searchParams.get('query')?.toString();
-  const [state, formAction] = useFormState(fetchUserAddress, initialState);
 
   const handleOnSubmit = () => {
     const params = new URLSearchParams(searchParams);
+
     if (!params.get('provider')) {
       params.set('provider', 'twitter');
     }
+
     const _provider = params.get('provider');
     const _user = params.get('query');
+
     push(`/${_provider}:${_user}/${chain}`);
   };
 
-  const config = {
-    client: { onSubmit: handleOnSubmit, onChange: withDebounce, onSelectChange: modifyQueryParams },
-    server: { onSubmit: formAction, onChange: fireSubmitWithDebounce, onSelectChange: fireSubmitWithDebounce },
-  };
+  const queryString = searchParams.get('query')?.toString();
 
   return (
-    <div className="flex w-full sm:w-4/6 sm:max-w-[520px]">
-      <UserForm
-        type={type}
-        formRef={formRef}
-        handleOnSubmit={handleOnSubmit}
-        queryString={queryString}
-        config={config}
-        className={className}
-        withSubmitButton={withSubmitButton}
-        state={state}
-        lookupProviderId={lookupProviderId}
-        {...props}
+    <div className="flex w-full gap-2 sm:w-4/6 sm:max-w-[520px]">
+      <LookupInput
+        onInputChange={(e) => withDebounce('query', e.target.value)}
+        onSelectChange={(value) => modifyQueryParams('provider', value)}
+        defaultValue={queryString}
+        placeholder={lookupProviderDetails.placeholder}
+        className="border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000"
+      />
+      <Button onClick={handleOnSubmit} disabled={!queryString} className="rounded-lg bg-orange-100 text-gray-1000">
+        Look up wallet
+      </Button>
+    </div>
+  );
+};
+
+/**
+ * Form to lookup a user's wallet based on serverside form submission e.g. in "Send" modal
+ */
+export const UserInputServerForm = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const fireSubmitWithDebounce = useDebouncedCallback(() => {
+    formRef.current?.requestSubmit();
+  }, 300);
+
+  const [state, formAction] = useFormState(fetchUserAddress, initialServerFormState);
+  console.log('state', state);
+
+  return (
+    <div className="flex w-full">
+      <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
+        <LookupInput
+          onInputChange={fireSubmitWithDebounce}
+          onSelectChange={fireSubmitWithDebounce}
+          className="border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000"
+        />
+        <LoadingIndicator className="absolute right-4 text-gray-300" />
+      </form>
+      <p className="absolute text-sm text-red-600">{state.errorMessage}</p>
+    </div>
+  );
+};
+
+function LoadingIndicator({ className }: { className?: string }) {
+  // Note: useFormStatus works only in the context of a form
+  const { pending } = useFormStatus();
+  return (
+    <LoadingSpinner
+      className={cn(className, {
+        hidden: !pending,
+      })}
+    />
+  );
+}
+
+const initialServerFormState = {
+  address: '' as UserId,
+  provider: 'twitter' as SupportedSocialNetworkIds,
+  errorMessage: '',
+};
+
+export const UserInputCustom = ({ by }: { by: 'address' | 'domain' }) => {
+  const content = {
+    address: {
+      btnTitle: 'Address',
+      placeholder: 'Enter address',
+    },
+    domain: {
+      btnTitle: 'Domain',
+      placeholder: 'Enter domain',
+    },
+  };
+  return (
+    <div className="flex w-full">
+      <Input
+        className="pl-24"
+        placeholder={content[by].placeholder}
+        leftButton={
+          <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
+            <div>{content[by].btnTitle}</div>
+          </div>
+        }
       />
     </div>
   );
