@@ -14,6 +14,7 @@ import { UserId } from '@patchwallet/patch-sdk';
 import { LoadingSpinner } from './Spinner';
 import { LookupInput } from './ui/lookup-input';
 import { Input } from './ui/input';
+import { useUserLookupBy } from '@/hooks/useUserLookupCustomBy';
 
 /**
  * Form to lookup a user's wallet based on query params and client-side routing e.g. in "/home" page
@@ -64,18 +65,12 @@ export const UserLookupClientForm = () => {
  * Form to lookup a user's wallet based on serverside form submission e.g. in "Send" modal
  */
 export const UserLookupServerForm = () => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const fireSubmitWithDebounce = useDebouncedCallback(() => {
-    formRef.current?.requestSubmit();
-  }, 300);
-
-  const [state, formAction] = useFormState(fetchUserAddress, initialServerFormState);
-  console.log('state', state);
+  const { content, formAction, formRef, state } = useUserLookupBy();
 
   return (
     <div className="flex w-full">
       <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
-        <LookupInput onInputChange={fireSubmitWithDebounce} onSelectChange={fireSubmitWithDebounce} />
+        <LookupInput onInputChange={content.onInputChange} onSelectChange={content.onInputChange} />
         <LoadingIndicator className="absolute right-4 text-gray-300" />
         <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
       </form>
@@ -95,43 +90,20 @@ function LoadingIndicator({ className }: { className?: string }) {
   );
 }
 
-const initialServerFormState = {
-  address: '' as UserId,
-  provider: 'twitter' as SupportedSocialNetworkIds,
-  errorMessage: '',
-};
-
 export const UserLookupCustom = ({ by }: { by: 'address' | 'domain' }) => {
-  const formRef = useRef<HTMLFormElement>(null);
-  const fireSubmitWithDebounce = useDebouncedCallback(() => {
-    formRef.current?.requestSubmit();
-  }, 500);
+  const { content, formAction, formRef, state } = useUserLookupBy({ by });
 
-  const [state, formAction] = useFormState(fetchUserAddress, initialServerFormState);
-
-  const content = {
-    address: {
-      btnTitle: 'Address',
-      placeholder: 'Enter address',
-      onInputChange: fireSubmitWithDebounce,
-    },
-    domain: {
-      btnTitle: 'Domain',
-      placeholder: 'Enter domain',
-      onInputChange: fireSubmitWithDebounce,
-    },
-  };
   return (
     <div className="flex w-full">
       <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
         <Input
           className="pl-24"
-          placeholder={content[by].placeholder}
-          onChange={content[by].onInputChange}
+          placeholder={content.placeholder}
+          onChange={content.onInputChange}
           name="userId"
           leftButton={
             <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
-              <div>{content[by].btnTitle}</div>
+              <div>{content.btnTitle}</div>
               <input type="hidden" name="provider" value={by} />
             </div>
           }
@@ -141,4 +113,10 @@ export const UserLookupCustom = ({ by }: { by: 'address' | 'domain' }) => {
       </form>
     </div>
   );
+};
+
+const initialServerFormState = {
+  address: '' as UserId,
+  provider: 'twitter' as SupportedSocialNetworkIds,
+  errorMessage: '',
 };
