@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { cn, getSupportedLookupNetworks } from '@/utils';
 import { Button } from './ui/button';
 import { useDebouncedCallback } from 'use-debounce';
-import { ChangeEvent, useContext, useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { UserContext } from '@/context/user-provider';
 import { SupportedSocialNetworkIds } from '@/types';
 import { useModifyQueryParams } from '@/hooks/useModifyQueryParams';
@@ -18,7 +18,7 @@ import { Input } from './ui/input';
 /**
  * Form to lookup a user's wallet based on query params and client-side routing e.g. in "/home" page
  */
-export const UserInputClientForm = () => {
+export const UserLookupClientForm = () => {
   const searchParams = useSearchParams();
   const { push } = useRouter();
   const { chain } = useContext(UserContext);
@@ -51,7 +51,6 @@ export const UserInputClientForm = () => {
         onSelectChange={(value) => modifyQueryParams('provider', value)}
         defaultValue={queryString}
         placeholder={lookupProviderDetails.placeholder}
-        className="border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000"
       />
       <Button onClick={handleOnSubmit} disabled={!queryString} className="rounded-lg bg-orange-100 text-gray-1000">
         Look up wallet
@@ -63,7 +62,7 @@ export const UserInputClientForm = () => {
 /**
  * Form to lookup a user's wallet based on serverside form submission e.g. in "Send" modal
  */
-export const UserInputServerForm = () => {
+export const UserLookupServerForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const fireSubmitWithDebounce = useDebouncedCallback(() => {
     formRef.current?.requestSubmit();
@@ -75,11 +74,7 @@ export const UserInputServerForm = () => {
   return (
     <div className="flex w-full">
       <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
-        <LookupInput
-          onInputChange={fireSubmitWithDebounce}
-          onSelectChange={fireSubmitWithDebounce}
-          className="border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000"
-        />
+        <LookupInput onInputChange={fireSubmitWithDebounce} onSelectChange={fireSubmitWithDebounce} />
         <LoadingIndicator className="absolute right-4 text-gray-300" />
         <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
       </form>
@@ -105,7 +100,7 @@ const initialServerFormState = {
   errorMessage: '',
 };
 
-export const UserInputCustom = ({ by }: { by: 'address' | 'domain' }) => {
+export const UserLookupCustom = ({ by }: { by: 'address' | 'domain' }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const fireSubmitWithDebounce = useDebouncedCallback(() => {
     formRef.current?.requestSubmit();

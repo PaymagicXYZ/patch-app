@@ -1,12 +1,6 @@
 'use client';
-
-import { Button } from '@/components/ui/button';
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UserInputCustom, UserInputServerForm } from './UserLookupForm';
-import { useFormStatus } from 'react-dom';
+import { UserLookupCustom, UserLookupServerForm } from './UserLookupForm';
 
 export function SendDialogContent() {
   return (
@@ -24,13 +18,13 @@ export function SendDialogContent() {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="patch-user" defaultChecked>
-        <UserInputServerForm />
+        <UserLookupServerForm />
       </TabsContent>
       <TabsContent value="address">
-        <UserInputCustom by="address" />
+        <UserLookupCustom by="address" />
       </TabsContent>
       <TabsContent value="domain">
-        <UserInputCustom by="domain" />
+        <UserLookupCustom by="domain" />
       </TabsContent>
     </Tabs>
   );
