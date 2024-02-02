@@ -4,12 +4,12 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { cn, getSupportedLookupNetworks } from '@/utils';
 import { Button } from './ui/button';
 import { useDebouncedCallback } from 'use-debounce';
-import { useContext, useRef } from 'react';
+import { ChangeEvent, useContext, useRef } from 'react';
 import { UserContext } from '@/context/user-provider';
 import { SupportedSocialNetworkIds } from '@/types';
 import { useModifyQueryParams } from '@/hooks/useModifyQueryParams';
 import { useFormState, useFormStatus } from 'react-dom';
-import { fetchUserAddress } from '@/libs/actions/resolveSocialProfile';
+import { fetchUserAddress } from '@/libs/actions/utils';
 import { UserId } from '@patchwallet/patch-sdk';
 import { LoadingSpinner } from './Spinner';
 import { LookupInput } from './ui/lookup-input';
@@ -81,8 +81,8 @@ export const UserInputServerForm = () => {
           className="border-gray-800 bg-gray-950 focus:border-[0.5px] focus:bg-gray-1000"
         />
         <LoadingIndicator className="absolute right-4 text-gray-300" />
+        <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
       </form>
-      <p className="absolute text-sm text-red-600">{state.errorMessage}</p>
     </div>
   );
 };
@@ -106,27 +106,43 @@ const initialServerFormState = {
 };
 
 export const UserInputCustom = ({ by }: { by: 'address' | 'domain' }) => {
+  const formRef = useRef<HTMLFormElement>(null);
+  const fireSubmitWithDebounce = useDebouncedCallback(() => {
+    formRef.current?.requestSubmit();
+  }, 500);
+
+  const [state, formAction] = useFormState(fetchUserAddress, initialServerFormState);
+
   const content = {
     address: {
       btnTitle: 'Address',
       placeholder: 'Enter address',
+      onInputChange: fireSubmitWithDebounce,
     },
     domain: {
       btnTitle: 'Domain',
       placeholder: 'Enter domain',
+      onInputChange: fireSubmitWithDebounce,
     },
   };
   return (
     <div className="flex w-full">
-      <Input
-        className="pl-24"
-        placeholder={content[by].placeholder}
-        leftButton={
-          <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
-            <div>{content[by].btnTitle}</div>
-          </div>
-        }
-      />
+      <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
+        <Input
+          className="pl-24"
+          placeholder={content[by].placeholder}
+          onChange={content[by].onInputChange}
+          name="userId"
+          leftButton={
+            <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
+              <div>{content[by].btnTitle}</div>
+              <input type="hidden" name="provider" value={by} />
+            </div>
+          }
+        />
+        <LoadingIndicator className="absolute right-4 text-gray-300" />
+        <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
+      </form>
     </div>
   );
 };

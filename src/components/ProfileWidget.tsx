@@ -2,18 +2,16 @@ import { Suspense } from 'react';
 import ViewAddressBtn from './components-old/ViewAddressBtn';
 import ProfileInfo from './components-old/ProfileInfo';
 import WidgetContainer from './components-old/WidgetContainer';
-import AccountActionButtons from './components-old/ActionsWidget';
 import { SocialProfile } from '@/types';
 import { Skeleton } from './ui/skeleton';
 import { Address, Chain } from '@patchwallet/patch-sdk';
 import { AddressTooltip } from './AddressTooltip';
 import { TotalBalanceUSD } from './TotalBalance';
-import { Button } from './ui/button';
-import { ArrowUp } from 'lucide-react';
 import { GenericDialog } from './GenericDialog';
 import { SignInButton, currentUser } from '@clerk/nextjs';
 import isAuthed from '@/utils/isAuthed';
 import { SendDialogContent } from './SendDialogContent';
+import { Separator } from './ui/separator';
 
 async function ProfileWidget({ address, profile, chain }: { address: Address; profile: SocialProfile; chain: Chain }) {
   console.log({ address, profile });
@@ -36,7 +34,8 @@ async function ProfileWidget({ address, profile, chain }: { address: Address; pr
         <AddressTooltip address={address} />
       </div>
       <div className="flex justify-end">
-        <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`} className=''>
+        <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`}>
+          <Separator />
           {auth ? (
             <SendDialogContent />
           ) : (
@@ -45,9 +44,9 @@ async function ProfileWidget({ address, profile, chain }: { address: Address; pr
               <SignInButton redirectUrl={`/${profile.patchUserId}/${chain}`} />
             </div>
           )}
+          <Separator className="mt-4" />
         </GenericDialog>
       </div>
-      {/* <AccountActionButtons address={address} profile={profile} /> */}
     </WidgetContainer>
   );
 }

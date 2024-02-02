@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UserInputByAddress, UserInputServerForm } from './UserLookupForm';
+import { UserInputCustom, UserInputServerForm } from './UserLookupForm';
 import { useFormStatus } from 'react-dom';
 
 export function SendDialogContent() {
@@ -26,9 +26,11 @@ export function SendDialogContent() {
       <TabsContent value="patch-user" defaultChecked>
         <UserInputServerForm />
       </TabsContent>
-
       <TabsContent value="address">
-        <UserInputByAddress />
+        <UserInputCustom by="address" />
+      </TabsContent>
+      <TabsContent value="domain">
+        <UserInputCustom by="domain" />
       </TabsContent>
     </Tabs>
   );

@@ -1,7 +1,7 @@
 import WalletBanner from '@/components/WalletBanner';
 import Image from 'next/image';
 import walletLogo from '../../public/wallet_logo.svg';
-import { UserInput, UserInputClientForm, UserLookupForm } from '@/components/UserLookupForm';
+import { UserInputClientForm } from '@/components/UserLookupForm';
 import Link from 'next/link';
 import ProfileBubble from '@/components/ProfileBubble';
 import socialLogoCenter from '../../public/social_logo_center.svg';
@@ -23,7 +23,7 @@ export default function Home() {
       <div className="flex w-full justify-center pt-9">
         {/* It is advisable for components consuming 'useSearchParams' to be wrapped in 'Suspense*', ref- https://nextjs.org/docs/app/api-reference/functions/use-search-params */}
         <Suspense fallback={<Skeleton className="flex h-9 w-full sm:w-4/6 sm:max-w-[520px]" />}>
-          <UserInputClientForm  />
+          <UserInputClientForm />
         </Suspense>
       </div>
       <div className="mx-6">
@@ -35,7 +35,7 @@ export default function Home() {
             <ProfileBubble userId="email:urmom69@gmail.com" name="Mom" imageUrl="/mom.jpeg" />
           </div>
           <div className="mx-auto md:w-[680px]">
-            <Separator className="mb-12 mt-12 h-0.5 bg-gray-900 md:mt-14" />
+            <Separator className="mb-12 mt-12 md:mt-14" />
             <div className="flex flex-wrap gap-3 text-gray-200 md:flex-nowrap">
               <Feature
                 btnHref={process.env.NEXT_PUBLIC_SOCIAL_DROP_HOST ?? 'http://localhost:3001'}
@@ -62,24 +62,24 @@ export default function Home() {
 const CentreSection = () => {
   return (
     <div className="mt-3 flex flex-col-reverse items-center lg:flex-row">
-    <div className="relative flex justify-center self-center md:flex-1 lg:-bottom-2 lg:-left-4 lg:w-full lg:items-end lg:self-end">
-      <span className="mb-2 mt-10 w-full text-center text-[15px] text-gray-400 lg:mb-[-13px] lg:mr-4 lg:mt-0 lg:w-[148px] lg:text-right">
-        Search for any social profile’s wallet
-      </span>
-      <Image src={dottedLineLeft} alt="dotted_line_left" className="mb-[-65px] mr-20 hidden lg:block" />
+      <div className="relative flex justify-center self-center md:flex-1 lg:-bottom-2 lg:-left-4 lg:w-full lg:items-end lg:self-end">
+        <span className="mb-2 mt-10 w-full text-center text-[15px] text-gray-400 lg:mb-[-13px] lg:mr-4 lg:mt-0 lg:w-[148px] lg:text-right">
+          Search for any social profile’s wallet
+        </span>
+        <Image src={dottedLineLeft} alt="dotted_line_left" className="mb-[-65px] mr-20 hidden lg:block" />
+      </div>
+      <Image src={socialLogoCenter} alt="social_logos" className="hidden shrink-0 self-center md:block" />
+      <div className="flex justify-center md:hidden md:flex-1">
+        <Image src={socialLogoCenter} alt="social_logos" />
+      </div>
+      <div className="flex w-10/12 items-center justify-center md:flex-1 md:justify-start">
+        <Image src={dottedLineRight} alt="dotted_line_right" className="mr-4 mt-[68px] hidden lg:block" />
+        <span className="mx-auto -mb-8 mt-8 w-full text-center text-[15px] text-gray-400 lg:mt-0 lg:w-[244px]">
+          Accept tokens & NFTs via your social handle and withdraw to your external crypto wallet anytime
+        </span>
+      </div>
     </div>
-    <Image src={socialLogoCenter} alt="social_logos" className="hidden shrink-0 self-center md:block" />
-    <div className="flex justify-center md:hidden md:flex-1">
-      <Image src={socialLogoCenter} alt="social_logos" />
-    </div>
-    <div className="flex w-10/12 items-center justify-center md:flex-1 md:justify-start">
-      <Image src={dottedLineRight} alt="dotted_line_right" className="mr-4 mt-[68px] hidden lg:block" />
-      <span className="mx-auto -mb-8 mt-8 w-full text-center text-[15px] text-gray-400 lg:mt-0 lg:w-[244px]">
-        Accept tokens & NFTs via your social handle and withdraw to your external crypto wallet anytime
-      </span>
-    </div>
-  </div>
-  )
+  );
 };
 
 const Feature = ({ title, desc, btnTitle, btnHref }: { title: string; desc: string; btnTitle: string; btnHref: string }) => {

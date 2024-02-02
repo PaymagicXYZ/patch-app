@@ -1,6 +1,6 @@
 import { UserWallet } from '@/components/UserWallet';
 import { Chain, UserId } from '@patchwallet/patch-sdk';
-import { resolveSocialProfile } from '@/libs/actions/resolveSocialProfile';
+import { resolveSocialProfile } from '@/libs/actions/utils';
 
 export default async function Wallet({ params }: { params: { userId: UserId; chain: Chain } }) {
   const _userId = decodeURIComponent(params.userId);
