@@ -13,9 +13,10 @@ export async function resolveSocialProfile(userId: UserId) {
   }
   const network = userId.split(':')[0] as SocialNetwork;
   const userName = userId.split(':')[1];
-
+  // const _userName =
+  console.log('network an xd username', { network, userName });
   const profile = await supportedSocialNetworks[network].resolveUser(userName);
-  const address = (await client.resolve(userId)) as Address;
+  const address = (await client.resolve('tel:+359895693040')) as Address;
   console.log('RESOLVED profile', profile);
   return {
     profile,

@@ -3,8 +3,6 @@ import { UserId, SocialNetwork as Network } from '@patchwallet/patch-sdk';
 
 type ResolveResponse = (username: string) => Promise<SocialProfile>;
 
-
-
 const email = {
   name: 'email' as Network,
   logo: 'icon-park:email-down',
@@ -13,29 +11,29 @@ const email = {
   url: 'mailto:',
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
-        return fetch(`${this.apiUrl}`, {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${this.apiKey}`,
-          },
-          body: JSON.stringify({ email: userName, source: "drop" }),
-        })
-      .then((response) => response.json())
-      .then((data) => data.result.verdict !== "Invalid")
-      .then((isValid) => {
-        if (isValid) {
-          return {
-            name: userName.split("@")[0],
-            description: "Email",
-            image: "/email_circle.svg",
-            handle: userName,
-            network: this.name,
-            patchUserId: `${this.name}:${userName}` as UserId,
-          };
-        } else {
-          throw new Error("Invalid Email"); 
-        }
-      });
+      return fetch(`${this.apiUrl}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify({ email: userName, source: 'drop' }),
+      })
+        .then((response) => response.json())
+        .then((data) => data.result.verdict !== 'Invalid')
+        .then((isValid) => {
+          if (isValid) {
+            return {
+              name: userName.split('@')[0],
+              description: 'Email',
+              image: '/email_circle.svg',
+              handle: userName,
+              network: this.name,
+              patchUserId: `${this.name}:${userName}` as UserId,
+            };
+          } else {
+            throw new Error('Invalid Email');
+          }
+        });
     };
   },
 };
@@ -76,7 +74,7 @@ const twitter = {
             }
           });
       } else {
-        throw new Error("Invalid Twitter username");
+        throw new Error('Invalid Twitter username');
       }
     };
   },
@@ -109,7 +107,7 @@ const github = {
               patchUserId: `${this.name}:${userName}` as UserId,
             };
           } else {
-            throw new Error("Invalid Github username");
+            throw new Error('Invalid Github username');
           }
         });
     };
@@ -140,7 +138,8 @@ const tel = {
             patchUserId: `${this.name}:${userName}` as UserId,
           };
         } else {
-          throw new Error("Invalid Phone number");
+          console.log('RESPONSE', response);
+          throw new Error('Invalid Phone number');
         }
       });
     };
@@ -225,7 +224,7 @@ export const supportedSocialNetworks = {
   github,
   tel,
   passphrase,
-//   farcaster, TODO: Uncomment this when FC is ready
+  //   farcaster, TODO: Uncomment this when FC is ready
 };
 
 export type SocialNetwork = keyof typeof supportedSocialNetworks;

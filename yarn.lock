@@ -1324,6 +1324,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/google-libphonenumber@npm:^7.4.30":
+  version: 7.4.30
+  resolution: "@types/google-libphonenumber@npm:7.4.30"
+  checksum: f81803dc061b775d981a04e99dfe9ee124b9e73ced6f0298928c0ff73fea4b34bc50b9c58f3235ee5c3c08a940a27bad20fcb9f4c25ba31698f1a64b98768306
+  languageName: node
+  linkType: hard
+
 "@types/http-errors@npm:*":
   version: 2.0.1
   resolution: "@types/http-errors@npm:2.0.1"
@@ -3372,6 +3379,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"google-libphonenumber@npm:^3.2.34":
+  version: 3.2.34
+  resolution: "google-libphonenumber@npm:3.2.34"
+  checksum: dd59889cafddf06c289c59584ce15bda67226f4c2ab17e9b3afcf3aa8c9110fbe729a540ae6a316577480a0c19ca2497e30075c0b6bf6c753c1c78936cdb35c7
+  languageName: node
+  linkType: hard
+
 "gopd@npm:^1.0.1":
   version: 1.0.1
   resolution: "gopd@npm:1.0.1"
@@ -4740,6 +4754,7 @@ __metadata:
     "@radix-ui/react-slot": "npm:^1.0.2"
     "@radix-ui/react-tabs": "npm:^1.0.4"
     "@radix-ui/react-tooltip": "npm:^1.0.7"
+    "@types/google-libphonenumber": "npm:^7.4.30"
     "@types/node": "npm:20.10.6"
     "@types/react": "npm:18.2.46"
     "@types/react-dom": "npm:18.2.18"
@@ -4751,6 +4766,7 @@ __metadata:
     eslint-config-next: "npm:^14.0.4"
     eslint-plugin-tailwindcss: "npm:^3.14.1"
     ethers: "npm:^6.10.0"
+    google-libphonenumber: "npm:^3.2.34"
     jose: "npm:^4.14.4"
     lucide-react: "npm:^0.317.0"
     next: "npm:^14.0.4"

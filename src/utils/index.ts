@@ -37,7 +37,7 @@ export function getSupportedLookupNetworks(isMobile = false): SupportedSocialNet
       name: 'Phone',
       label: isMobile ? '' : 'Phone',
       placeholder: !isMobile ? 'Search for phone number...' : 'phone number',
-      iconSrc: '/phone.svg',
+      iconSrc: '/tel.svg',
       iconAlt: 'phone icon',
     },
     passphrase: {

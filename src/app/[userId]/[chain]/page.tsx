@@ -1,4 +1,3 @@
-import { UserWallet } from '@/components/UserWallet';
 import { Chain, UserId } from '@patchwallet/patch-sdk';
 import { resolveSocialProfile } from '@/libs/actions/utils';
 import ProfileWidget from '@/components/ProfileWidget';

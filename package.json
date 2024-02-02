@@ -27,6 +27,7 @@
     "eslint": "8.56.0",
     "eslint-config-next": "^14.0.4",
     "ethers": "^6.10.0",
+    "google-libphonenumber": "^3.2.34",
     "jose": "^4.14.4",
     "lucide-react": "^0.317.0",
     "next": "^14.0.4",
@@ -44,6 +45,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/google-libphonenumber": "^7.4.30",
     "@types/node": "20.10.6",
     "@types/react": "18.2.46",
     "@types/react-dom": "18.2.18",

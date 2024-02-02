@@ -4,28 +4,25 @@ import Image from 'next/image';
 import ProfileImg from './components-old/ProfileImg';
 import { SocialProfile } from '@/types';
 import { cn } from '@/utils';
-// import { PhoneNumberUtil, PhoneNumberFormat } from "google-libphonenumber";
+import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
 
-// const phoneUtil = PhoneNumberUtil.getInstance();
+const phoneUtil = PhoneNumberUtil.getInstance();
 
-// const formatPhoneNumber = (phoneNumberString: string) => {
-//   let phoneNumber;
-//   phoneNumberString = "+" + phoneNumberString.replace(/\s/g, "");
-//   try {
-//     phoneNumber = phoneUtil.parse(phoneNumberString);
-//   } catch (err) {
-//     console.error(err);
-//   }
+const formatPhoneNumber = (phoneNumberString: string) => {
+  let phoneNumber;
+  phoneNumberString = '+' + phoneNumberString.replace(/\s/g, '');
+  try {
+    phoneNumber = phoneUtil.parse(phoneNumberString);
+  } catch (err) {
+    console.error(err);
+  }
 
-//   if (phoneNumber) {
-//     const formattedPhoneNumber = phoneUtil.format(
-//       phoneNumber,
-//       PhoneNumberFormat.INTERNATIONAL
-//     );
-//     return formattedPhoneNumber;
-//   }
-//   return phoneNumberString;
-// };
+  if (phoneNumber) {
+    const formattedPhoneNumber = phoneUtil.format(phoneNumber, PhoneNumberFormat.INTERNATIONAL);
+    return formattedPhoneNumber;
+  }
+  return phoneNumberString;
+};
 
 type Props = {
   profile: SocialProfile;
@@ -42,12 +39,12 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
   const formattedHandle =
     profile?.network === 'twitter'
       ? `@${profile?.handle}`
-      : // : profile?.network === TEL
-        // ? formatPhoneNumber(profile?.handle)
-        profile?.handle;
+      : profile?.network === 'tel'
+      ? formatPhoneNumber(profile?.handle)
+      : profile?.handle;
   return (
     <div className="flex">
-      <ProfileImg size={size} imageSrc={profile.image} />
+      <ProfileImg size={size} imageSrc={profile.image ?? `${profile.network}.svg`} />
       <div className="m-auto ml-2 flex-col items-center gap-1">
         <div className="flex justify-between">
           <div className="mb-1 flex gap-1">
