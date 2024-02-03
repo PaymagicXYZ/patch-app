@@ -1,7 +1,7 @@
 // import { TWITTER, TEL, SocialProfile, PASSPHRASE } from "types";
 // import { useIsVerified } from "../hooks";
 import Image from 'next/image';
-import ProfileImg from './components-old/ProfileImg';
+import ProfileImg from './ProfileImg';
 import { SocialProfile } from '@/types';
 import { cn } from '@/utils';
 import { PhoneNumberUtil, PhoneNumberFormat } from 'google-libphonenumber';
