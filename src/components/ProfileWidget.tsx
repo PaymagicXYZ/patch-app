@@ -34,9 +34,10 @@ async function ProfileWidget({
 
       <div className="mt-8 flex w-full flex-col items-center justify-center">
         <p className="text-sm leading-7 text-gray-700">TOTAL BALANCE</p>
-        <Suspense fallback={<Skeleton className="my-1 h-10 w-28" />}>
+        <Suspense fallback={<Skeleton className="my-1 h-10 w-32 mb-4" />}>
           <TotalBalanceUSD address={address} chain={chain} />
         </Suspense>
+        
         <AddressTooltip address={address} />
       </div>
       <div className="mt-7 flex justify-end px-4">

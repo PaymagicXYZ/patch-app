@@ -9,7 +9,7 @@ import { UserContext } from '@/context/user-provider';
 import { SupportedSocialNetworkIds, UserLookupBy } from '@/types';
 import { useModifyQueryParams } from '@/hooks/useModifyQueryParams';
 import { LookupInput } from './ui/lookup-input';
-import { useUserLookupBy } from '@/hooks/useUserLookupCustomBy';
+import { useUserLookupBy } from '@/hooks/useUserLookupBy';
 import { FormSubmissionLoader } from './FormSubmissionLoader';
 
 /**
