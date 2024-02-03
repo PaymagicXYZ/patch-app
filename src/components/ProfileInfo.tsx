@@ -33,8 +33,8 @@ type Props = {
 
 // TODO
 function ProfileInfo({ profile, size, small, checkMark }: Props) {
-  // const { isVerified } = useIsVerified();
-  const { isVerified } = { isVerified: false };
+  // const { isVerified } = useIsVerified(); // TODO
+  const { isVerified } = { isVerified: false }; // TODO
   const shouldShowNetworkLogo = profile?.network !== 'passphrase';
   const formattedHandle =
     profile?.network === 'twitter'

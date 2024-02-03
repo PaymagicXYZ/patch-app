@@ -1,5 +1,6 @@
-"use client"
+'use client';
 
+import { cn } from '@/utils';
 import { minifyAddress } from '@/utils/checkUserId';
 import { Address } from '@patchwallet/patch-sdk';
 import { Copy } from 'lucide-react';
@@ -23,14 +24,14 @@ export const AddressTooltip = ({ address }: { address: Address }) => {
       onMouseLeave={() => setShowTooltip(false)}
       onClick={handleCopyAddress}
     >
-      <p className="text-gray-700">{minifyAddress(address || '', 4)}</p>
+      <p className="cursor-pointer text-gray-700">{minifyAddress(address || '', 4)}</p>
       <div>
         <Copy size={24} className="text-gray-600" />
         <div className="absolute ml-[-80px] flex w-[200px] justify-center">
           <p
-            className={`mt-1 rounded-lg bg-gray-800 px-3 py-2 text-xs text-gray-300 duration-200 ${
-              showTooltip ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={cn('opacity-0 mt-1 rounded-lg bg-gray-800 px-3 py-2 text-xs text-gray-300 duration-200', {
+              'opacity-100': showTooltip,
+            })}
           >
             {tooltipMsg}
           </p>

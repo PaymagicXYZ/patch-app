@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import ViewAddressBtn from './components-old/ViewAddressBtn';
+import ViewAddressBtn from './ViewAddressBtn';
 import ProfileInfo from './ProfileInfo';
 import WidgetContainer from './WidgetContainer';
 import { SocialProfile } from '@/types';
@@ -37,7 +37,6 @@ async function ProfileWidget({
         <Suspense fallback={<Skeleton className="my-1 h-10 w-32 mb-4" />}>
           <TotalBalanceUSD address={address} chain={chain} />
         </Suspense>
-        
         <AddressTooltip address={address} />
       </div>
       <div className="mt-7 flex justify-end px-4">
