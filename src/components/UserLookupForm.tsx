@@ -4,17 +4,13 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { cn, getSupportedLookupNetworks } from '@/utils';
 import { Button } from './ui/button';
 import { useDebouncedCallback } from 'use-debounce';
-import { useContext, useRef } from 'react';
+import { useContext } from 'react';
 import { UserContext } from '@/context/user-provider';
-import { SupportedSocialNetworkIds } from '@/types';
+import { SupportedSocialNetworkIds, UserLookupBy } from '@/types';
 import { useModifyQueryParams } from '@/hooks/useModifyQueryParams';
-import { useFormState, useFormStatus } from 'react-dom';
-import { fetchUserAddress } from '@/libs/actions/utils';
-import { UserId } from '@patchwallet/patch-sdk';
-import { LoadingSpinner } from './Spinner';
 import { LookupInput } from './ui/lookup-input';
-import { Input } from './ui/input';
 import { useUserLookupBy } from '@/hooks/useUserLookupCustomBy';
+import { FormSubmissionLoader } from './FormSubmissionLoader';
 
 /**
  * Form to lookup a user's wallet based on query params and client-side routing e.g. in "/home" page
@@ -64,59 +60,30 @@ export const UserLookupClientForm = () => {
 /**
  * Form to lookup a user's wallet based on serverside form submission e.g. in "Send" modal
  */
-export const UserLookupServerForm = () => {
-  const { content, formAction, formRef, state } = useUserLookupBy();
-
-  return (
-    <div className="flex w-full">
-      <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
-        <LookupInput onInputChange={content.onInputChange} onSelectChange={content.onInputChange} />
-        <LoadingIndicator className="absolute right-4 text-gray-300" />
-        <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
-      </form>
-    </div>
-  );
-};
-
-function LoadingIndicator({ className }: { className?: string }) {
-  // Note: useFormStatus works only in the context of a form
-  const { pending } = useFormStatus();
-  return (
-    <LoadingSpinner
-      className={cn(className, {
-        hidden: !pending,
-      })}
-    />
-  );
-}
-
-export const UserLookupCustom = ({ by }: { by: 'address' | 'domain' }) => {
+export const UserLookupServerForm = ({ by = 'default' }: { by: UserLookupBy }) => {
   const { content, formAction, formRef, state } = useUserLookupBy({ by });
+  const isDefault = by === 'default';
 
   return (
     <div className="flex w-full">
       <form action={formAction} ref={formRef} className="relative flex flex-1 items-center">
-        <Input
-          className="pl-24"
+        <LookupInput
+          onInputChange={content.onInputChange}
+          onSelectChange={content.onInputChange}
+          className={cn({ 'pl-24': by !== 'default' })}
           placeholder={content.placeholder}
-          onChange={content.onInputChange}
-          name="userId"
           leftButton={
-            <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
-              <div>{content.btnTitle}</div>
-              <input type="hidden" name="provider" value={by} />
-            </div>
+            !isDefault ? (
+              <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
+                <div>{content.btnTitle}</div>
+                <input type="hidden" name="provider" value={by} />
+              </div>
+            ) : undefined
           }
         />
-        <LoadingIndicator className="absolute right-4 text-gray-300" />
+        <FormSubmissionLoader className="absolute right-4 text-gray-300" />
         <p className="absolute -bottom-6 left-2 text-sm text-red-600">{state.errorMessage}</p>
       </form>
     </div>
   );
-};
-
-const initialServerFormState = {
-  address: '' as UserId,
-  provider: 'twitter' as SupportedSocialNetworkIds,
-  errorMessage: '',
 };

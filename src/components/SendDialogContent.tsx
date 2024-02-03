@@ -1,6 +1,6 @@
 'use server';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { UserLookupCustom, UserLookupServerForm } from './UserLookupForm';
+import { UserLookupServerForm } from './UserLookupForm';
 import { SocialProfile } from '@/types';
 import { currentUser } from '@clerk/nextjs/server';
 import isAuthed from '@/utils/isAuthed';
@@ -27,13 +27,13 @@ export async function SendDialogContent({ profile, chain }: { profile: SocialPro
         </TabsTrigger>
       </TabsList>
       <TabsContent value="patch-user" defaultChecked>
-        <UserLookupServerForm />
+        <UserLookupServerForm by={'default'} />
       </TabsContent>
       <TabsContent value="address">
-        <UserLookupCustom by="address" />
+        <UserLookupServerForm by="address" />
       </TabsContent>
       <TabsContent value="domain">
-        <UserLookupCustom by="domain" />
+        <UserLookupServerForm by="domain" />
       </TabsContent>
     </Tabs>
   ) : (

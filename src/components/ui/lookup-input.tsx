@@ -9,15 +9,16 @@ type Props = {
   defaultValue?: string;
   placeholder?: string;
   className?: string;
+  leftButton?: React.ReactNode;
 };
 
-export const LookupInput = ({ onInputChange, onSelectChange, defaultValue, placeholder, className }: Props) => {
+export const LookupInput = ({ onInputChange, onSelectChange, defaultValue, placeholder, leftButton, className }: Props) => {
   return (
     <Input
       defaultValue={defaultValue}
       name="userId"
       onChange={onInputChange}
-      leftButton={<SelectSocialProvider name="provider" onChange={onSelectChange} />}
+      leftButton={leftButton ?? <SelectSocialProvider name="provider" onChange={onSelectChange} />}
       type="text"
       placeholder={placeholder}
       className={cn('mt-4', className)}

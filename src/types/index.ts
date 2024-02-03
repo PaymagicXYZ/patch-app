@@ -42,3 +42,5 @@ export type SocialProfile = {
   handle: string;
   patchUserId: UserId;
 };
+
+export type UserLookupBy = 'address' | 'domain' | 'default'

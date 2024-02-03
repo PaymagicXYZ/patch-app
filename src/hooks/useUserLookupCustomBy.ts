@@ -1,5 +1,5 @@
 import { fetchUserAddress } from '@/libs/actions/utils';
-import { SupportedSocialNetworkIds } from '@/types';
+import { SupportedSocialNetworkIds, UserLookupBy } from '@/types';
 import { UserId } from '@patchwallet/patch-sdk';
 import { useRef } from 'react';
 import { useFormState } from 'react-dom';
@@ -11,7 +11,7 @@ const initialServerFormState = {
   errorMessage: '',
 };
 
-export const useUserLookupBy = ({ by = 'default' }: { by?: 'address' | 'domain' | 'default' } = {}) => {
+export const useUserLookupBy = ({ by = 'default' }: { by?: UserLookupBy } = {}) => {
   const formRef = useRef<HTMLFormElement>(null);
   const fireSubmitWithDebounce = useDebouncedCallback(() => {
     formRef.current?.requestSubmit();
@@ -32,7 +32,7 @@ export const useUserLookupBy = ({ by = 'default' }: { by?: 'address' | 'domain' 
     },
     default: {
       btnTitle: '',
-      placeholder: 'username',
+      placeholder: 'Enter handle',
       onInputChange: fireSubmitWithDebounce,
     },
   };
@@ -42,5 +42,5 @@ export const useUserLookupBy = ({ by = 'default' }: { by?: 'address' | 'domain' 
     formAction,
     content: content[by],
     state,
-  }
+  };
 };
