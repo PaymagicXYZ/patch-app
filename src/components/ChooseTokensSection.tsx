@@ -1,4 +1,3 @@
-// NOT WORKING
 "use client";
 import * as React from "react";
 import { ArrowRight, MinusSquare } from "lucide-react";

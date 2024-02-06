@@ -41,7 +41,9 @@ const AccountSelector = ({
         ))}
       </select>
       {selectedAccount && (
-        <pre>{wallets[availableWallets.indexOf(selectedAccount)]}</pre>
+        <pre className="md:text-base w-full text-xs">
+          {wallets[availableWallets.indexOf(selectedAccount)]}
+        </pre>
       )}
     </div>
   );

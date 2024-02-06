@@ -12,6 +12,7 @@ const initialServerFormState = {
   errorMessage: "",
 };
 
+// TODO: replace with react-hook-form implementation
 export const useUserLookupBy = ({
   by = "default",
 }: { by?: UserLookupBy } = {}) => {
@@ -27,10 +28,7 @@ export const useUserLookupBy = ({
   );
 
   useEffect(() => {
-    console.log("address changed: ", state.address);
-    // if (state.address) {
     setTo((state.address as Address) ?? null);
-    // }
   }, [state, setTo]);
 
   const content = {

@@ -47,7 +47,7 @@ export async function SendDialogContent({
 function ChooseRecipientSection() {
   return (
     <Tabs defaultValue="patch-user" className="inline-block">
-      <div className="mb-1 flex text-base uppercase leading-4 text-gray-400">
+      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
         choose recipient
       </div>
       <TabsList className="grid w-full grid-cols-3 gap-1 bg-gray-1000">
@@ -83,7 +83,7 @@ function ChooseTokensSection({
 }) {
   return (
     <Tabs defaultValue="tokens" className="inline-block">
-      <div className="mb-1 flex text-base uppercase leading-4 text-gray-400">
+      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
         choose tokens
       </div>
       <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
@@ -113,7 +113,7 @@ function ChooseTokensSection({
         />
       </TabsContent>
       <TabsContent value="nfts">
-        <UserLookupServerForm by="address" />
+        {/* <UserLookupServerForm by="address" /> */}
       </TabsContent>
     </Tabs>
   );
