@@ -8,7 +8,7 @@ import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 import ProfileInfo from "./ProfileInfo";
 import { SignInButton } from "@clerk/nextjs";
 import { Separator } from "./ui/separator";
-import { TokenInputForm } from "./ChooseTokensSection";
+import { TokenInputForm } from "./TokenInputForm";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
 import { BalanceItem } from "@covalenthq/client-sdk";
@@ -27,8 +27,6 @@ export async function SendDialogContent({
 
   const tokenBalance =
     (await covalentService.fetchTokenBalance(address, chain)) ?? [];
-
-  console.log({ tokenBalance });
 
   return authed ? (
     <div className="flex flex-col">

@@ -67,9 +67,7 @@ export function TokenInputForm({
     console.log("tx", tx);
 
     if (tx && tx.txHash) {
-      router.push(
-        "/success?txHash=0x8f9c8d8347a909e0c7d6bf79087fcda0e298519fc0bd2f3055f8c82792bfb28f",
-      );
+      router.push(`/success?txHash=${tx.txHash}`);
     }
   };
 
@@ -92,7 +90,6 @@ export function TokenInputForm({
 
   return (
     <Form {...form}>
-      {/* <Confetti recycle={false} width={800} numberOfPieces={500} run={form.formState.isSubmitSuccessful} /> */}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>
           {fields?.map((item, index) => {
@@ -144,36 +141,51 @@ export function TokenInputForm({
           onTokenSelect={handleSelectToken}
         />
         <div className="mt-4 flex justify-end">
-          <Button
-            type="submit"
-            className={cn(
-              "hidden text-gray-1000 bg-green-100 hover:bg-green-100/80 gap-2",
-              {
-                block: to,
-              },
-            )}
+          <SendButton
+            hidden={!to}
             disabled={
               form.formState.isSubmitting ||
               !!form.formState.errors.tokens?.length ||
               !fields.length
             }
-          >
-            {!form.formState.isSubmitting ? (
-              <div className="flex gap-2 items-center">
-                <div>Send</div> <ArrowRight />
-              </div>
-            ) : (
-              <div className="flex gap-2 items-center">
-                <LoadingSpinner />
-                <div>Transaction Pending</div> <ArrowRight />
-              </div>
-            )}
-          </Button>
+            isLoading={form.formState.isSubmitting}
+          />
         </div>
       </form>
     </Form>
   );
 }
+
+interface ISendButton {
+  hidden: boolean;
+  isLoading: boolean;
+  disabled: boolean;
+}
+const SendButton = ({ hidden, isLoading, disabled }: ISendButton) => {
+  return (
+    <Button
+      type="submit"
+      className={cn(
+        "hidden text-gray-1000 bg-green-100 hover:bg-green-100/80 gap-2",
+        {
+          block: !hidden,
+        },
+      )}
+      disabled={disabled}
+    >
+      {!isLoading ? (
+        <div className="flex items-center gap-2">
+          <div>Send</div> <ArrowRight />
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <LoadingSpinner />
+          <div>Transaction Pending</div> <ArrowRight />
+        </div>
+      )}
+    </Button>
+  );
+};
 
 interface InputProps extends ControllerRenderProps<Inputs, any> {
   token: InputToken;

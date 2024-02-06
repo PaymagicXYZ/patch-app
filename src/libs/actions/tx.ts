@@ -30,5 +30,16 @@ export async function sendTx(
     delegatecall: 0,
     auth: _token,
   });
-  return tx;
+
+  if ("txHash" in tx) {
+    return {
+      txHash: tx.txHash,
+    };
+  }
+
+  if ("error" in tx) {
+    return {
+      error: tx.error,
+    };
+  }
 }
