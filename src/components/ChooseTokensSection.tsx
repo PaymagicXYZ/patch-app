@@ -21,10 +21,11 @@ import { SelectTokenDropdown } from "./SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "./Spinner";
 import { useRouter } from "next/navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 type Inputs = { tokens: InputToken[] };
 
-export function TokenInputForm({
+export function ChooseTokensSection({
   tokens,
   userId,
 }: {
@@ -89,70 +90,88 @@ export function TokenInputForm({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div>
-          {fields?.map((item, index) => {
-            return (
-              <FormField
-                defaultValue=""
-                key={item.id}
-                control={form.control}
-                rules={{
-                  pattern: {
-                    value: /^\d*\.?\d+$/,
-                    message: "Please provide a valid number",
-                  },
-                  validate: {
-                    sufficient: (v) =>
-                      +v < +item.amount || "Insufficient balance",
-                    positive: (v) =>
-                      +v > 0 || "Please provide a positive number",
-                  },
-                }}
-                name={`tokens.${index}.value`}
-                render={({ field, fieldState }) => {
-                  return (
-                    <div className="relative">
-                      <div className=" mb-2 flex gap-2">
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <TokenInput token={item} {...field} />
-                          </FormControl>
-                        </FormItem>
-                        <MinusSquare
-                          size={44}
-                          className="cursor-pointer text-gray-700 hover:text-red-500"
-                          onClick={() => handleDeleteToken(index)}
-                        />
-                      </div>
-                      <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
-                        {fieldState.error?.message}
-                      </p>
-                    </div>
-                  );
-                }}
+    <Tabs defaultValue="tokens" className="inline-block">
+      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
+        choose tokens
+      </div>
+      <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
+        <TabsTrigger value="tokens" className="">
+          Tokens
+        </TabsTrigger>
+        <TabsTrigger value="nfts" className="">
+          NFTs
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent value="tokens" defaultChecked>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              {fields?.map((item, index) => {
+                return (
+                  <FormField
+                    defaultValue=""
+                    key={item.id}
+                    control={form.control}
+                    rules={{
+                      pattern: {
+                        value: /^\d*\.?\d+$/,
+                        message: "Please provide a valid number",
+                      },
+                      validate: {
+                        sufficient: (v) =>
+                          +v < +item.amount || "Insufficient balance",
+                        positive: (v) =>
+                          +v > 0 || "Please provide a positive number",
+                      },
+                    }}
+                    name={`tokens.${index}.value`}
+                    render={({ field, fieldState }) => {
+                      return (
+                        <div className="relative">
+                          <div className=" mb-2 flex gap-2">
+                            <FormItem className="flex-1">
+                              <FormControl>
+                                <TokenInput token={item} {...field} />
+                              </FormControl>
+                            </FormItem>
+                            <MinusSquare
+                              size={44}
+                              className="cursor-pointer text-gray-700 hover:text-red-500"
+                              onClick={() => handleDeleteToken(index)}
+                            />
+                          </div>
+                          <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
+                            {fieldState.error?.message}
+                          </p>
+                        </div>
+                      );
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <SelectTokenDropdown
+              tokens={filteredTokens}
+              onTokenSelect={handleSelectToken}
+            />
+            <div className="mt-4 flex justify-end">
+              <SendButton
+                hidden={!to}
+                disabled={
+                  form.formState.isSubmitting ||
+                  !!form.formState.errors.tokens?.length ||
+                  !fields.length
+                }
+                isLoading={form.formState.isSubmitting}
               />
-            );
-          })}
-        </div>
-        <SelectTokenDropdown
-          tokens={filteredTokens}
-          onTokenSelect={handleSelectToken}
-        />
-        <div className="mt-4 flex justify-end">
-          <SendButton
-            hidden={!to}
-            disabled={
-              form.formState.isSubmitting ||
-              !!form.formState.errors.tokens?.length ||
-              !fields.length
-            }
-            isLoading={form.formState.isSubmitting}
-          />
-        </div>
-      </form>
-    </Form>
+            </div>
+          </form>
+        </Form>
+      </TabsContent>
+      <TabsContent value="nfts">
+        {/* <UserLookupServerForm by="address" /> */}
+      </TabsContent>
+    </Tabs>
   );
 }
 

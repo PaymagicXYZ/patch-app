@@ -4,14 +4,13 @@ import { UserLookupServerForm } from "./UserLookupForm";
 import { SocialProfile } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
 import isAuthed from "@/utils/isAuthed";
-import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
+import { Address, Chain } from "@patchwallet/patch-sdk";
 import ProfileInfo from "./ProfileInfo";
 import { SignInButton } from "@clerk/nextjs";
 import { Separator } from "./ui/separator";
-import { TokenInputForm } from "./TokenInputForm";
+import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
-import { BalanceItem } from "@covalenthq/client-sdk";
 
 export async function SendDialogContent({
   profile,
@@ -32,7 +31,22 @@ export async function SendDialogContent({
     <div className="flex flex-col">
       <ChooseRecipientSection />
       <Separator className="my-4" />
-      <ChooseTokensSection userId={profile.patchUserId} tokens={tokenBalance} />
+      <ChooseTokensSection
+        userId={profile.patchUserId}
+        tokens={tokenBalance?.map((token) => {
+          console.log("TOKEN FROM RESPO", token);
+          return {
+            tickerSymbol: token.contract_ticker_symbol,
+            amount: token.balance
+              ? formatUnits(token.balance, token.contract_decimals)
+              : "0",
+            logoUrl: token.logo_url,
+            price: token.quote_rate.toFixed(2),
+            contractAddress: token.contract_address,
+            decimals: token.contract_decimals,
+          };
+        })}
+      />
     </div>
   ) : (
     <div className="mt-4 flex w-full items-center justify-between rounded-xl border-[0.5px] border-gray-800 bg-gray-950 p-2">
@@ -67,51 +81,6 @@ function ChooseRecipientSection() {
       </TabsContent>
       <TabsContent value="domain">
         <UserLookupServerForm by="domain" />
-      </TabsContent>
-    </Tabs>
-  );
-}
-
-function ChooseTokensSection({
-  userId,
-  tokens,
-}: {
-  userId: UserId;
-  tokens: BalanceItem[];
-}) {
-  return (
-    <Tabs defaultValue="tokens" className="inline-block">
-      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
-        choose tokens
-      </div>
-      <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
-        <TabsTrigger value="tokens" className="">
-          Tokens
-        </TabsTrigger>
-        <TabsTrigger value="nfts" className="">
-          NFTs
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="tokens" defaultChecked>
-        <TokenInputForm
-          userId={userId}
-          tokens={tokens?.map((token) => {
-            console.log("TOKEN FROM RESPO", token);
-            return {
-              tickerSymbol: token.contract_ticker_symbol,
-              amount: token.balance
-                ? formatUnits(token.balance, token.contract_decimals)
-                : "0",
-              logoUrl: token.logo_url,
-              price: token.quote_rate.toFixed(2),
-              contractAddress: token.contract_address,
-              decimals: token.contract_decimals,
-            };
-          })}
-        />
-      </TabsContent>
-      <TabsContent value="nfts">
-        {/* <UserLookupServerForm by="address" /> */}
       </TabsContent>
     </Tabs>
   );
