@@ -29,7 +29,7 @@ const RAW_RUNTIME_STATE =
           ["@clerk/nextjs", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:4.29.3"],\
           ["@covalenthq/client-sdk", "npm:0.8.5"],\
           ["@hookform/resolvers", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.3.4"],\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.6"],\
           ["@radix-ui/react-dialog", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-popover", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.7"],\
@@ -693,17 +693,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@patchwallet/patch-sdk", [\
-      ["npm:0.0.5", {\
-        "packageLocation": "../../../.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.5-eb09bec30e-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
+      ["npm:0.0.6", {\
+        "packageLocation": "../../../.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.6-688332dd6f-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
         "packageDependencies": [\
-          ["@patchwallet/patch-sdk", "npm:0.0.5"]\
+          ["@patchwallet/patch-sdk", "npm:0.0.6"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5", {\
-        "packageLocation": "./.yarn/__virtual__/@patchwallet-patch-sdk-virtual-215b7e160a/4/.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.5-eb09bec30e-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.6", {\
+        "packageLocation": "./.yarn/__virtual__/@patchwallet-patch-sdk-virtual-85cebef551/4/.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.6-688332dd6f-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
         "packageDependencies": [\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.6"],\
           ["@types/typescript", null],\
           ["typescript", "patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"]\
         ],\
@@ -6322,7 +6322,7 @@ const RAW_RUNTIME_STATE =
           ["@clerk/nextjs", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:4.29.3"],\
           ["@covalenthq/client-sdk", "npm:0.8.5"],\
           ["@hookform/resolvers", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.3.4"],\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.6"],\
           ["@radix-ui/react-dialog", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-popover", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.7"],\
