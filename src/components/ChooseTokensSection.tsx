@@ -1,7 +1,7 @@
 // NOT WORKING
 "use client";
 import * as React from "react";
-import { MinusSquare } from "lucide-react";
+import { ArrowRight, MinusSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/utils";
 import {
@@ -137,14 +137,17 @@ export function TokenInputForm({
         <div className="mt-4 flex justify-end">
           <Button
             type="submit"
-            className={cn("hidden", { block: to })}
+            className={cn("hidden text-gray-1000 bg-green-100 gap-2", {
+              flex: to,
+            })}
             disabled={
               form.formState.isSubmitting ||
               !!form.formState.errors.tokens?.length ||
               !fields.length
             }
           >
-            Submit
+            Send
+            <ArrowRight />
           </Button>
         </div>
       </form>
