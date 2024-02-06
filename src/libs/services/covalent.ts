@@ -7,7 +7,7 @@ import { getChainNameFromShortName } from "@/utils/chain";
 class CovalentServiceV2 {
   private covalentInstance = new CovalentClient(process.env.COVALENT_API_KEY!);
 
-  async fetchTokenBalance(address: Address, chain: Chain) {
+  async fetchTokenBalance(address: Address, chain: Chain, withNFTs = false) {
     const chainName = getChainNameFromShortName(chain);
 
     if (chainName) {
@@ -15,6 +15,9 @@ class CovalentServiceV2 {
         await this.covalentInstance.BalanceService.getTokenBalancesForWalletAddress(
           chainName,
           address as Address,
+          {
+            nft: withNFTs,
+          },
         );
       return response.data.items;
     } else {
