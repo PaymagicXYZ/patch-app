@@ -82,3 +82,7 @@ export const getNetworkfromShortName = (shortName: ShortName): Networks => {
 };
 
 export const isSupportedChain = (chain: ShortName): boolean => supportedShortNames.includes(chain);
+
+export const NATIVE_TOKEN_ADDRESSES = [
+  "0x0000000000000000000000000000000000001010",
+];

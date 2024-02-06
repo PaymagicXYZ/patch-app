@@ -32,7 +32,7 @@ export function GenericDialog({
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className={cn('min-w-[260px] max-w-[660px] bg-gray-900 border-none flex flex-col justify-center', className)}>
+      <DialogContent className={cn('min-w-[260px] max-w-[660px] bg-gray-900 border-none flex flex-col justify-center pb-0', className)}>
         <DialogHeader>
           <DialogTitle className="text-2xl">{title}</DialogTitle>
           <DialogDescription>{subtitle}</DialogDescription>

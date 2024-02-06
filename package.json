@@ -15,6 +15,7 @@
     "@patchwallet/patch-sdk": "^0.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-popover": "^1.0.7",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
@@ -23,6 +24,7 @@
     "autoprefixer": "10.4.15",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cmdk": "^0.2.1",
     "dayjs": "^1.11.10",
     "eslint": "8.56.0",
     "eslint-config-next": "^14.0.4",
@@ -42,7 +44,8 @@
     "typescript": "5.2.2",
     "use-debounce": "^10.0.0",
     "viem": "^2.7.1",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@types/google-libphonenumber": "^7.4.30",

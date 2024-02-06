@@ -43,9 +43,9 @@ async function ProfileWidget({
         <GenericDialog title="Send" subtitle={`In order to send you need to first verify your ${whatToVerify}`}>
           <Separator />
           <Suspense fallback={<Skeleton className="h-80 w-96" />}>
-            <SendDialogContent profile={profile} chain={chain} />
+            <SendDialogContent profile={profile} chain={chain} address={address} />
           </Suspense>
-          <Separator className="mt-4" />
+          {/* <Separator className="mt-4" /> */}
         </GenericDialog>
       </div>
     </WidgetContainer>

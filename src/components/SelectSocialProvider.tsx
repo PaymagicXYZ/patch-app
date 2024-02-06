@@ -19,12 +19,12 @@ export function SelectSocialProvider({ onChange, name }: { onChange: (value: str
 
   return (
     <Select onValueChange={handleOnChange} defaultValue={"twitter"} name={name}>
-      <SelectTrigger className="border-none selection:border-none focus:border-none active:border-none" value={selectedProvider}>
+      <SelectTrigger value={selectedProvider}>
         <SelectValue>
           <Image src={socialNetworks[selectedProvider].iconSrc} alt={socialNetworks[selectedProvider].iconAlt} width={24} height={24} />
         </SelectValue>
       </SelectTrigger>
-      <SelectContent className="w-40 border-none bg-gray-900">
+      <SelectContent className="w-40">
         <SelectGroup>
           {Object.keys(socialNetworks).map((_socialNetworkKey) => {
             const _socialNetwork = socialNetworks[_socialNetworkKey as SupportedSocialNetworkIds];

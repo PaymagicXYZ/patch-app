@@ -19,9 +19,9 @@ const email = {
         body: JSON.stringify({ email: userName, source: 'drop' }),
       })
         .then((response) => response.json())
-        .then((data) => data.result.verdict !== 'Invalid')
+        .then((data) => data?.result?.verdict !== 'Invalid')
         .then((isValid) => {
-          if (isValid) {
+          if (isValid || /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(userName)) {
             return {
               name: userName.split('@')[0],
               description: 'Email',
@@ -53,6 +53,7 @@ const twitter = {
         })
           .then(async (response) => response.json())
           .then((data) => {
+            // console.log("DATA", data)
             if (data && data.data) {
               return {
                 name: data.data.name,

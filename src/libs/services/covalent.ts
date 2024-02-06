@@ -7,8 +7,7 @@ import { getChainNameFromShortName } from '@/utils/chain';
 class CovalentServiceV2 {
   private covalentInstance = new CovalentClient(process.env.COVALENT_API_KEY!);
 
-  async fetchTokenBalance(userId: UserId, chain: Chain) {
-    const address = await client.resolve(userId);
+  async fetchTokenBalance(address: Address, chain: Chain) {
     const chainName = getChainNameFromShortName(chain);
 
     if (chainName) {
