@@ -1,5 +1,13 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { cn } from '@/utils';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/utils";
 
 export function SendDialog({
   children,
@@ -17,7 +25,9 @@ export function SendDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{TriggerComponent}</DialogTrigger>
-      <DialogContent className={cn('min-w-[260px] bg-gray-900 border-none', className)}>
+      <DialogContent
+        className={cn("min-w-[260px] bg-gray-900 border-none", className)}
+      >
         <DialogHeader>
           <DialogTitle className="text-2xl">Send</DialogTitle>
           <DialogDescription>{subtitle}</DialogDescription>

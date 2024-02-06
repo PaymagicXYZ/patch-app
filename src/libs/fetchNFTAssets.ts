@@ -1,6 +1,9 @@
-import { getChainNameFromShortName, getNetworkfromShortName } from '@/utils/chain';
-import { UserId, Chain } from '@patchwallet/patch-sdk';
-import { client } from './client';
+import {
+  getChainNameFromShortName,
+  getNetworkfromShortName,
+} from "@/utils/chain";
+import { UserId, Chain } from "@patchwallet/patch-sdk";
+import { client } from "./client";
 
 export const fetchNFTAssets = async (userId: UserId, chain: Chain) => {
   const address = await client.resolve(userId);
@@ -17,9 +20,9 @@ export const fetchNFTAssets = async (userId: UserId, chain: Chain) => {
     const nftURL = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_nft/`;
     const data = await fetch(nftURL, {
       headers: {
-        'Accept-Encoding': '*',
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + process.env.COVALENT_API_KEY,
+        "Accept-Encoding": "*",
+        "Content-Type": "application/json",
+        Authorization: "Basic " + process.env.COVALENT_API_KEY,
       },
     }).then((res) => res.json());
     return data;

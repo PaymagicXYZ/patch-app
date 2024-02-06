@@ -1,5 +1,5 @@
-import WalletDetail from '@/components/WalletDetail';
-import { Suspense } from 'react';
+import WalletDetail from "@/components/WalletDetail";
+import { Suspense } from "react";
 export default async function Page() {
   return (
     <main className="flex-1">

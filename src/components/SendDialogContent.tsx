@@ -98,7 +98,7 @@ function ChooseTokensSection({
         <TokenInputForm
           userId={userId}
           tokens={tokens?.map((token) => {
-            console.log("TOKEN FROM RESPO", token)
+            console.log("TOKEN FROM RESPO", token);
             return {
               tickerSymbol: token.contract_ticker_symbol,
               amount: token.balance

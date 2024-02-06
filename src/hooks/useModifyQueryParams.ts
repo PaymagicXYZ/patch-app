@@ -1,4 +1,4 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export const useModifyQueryParams = () => {
   const searchParams = useSearchParams();
@@ -6,7 +6,11 @@ export const useModifyQueryParams = () => {
   const { replace } = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  const modifyQueryParams = (key: string, value: string, cb?: (params: URLSearchParams) => void) => {
+  const modifyQueryParams = (
+    key: string,
+    value: string,
+    cb?: (params: URLSearchParams) => void,
+  ) => {
     if (value) {
       params.set(key, value);
     } else {

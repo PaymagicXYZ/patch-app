@@ -1,7 +1,7 @@
-import { ChangeEvent, HTMLInputTypeAttribute } from 'react';
-import { Input } from './input';
-import { SelectSocialProvider } from '../SelectSocialProvider';
-import { cn } from '@/utils';
+import { ChangeEvent, HTMLInputTypeAttribute } from "react";
+import { Input } from "./input";
+import { SelectSocialProvider } from "../SelectSocialProvider";
+import { cn } from "@/utils";
 
 type Props = {
   onInputChange: (value: ChangeEvent<HTMLInputElement>) => void;
@@ -32,13 +32,20 @@ export const LookupInput = ({
   return (
     <Input
       defaultValue={defaultValue}
-      name={inputName ?? 'userId'}
+      name={inputName ?? "userId"}
       onChange={onInputChange}
-      leftButton={leftButton ?? <SelectSocialProvider name={selectName ?? 'provider'} onChange={onSelectChange} />}
+      leftButton={
+        leftButton ?? (
+          <SelectSocialProvider
+            name={selectName ?? "provider"}
+            onChange={onSelectChange}
+          />
+        )
+      }
       rightElement={rightElement}
-      type={type ?? 'text'}
+      type={type ?? "text"}
       placeholder={placeholder}
-      className={cn('mt-4', className)}
+      className={cn("mt-4", className)}
       {...rest}
     />
   );

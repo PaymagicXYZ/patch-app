@@ -1,17 +1,21 @@
-import { Chain, UserId } from '@patchwallet/patch-sdk';
-import { resolveSocialProfile } from '@/libs/actions/utils';
-import ProfileWidget from '@/components/ProfileWidget';
-import { notFound } from 'next/navigation';
-import { auth, currentUser } from '@clerk/nextjs';
-import { User } from '@clerk/nextjs/server';
-import { SignBtn } from '@/components/SignBtn';
+import { Chain, UserId } from "@patchwallet/patch-sdk";
+import { resolveSocialProfile } from "@/libs/actions/utils";
+import ProfileWidget from "@/components/ProfileWidget";
+import { notFound } from "next/navigation";
+import { auth, currentUser } from "@clerk/nextjs";
+import { User } from "@clerk/nextjs/server";
+import { SignBtn } from "@/components/SignBtn";
 
-export default async function Wallet({ params }: { params: { userId: UserId; chain: Chain } }) {
+export default async function Wallet({
+  params,
+}: {
+  params: { userId: UserId; chain: Chain };
+}) {
   const _userId = decodeURIComponent(params.userId);
   const { address, profile } = await resolveSocialProfile(_userId as UserId);
   const user: User | null = await currentUser();
   const { getToken } = auth();
-  const token = (await getToken({ template: 'patchwallet' })) || '';
+  const token = (await getToken({ template: "patchwallet" })) || "";
   if (!address) {
     notFound();
   }
@@ -23,9 +27,13 @@ export default async function Wallet({ params }: { params: { userId: UserId; cha
           <div className="flex justify-center mt-6 md:mt-[108px] mb-auto ">
             <div className="w-full md:w-[600px]">
               <div className="flex basis-0 flex-wrap gap-4 md:flex-nowrap">
-                <ProfileWidget address={address} profile={profile} chain={params.chain} className="w-full" />
+                <ProfileWidget
+                  address={address}
+                  profile={profile}
+                  chain={params.chain}
+                  className="w-full"
+                />
               </div>
-              <SignBtn userId={_userId} token={token} />
               {/* <div className="mt-4">{user.userId && <ClaimNFT />}</div> */}
               {/* <div className="mt-4">{user.userId && <LinearQuest />}</div> */}
               <div className="mt-4">{/* <Inventory user={user} /> */}</div>

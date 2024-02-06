@@ -1,8 +1,8 @@
-'use client';
-import { useContext, useEffect } from 'react';
-import { UserContext } from '@/context/user-provider';
-import { TokenBalance } from './TokenBalance';
-import { UserId } from '@patchwallet/patch-sdk';
+"use client";
+import { useContext, useEffect } from "react";
+import { UserContext } from "@/context/user-provider";
+import { TokenBalance } from "./TokenBalance";
+import { UserId } from "@patchwallet/patch-sdk";
 
 export default function WalletDetail({ userId }: { userId?: string }) {
   const { user, chain, setUser } = useContext(UserContext);

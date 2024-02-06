@@ -1,5 +1,10 @@
 import { ReactNode } from "react";
-import { Address, HexString, SocialNetwork, UserId } from "@patchwallet/patch-sdk";
+import {
+  Address,
+  HexString,
+  SocialNetwork,
+  UserId,
+} from "@patchwallet/patch-sdk";
 
 export const TWITTER = "twitter";
 export const GITHUB = "github";

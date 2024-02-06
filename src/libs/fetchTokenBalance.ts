@@ -1,7 +1,7 @@
-import 'server-only';
-import { getChainNameFromShortName } from '@/utils/chain';
-import { client } from './client';
-import type { UserId, Chain } from '@patchwallet/patch-sdk';
+import "server-only";
+import { getChainNameFromShortName } from "@/utils/chain";
+import { client } from "./client";
+import type { UserId, Chain } from "@patchwallet/patch-sdk";
 
 export async function fetchTokenBalance(userId: UserId, chain: Chain) {
   const address = await client.resolve(userId);
@@ -10,9 +10,9 @@ export async function fetchTokenBalance(userId: UserId, chain: Chain) {
     const url = `https://api.covalenthq.com/v1/${chainName}/address/${address}/balances_v2/`;
     const res = await fetch(url, {
       headers: {
-        'Accept-Encoding': '*',
-        'Content-Type': 'application/json',
-        Authorization: 'Basic ' + process.env.COVALENT_API_KEY2,
+        "Accept-Encoding": "*",
+        "Content-Type": "application/json",
+        Authorization: "Basic " + process.env.COVALENT_API_KEY2,
       },
     }).then((res) => res.json());
     return res.data.items;

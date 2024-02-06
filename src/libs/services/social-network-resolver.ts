@@ -1,37 +1,42 @@
-import { SocialProfile, SupportedSocialNetworkIds } from '@/types';
-import { UserId, SocialNetwork as Network } from '@patchwallet/patch-sdk';
+import { SocialProfile, SupportedSocialNetworkIds } from "@/types";
+import { UserId, SocialNetwork as Network } from "@patchwallet/patch-sdk";
 
 type ResolveResponse = (username: string) => Promise<SocialProfile>;
 
 const email = {
-  name: 'email' as Network,
-  logo: 'icon-park:email-down',
-  apiUrl: 'https://api.sendgrid.com/v3/validations/email',
+  name: "email" as Network,
+  logo: "icon-park:email-down",
+  apiUrl: "https://api.sendgrid.com/v3/validations/email",
   apiKey: process.env.SENDGRID_API_KEY,
-  url: 'mailto:',
+  url: "mailto:",
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
       return fetch(`${this.apiUrl}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
           Authorization: `Bearer ${this.apiKey}`,
         },
-        body: JSON.stringify({ email: userName, source: 'drop' }),
+        body: JSON.stringify({ email: userName, source: "drop" }),
       })
         .then((response) => response.json())
-        .then((data) => data?.result?.verdict !== 'Invalid')
+        .then((data) => data?.result?.verdict !== "Invalid")
         .then((isValid) => {
-          if (isValid || /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(userName)) {
+          if (
+            isValid ||
+            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+              userName,
+            )
+          ) {
             return {
-              name: userName.split('@')[0],
-              description: 'Email',
-              image: '/email_circle.svg',
+              name: userName.split("@")[0],
+              description: "Email",
+              image: "/email_circle.svg",
               handle: userName,
               network: this.name,
               patchUserId: `${this.name}:${userName}` as UserId,
             };
           } else {
-            throw new Error('Invalid Email');
+            throw new Error("Invalid Email");
           }
         });
     };
@@ -39,18 +44,21 @@ const email = {
 };
 
 const twitter = {
-  name: 'twitter' as Network,
-  logo: 'icon-park:twitter',
+  name: "twitter" as Network,
+  logo: "icon-park:twitter",
   apiKey: process.env.TWITTER_TOKEN,
-  apiUrl: 'https://api.twitter.com/2',
-  url: 'https://twitter.com/',
+  apiUrl: "https://api.twitter.com/2",
+  url: "https://twitter.com/",
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
       if (/^[a-zA-Z0-9_]{1,15}$/.test(userName)) {
-        return fetch(`${this.apiUrl}/users/by/username/${userName}?user.fields=description,profile_image_url`, {
-          method: 'GET',
-          headers: { Authorization: `Bearer ${this.apiKey}` },
-        })
+        return fetch(
+          `${this.apiUrl}/users/by/username/${userName}?user.fields=description,profile_image_url`,
+          {
+            method: "GET",
+            headers: { Authorization: `Bearer ${this.apiKey}` },
+          },
+        )
           .then(async (response) => response.json())
           .then((data) => {
             // console.log("DATA", data)
@@ -66,8 +74,8 @@ const twitter = {
             } else {
               return {
                 name: userName,
-                description: 'Twitter',
-                image: '/twitter.svg',
+                description: "Twitter",
+                image: "/twitter.svg",
                 handle: userName,
                 network: this.name,
                 patchUserId: `${this.name}:${userName}` as UserId,
@@ -75,24 +83,24 @@ const twitter = {
             }
           });
       } else {
-        throw new Error('Invalid Twitter username');
+        throw new Error("Invalid Twitter username");
       }
     };
   },
 };
 
 const github = {
-  name: 'github' as Network,
-  logo: 'icon-park:github',
+  name: "github" as Network,
+  logo: "icon-park:github",
   apiKey: process.env.GITHUB_TOKEN,
-  apiUrl: 'https://api.github.com',
-  url: 'https://github.com/',
+  apiUrl: "https://api.github.com",
+  url: "https://github.com/",
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
       return fetch(`${this.apiUrl}/users/${userName}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          Accept: 'application/vnd.github+json',
+          Accept: "application/vnd.github+json",
           Authorization: `Bearer ${this.apiKey}`,
         },
       })
@@ -108,7 +116,7 @@ const github = {
               patchUserId: `${this.name}:${userName}` as UserId,
             };
           } else {
-            throw new Error('Invalid Github username');
+            throw new Error("Invalid Github username");
           }
         });
     };
@@ -116,15 +124,15 @@ const github = {
 };
 
 const tel = {
-  name: 'tel' as Network,
-  logo: 'icon-park:phone-telephone',
+  name: "tel" as Network,
+  logo: "icon-park:phone-telephone",
   apiKey: process.env.TWILIO_API_KEY,
-  apiUrl: 'https://lookups.twilio.com/v1/PhoneNumbers',
-  url: 'tel:',
+  apiUrl: "https://lookups.twilio.com/v1/PhoneNumbers",
+  url: "tel:",
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
       return fetch(`${this.apiUrl}/${userName}`, {
-        method: 'GET',
+        method: "GET",
         headers: {
           Authorization: `Basic ${this.apiKey}`,
         },
@@ -132,15 +140,15 @@ const tel = {
         if (response.status === 200) {
           return {
             name: userName,
-            description: 'Tel',
-            image: '',
+            description: "Tel",
+            image: "",
             handle: userName,
             network: this.name,
             patchUserId: `${this.name}:${userName}` as UserId,
           };
         } else {
-          console.log('RESPONSE', response);
-          throw new Error('Invalid Phone number');
+          console.log("RESPONSE", response);
+          throw new Error("Invalid Phone number");
         }
       });
     };
@@ -148,14 +156,14 @@ const tel = {
 };
 
 const passphrase = {
-  name: 'passphrase' as Network,
-  logo: 'icon-park:github',
+  name: "passphrase" as Network,
+  logo: "icon-park:github",
   get resolveUser(): ResolveResponse {
     return async (userName: string) => {
       return {
-        name: 'Passphrase Wallet',
-        description: 'Passphrase Wallet',
-        image: '/passphrase.svg',
+        name: "Passphrase Wallet",
+        description: "Passphrase Wallet",
+        image: "/passphrase.svg",
         handle: this.formatUsername(userName),
         network: this.name,
         patchUserId: `${this.name}:${userName}` as UserId,
@@ -163,15 +171,15 @@ const passphrase = {
     };
   },
   formatUsername(userName: string) {
-    return userName.length > 15 ? userName.substring(0, 14) + '...' : userName;
+    return userName.length > 15 ? userName.substring(0, 14) + "..." : userName;
   },
 };
 
 const farcaster = {
-  name: 'farcaster' as Network,
-  logo: 'icon-park:farcaster',
+  name: "farcaster" as Network,
+  logo: "icon-park:farcaster",
   apiKey: process.env.NEYNAR_API_KEY,
-  apiUrl: 'https://api.neynar.com/v1/farcaster',
+  apiUrl: "https://api.neynar.com/v1/farcaster",
   async resolveFarcasterUser(endpoint: string) {
     try {
       const response = await fetch(endpoint);
@@ -192,7 +200,7 @@ const farcaster = {
       }
       return null;
     } catch (error) {
-      console.error('Error fetching recent reactions from FC:', error);
+      console.error("Error fetching recent reactions from FC:", error);
       throw error;
     }
   },
