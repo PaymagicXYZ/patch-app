@@ -10,7 +10,7 @@ export async function sendTx(
   value: String[],
   data: HexString[],
 ) {
-  const { getToken, session } = auth();
+  const { getToken } = auth();
   const _token = await getToken({
     template: "patchwallet",
   });
@@ -21,18 +21,14 @@ export async function sendTx(
     throw new Error("Not authenticated");
   }
 
-  try {
-    const tx = await client.tx({
-      userId,
-      chain,
-      to,
-      value,
-      data,
-      delegatecall: 0,
-      auth: _token,
-    });
-    return tx;
-  } catch (e) {
-    console.log("ERROR", e);
-  }
+  const tx = await client.tx({
+    userId,
+    chain,
+    to,
+    value,
+    data,
+    delegatecall: 0,
+    auth: _token,
+  });
+  return tx;
 }

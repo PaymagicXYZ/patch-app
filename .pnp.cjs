@@ -57,6 +57,7 @@ const RAW_RUNTIME_STATE =
           ["next", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:14.0.4"],\
           ["postcss", "npm:8.4.29"],\
           ["react", "npm:18.2.0"],\
+          ["react-confetti", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:6.1.0"],\
           ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"],\
           ["react-hook-form", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:7.49.3"],\
           ["server-only", "npm:0.0.1"],\
@@ -6349,6 +6350,7 @@ const RAW_RUNTIME_STATE =
           ["next", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:14.0.4"],\
           ["postcss", "npm:8.4.29"],\
           ["react", "npm:18.2.0"],\
+          ["react-confetti", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:6.1.0"],\
           ["react-dom", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:18.2.0"],\
           ["react-hook-form", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:7.49.3"],\
           ["server-only", "npm:0.0.1"],\
@@ -6710,6 +6712,29 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["react", "npm:18.2.0"],\
           ["loose-envify", "npm:1.4.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-confetti", [\
+      ["npm:6.1.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/react-confetti-npm-6.1.0-9b9e19a3c8-10c0.zip/node_modules/react-confetti/",\
+        "packageDependencies": [\
+          ["react-confetti", "npm:6.1.0"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:6.1.0", {\
+        "packageLocation": "./.yarn/__virtual__/react-confetti-virtual-22ef56e0e8/4/.yarn/berry/cache/react-confetti-npm-6.1.0-9b9e19a3c8-10c0.zip/node_modules/react-confetti/",\
+        "packageDependencies": [\
+          ["react-confetti", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:6.1.0"],\
+          ["@types/react", "npm:18.2.46"],\
+          ["react", "npm:18.2.0"],\
+          ["tween-functions", "npm:1.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7768,6 +7793,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../../.yarn/berry/cache/tslib-npm-2.6.2-4fc8c068d9-10c0.zip/node_modules/tslib/",\
         "packageDependencies": [\
           ["tslib", "npm:2.6.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["tween-functions", [\
+      ["npm:1.2.0", {\
+        "packageLocation": "../../../.yarn/berry/cache/tween-functions-npm-1.2.0-4c24ac77a5-10c0.zip/node_modules/tween-functions/",\
+        "packageDependencies": [\
+          ["tween-functions", "npm:1.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\

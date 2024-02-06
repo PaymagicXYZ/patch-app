@@ -20,6 +20,7 @@ import { useConstructTx } from "@/hooks/useConstructTx";
 import { SelectTokenDropdown } from "./SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "./Spinner";
+import { useRouter } from "next/navigation";
 
 type Inputs = { tokens: InputToken[] };
 
@@ -30,6 +31,7 @@ export function TokenInputForm({
   tokens: Token[];
   userId: UserId;
 }) {
+  const router = useRouter();
   const to = useSendContextStore((state) => state.to);
   const setTo = useSendContextStore((state) => state.setTo);
   const { chain } = React.useContext(UserContext);
@@ -63,6 +65,12 @@ export function TokenInputForm({
       formattedTxData.data,
     );
     console.log("tx", tx);
+
+    if (tx && tx.txHash) {
+      router.push(
+        "/success?txHash=0x8f9c8d8347a909e0c7d6bf79087fcda0e298519fc0bd2f3055f8c82792bfb28f",
+      );
+    }
   };
 
   const filteredTokens = tokens.filter((token) => {
@@ -84,6 +92,7 @@ export function TokenInputForm({
 
   return (
     <Form {...form}>
+      {/* <Confetti recycle={false} width={800} numberOfPieces={500} run={form.formState.isSubmitSuccessful} /> */}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div>
           {fields?.map((item, index) => {
@@ -137,9 +146,12 @@ export function TokenInputForm({
         <div className="mt-4 flex justify-end">
           <Button
             type="submit"
-            className={cn("hidden text-gray-1000 bg-green-100 hover:bg-green-100/80 gap-2", {
-              block: to,
-            })}
+            className={cn(
+              "hidden text-gray-1000 bg-green-100 hover:bg-green-100/80 gap-2",
+              {
+                block: to,
+              },
+            )}
             disabled={
               form.formState.isSubmitting ||
               !!form.formState.errors.tokens?.length ||
@@ -176,7 +188,7 @@ const TokenInput = React.forwardRef<HTMLInputElement, InputProps>(
       <Input
         type="number"
         className="flex-1 pl-24"
-        rightElement={<div>~${_value.toFixed()}</div>}
+        rightElement={<div>~${_value.toFixed(2)}</div>}
         leftButton={
           <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
             <div>{token?.tickerSymbol}</div>

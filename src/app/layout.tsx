@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "../components/Nav";
 import { Footer } from "@/components/Footer";
+import ModalSlot from "@/components/ModalSlot";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +16,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: {
   children: React.ReactNode;
+  modal: React.ReactNode;
 }) {
   return (
     <ClerkProvider>
@@ -26,6 +29,7 @@ export default function RootLayout({
             <Nav />
             {children}
             <Footer />
+            <ModalSlot>{modal}</ModalSlot>
           </div>
         </body>
       </html>
