@@ -11,6 +11,8 @@ import {
   CommandItem,
 } from "./ui/command";
 import Image from "next/image";
+import { isNFT } from "@/utils";
+import { minifyAddress } from "@/utils/checkUserId";
 
 export function SelectTokenDropdown({
   tokens,
@@ -40,32 +42,99 @@ export function SelectTokenDropdown({
           <CommandInput placeholder="Search for tokens..." />
           <CommandEmpty>No tokens found.</CommandEmpty>
           <CommandGroup className="bg-gray-900">
-            {tokens?.map((token) => (
-              <CommandItem
-                key={token.tickerSymbol}
-                value={token.tickerSymbol}
-                className="flex items-center justify-between bg-gray-900 text-gray-50"
-                onSelect={() => {
-                  onTokenSelect(token);
-                  setOpen(false);
-                }}
-              >
-                <div className="flex gap-2">
-                  <Image
-                    src={token.logoUrl}
-                    alt={token.tickerSymbol}
-                    width={24}
-                    height={24}
-                    unoptimized
-                  />
-                  <div>{token.tickerSymbol}</div>
-                </div>
-                <div className="text-gray-100">{token.amount}</div>
-              </CommandItem>
-            ))}
+            {tokens?.map((token) =>
+              !isNFT(token) ? (
+                <TokenItem
+                  key={token.tickerSymbol}
+                  token={token}
+                  onSelect={() => {
+                    onTokenSelect(token);
+                    setOpen(false);
+                  }}
+                />
+              ) : (
+                <NftCommandItem
+                  key={token.tickerSymbol}
+                  token={token}
+                  onSelect={() => {
+                    onTokenSelect(token);
+                    setOpen(false);
+                  }}
+                />
+              ),
+            )}
           </CommandGroup>
         </Command>
       </PopoverContent>
     </Popover>
   );
 }
+
+const NftCommandItem = ({
+  token,
+  onSelect,
+}: {
+  token: NFTToken;
+  onSelect: () => void;
+}) => {
+  return (
+    <CommandItem
+      key={token.tickerSymbol}
+      value={token.tickerSymbol}
+      className="flex items-center justify-between bg-gray-900 text-gray-50"
+      onSelect={onSelect}
+    >
+      <NftItem token={token} />
+    </CommandItem>
+  );
+};
+
+export const NftItem = ({ token }: { token: NFTToken }) => {
+  return (
+    <div className="flex flex-1 justify-between rounded-xl bg-gray-800 px-2 py-1.5">
+      <div className="flex gap-2">
+        <Image
+          src={token.tokenUrl ?? "/app_icon.svg"}
+          alt={token.tickerSymbol}
+          width={24}
+          height={24}
+          unoptimized
+        />
+        <div>{token.tickerSymbol}</div>
+      </div>
+      <div className="flex gap-1">
+        <div className="bg-gray-700  text-gray-200">#{token.tokenId}</div>
+        <div>{minifyAddress(token.contractAddress)}</div>
+      </div>
+    </div>
+  );
+};
+
+const TokenItem = ({
+  token,
+  onSelect,
+}: {
+  token: Token;
+  onSelect: () => void;
+}) => {
+  return (
+    <CommandItem
+      key={token.tickerSymbol}
+      value={token.tickerSymbol}
+      className="flex items-center justify-between bg-gray-900 text-gray-50"
+      onSelect={onSelect}
+    >
+      <div className="flex gap-2">
+        <Image
+          src={token.logoUrl}
+          alt={token.tickerSymbol}
+          width={24}
+          height={24}
+          unoptimized
+        />
+        <div>{token.tickerSymbol}</div>
+      </div>
+      <div className="text-gray-100">{token.amount}</div>
+    </CommandItem>
+  );
+};

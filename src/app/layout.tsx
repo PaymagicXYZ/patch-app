@@ -5,6 +5,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "../components/Nav";
 import { Footer } from "@/components/Footer";
 import ModalSlot from "@/components/ModalSlot";
+import UserProvider from "@/context/user-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,16 +24,18 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <div className="flex min-h-screen flex-col">
-            <Nav />
-            {children}
-            <Footer />
-            <ModalSlot>{modal}</ModalSlot>
-          </div>
-        </body>
-      </html>
+      <UserProvider>
+        <html lang="en">
+          <body className={inter.className}>
+            <div className="flex min-h-screen flex-col">
+              <Nav />
+              {children}
+              <Footer />
+              <ModalSlot>{modal}</ModalSlot>
+            </div>
+          </body>
+        </html>
+      </UserProvider>
     </ClerkProvider>
   );
 }

@@ -54,10 +54,11 @@ export async function SendDialogContent({
             contractAddress: nft.contract_address,
             price: nft.quote_rate?.toFixed(2) ?? 0,
             tokenUrl: nft.nft_data[0]?.external_data?.image,
-            tokenId: nft.nft_data[0]?.token_id?.toString(),
+            tokenId: nft.nft_data[0]?.token_id?.toString() ?? "0",
             amount: nft.balance?.toString() ?? "1",
             logoUrl: nft.logo_url,
             decimals: nft.contract_decimals,
+            supportedERCStandards: nft.supports_erc as unknown as string[],
           };
         })}
       />

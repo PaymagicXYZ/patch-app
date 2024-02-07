@@ -70,8 +70,9 @@ export interface Token {
 }
 
 export interface NFTToken extends Token {
-  tokenId?: string;
+  tokenId: string;
   tokenUrl?: string;
+  supportedERCStandards: string[];
 }
 
 export interface InputToken extends Token {

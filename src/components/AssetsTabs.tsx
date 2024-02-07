@@ -62,7 +62,7 @@ export async function AssetsTab({
                   contractAddress={token.contract_address}
                   price={token.quote_rate?.toFixed(2) ?? 0}
                   tokenUrl={token.nft_data[0]?.external_data?.image}
-                  tokenId={token.nft_data[0]?.token_id?.toString()}
+                  tokenId={token.nft_data[0]?.token_id?.toString() ?? ""}
                 />
               );
             })}
@@ -110,7 +110,10 @@ const NFTRow = ({
   tokenId,
   tokenUrl,
   contractAddress,
-}: NFTToken) => {
+}: Omit<
+  NFTToken,
+  "decimals" | "amount" | "supportedERCStandards" | "logoUrl"
+>) => {
   return (
     <div
       key={tickerSymbol}

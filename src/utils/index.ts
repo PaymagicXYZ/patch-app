@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { SupportedSocialNetworksDetails } from "@/types";
+import { NFTToken, SupportedSocialNetworksDetails, Token } from "@/types";
 import { BalanceItem } from "@covalenthq/client-sdk";
 
 export function cn(...inputs: ClassValue[]) {
@@ -72,3 +72,7 @@ export const sortCovalentAssetsByType = (assets: BalanceItem[]) => {
     },
   );
 };
+
+export function isNFT(token: Token | NFTToken): token is NFTToken {
+  return (token as NFTToken).tokenId !== undefined;
+}

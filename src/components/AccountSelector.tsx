@@ -1,49 +1,51 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import type { UserId } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
 import isUserId from "@/utils/checkUserId";
+import { UserContext } from "@/context/user-provider";
 
 const AccountSelector = ({
-  availableWallets,
-  wallets,
+  userAddressMap,
 }: {
-  availableWallets: UserId[];
-  wallets: string[];
+  userAddressMap: Record<string, string>;
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedAccount, setSelectedAccount] = useState<UserId | "">("");
+  const { setUser, setSelectedAddress, selectedAddress } =
+    useContext(UserContext);
   const user = pathname.split("/")[1];
   const chain = pathname.split("/")[2] || "";
+
   useEffect(() => {
-    if (isUserId(user) && availableWallets.lastIndexOf(user) > -1) {
-      setSelectedAccount(user);
+    if (isUserId(user) && userAddressMap[user]) {
+      setUser(user);
+      setSelectedAddress(userAddressMap[user]);
     }
-  }, [availableWallets, user]);
+  }, [userAddressMap, user, setSelectedAddress, setUser]);
 
   return (
     <div>
       <select
-        value={selectedAccount}
+        value={user}
         onChange={(e) => {
-          setSelectedAccount((e.target.value as UserId) || "");
+          const _userId = e.target.value as UserId;
+          setUser(_userId);
+          setSelectedAddress(userAddressMap[_userId]);
           router.push(`/${e.target.value}/${chain}`);
         }}
       >
         <option value="" disabled>
           Select a wallet
         </option>
-        {availableWallets.map((account, i) => (
-          <option key={i} value={account}>
-            {account}
+        {Object.keys(userAddressMap).map((username, i) => (
+          <option key={i} value={username}>
+            {username}
           </option>
         ))}
       </select>
-      {selectedAccount && (
-        <pre className="md:text-base w-full text-xs">
-          {wallets[availableWallets.indexOf(selectedAccount)]}
-        </pre>
+      {user && (
+        <pre className="w-full text-xs md:text-base">{selectedAddress}</pre>
       )}
     </div>
   );

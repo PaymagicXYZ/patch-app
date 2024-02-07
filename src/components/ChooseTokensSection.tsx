@@ -2,7 +2,7 @@
 import * as React from "react";
 import { ArrowRight, MinusSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/utils";
+import { cn, isNFT } from "@/utils";
 import {
   ControllerRenderProps,
   SubmitHandler,
@@ -11,21 +11,19 @@ import {
 } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
-import { UserId } from "@patchwallet/patch-sdk";
-import { sendTx } from "@/libs/actions/tx";
+import { Address } from "@patchwallet/patch-sdk";
 import { useSendContextStore } from "@/hooks/useSendContextStore";
 import { UserContext } from "@/context/user-provider";
 import { InputToken, NFTToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/hooks/useConstructTx";
-import { SelectTokenDropdown } from "./SelectTokenDropdown";
+import { NftItem, SelectTokenDropdown } from "./SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "./Spinner";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import Image from "next/image";
-import { minifyAddress } from "@/utils/checkUserId";
-type Inputs = { tokens: InputToken[] };
-type NftInputs = { nfts: NFTToken[] };
+import { sendTx } from "@/libs/actions/tx";
+
+type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };
 
 export function ChooseTokensSection({
   tokens,
@@ -39,27 +37,42 @@ export function ChooseTokensSection({
   const router = useRouter();
   const to = useSendContextStore((state) => state.to);
   const setTo = useSendContextStore((state) => state.setTo);
-  const { chain } = React.useContext(UserContext);
+  const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
-  const form = useForm<Inputs>({ reValidateMode: "onChange" });
+  const form = useForm<AssetInputs>({ reValidateMode: "onChange" });
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "tokens",
   });
+  const {
+    fields: nftFields,
+    append: nftAppend,
+    remove: nftRemove,
+  } = useFieldArray({
+    control: form.control,
+    name: "nfts",
+  });
 
   useEffect(() => {
-    return function () {
-      form.reset();
-      setTo(null);
-    };
+    resetForm(true);
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const resetForm = (withAddress = false) => {
+    form.reset({ nfts: [], tokens: [] });
+    withAddress && setTo(null);
+  };
+
+  const onSubmit: SubmitHandler<AssetInputs> = async (data) => {
     if (!to) {
       return; // TODO: not likely case because the button is hidden on !to
     }
 
-    const txData = await bundleTxns(data.tokens, to);
+    const txData = await bundleTxns(
+      data.tokens,
+      data.nfts,
+      to,
+      selectedAddress as Address,
+    );
     const formattedTxData = formatTxData(txData);
 
     const tx = await sendTx(
@@ -71,6 +84,7 @@ export function ChooseTokensSection({
     );
 
     if (tx && tx.txHash) {
+      resetForm();
       router.push(`/success?txHash=${tx.txHash}&userId=${profile.patchUserId}`);
     }
   };
@@ -81,184 +95,154 @@ export function ChooseTokensSection({
     );
   });
 
-  const handleSelectToken = (token: Token) => {
-    append({
-      ...token,
-      value: "",
-    });
-  };
-
-  const handleDeleteToken = (index: number) => {
-    remove(index);
-  };
-
-  return (
-    <Tabs defaultValue="tokens" className="inline-block">
-      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
-        choose tokens
-      </div>
-      <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
-        <TabsTrigger value="tokens" className="">
-          Tokens
-        </TabsTrigger>
-        <TabsTrigger value="nfts" className="">
-          NFTs
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="tokens" defaultChecked>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div>
-              {fields?.map((item, index) => {
-                return (
-                  <FormField
-                    defaultValue=""
-                    key={item.id}
-                    control={form.control}
-                    rules={{
-                      pattern: {
-                        value: /^\d*\.?\d+$/,
-                        message: "Please provide a valid number",
-                      },
-                      validate: {
-                        sufficient: (v) =>
-                          +v < +item.amount || "Insufficient balance",
-                        positive: (v) =>
-                          +v > 0 || "Please provide a positive number",
-                      },
-                    }}
-                    name={`tokens.${index}.value`}
-                    render={({ field, fieldState }) => {
-                      return (
-                        <div className="relative">
-                          <div className=" mb-2 flex gap-2">
-                            <FormItem className="flex-1">
-                              <FormControl>
-                                <TokenInput token={item} {...field} />
-                              </FormControl>
-                            </FormItem>
-                            <MinusSquare
-                              size={44}
-                              className="cursor-pointer text-gray-700 hover:text-red-500"
-                              onClick={() => handleDeleteToken(index)}
-                            />
-                          </div>
-                          <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
-                            {fieldState.error?.message}
-                          </p>
-                        </div>
-                      );
-                    }}
-                  />
-                );
-              })}
-            </div>
-            <SelectTokenDropdown
-              tokens={filteredTokens}
-              onTokenSelect={handleSelectToken}
-              title="Add another Token"
-            />
-            <div className="mt-4 flex justify-end">
-              <SendButton
-                hidden={!to}
-                disabled={
-                  form.formState.isSubmitting ||
-                  !!form.formState.errors.tokens?.length ||
-                  !fields.length
-                }
-                isLoading={form.formState.isSubmitting}
-              />
-            </div>
-          </form>
-        </Form>
-      </TabsContent>
-      <TabsContent value="nfts">
-        {/* <UserLookupServerForm by="address" /> */}
-        <NFTTabContent nfts={nfts} />
-      </TabsContent>
-    </Tabs>
-  );
-}
-
-const NFTTabContent = ({ nfts }: { nfts: NFTToken[] }) => {
-  const form = useForm<NftInputs>({ reValidateMode: "onChange" });
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "nfts",
+  const filteredNfts = nfts.filter((nft) => {
+    return !nftFields.some(
+      (field) =>
+        field.contractAddress === nft.contractAddress &&
+        field.tokenId === nft.tokenId,
+    );
   });
 
-  const handleSelectToken = (token: NFTToken) => {
-    append({
-      ...token,
-    });
+  const handleSelectToken = (token: Token | NFTToken) => {
+    isNFT(token)
+      ? nftAppend({
+          ...token,
+        })
+      : append({
+          ...token,
+          value: "",
+        });
   };
 
-  const handleDeleteToken = (index: number) => {
-    remove(index);
+  const handleDeleteToken = (index: number, item: Token | NFTToken) => {
+    isNFT(item) ? nftRemove(index) : remove(index);
   };
 
-  const onSubmit: SubmitHandler<NftInputs> = async (data) => {
-    console.log("onSubmit");
-  };
   return (
-    <>
+    <div className="flex w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          {fields?.map((item, index) => {
-            return (
-              <FormField
-                defaultValue=""
-                key={item.id}
-                control={form.control}
-                rules={
-                  {
-                    // pattern: {
-                    //   value: /^\d*\.?\d+$/,
-                    //   message: "Please provide a valid number",
-                    // },
-                    // validate: {
-                    //   sufficient: (v) =>
-                    //     +v < +item.amount || "Insufficient balance",
-                    //   positive: (v) =>
-                    //     +v > 0 || "Please provide a positive number",
-                    // },
-                  }
-                }
-                name={`nfts.${index}.tokenId`}
-                render={({ field, fieldState }) => {
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex-1">
+          <Tabs defaultValue="tokens" className="inline-block w-full">
+            <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
+              choose tokens
+            </div>
+            <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
+              <TabsTrigger value="tokens" className="">
+                Tokens
+              </TabsTrigger>
+              <TabsTrigger value="nfts" className="">
+                NFTs
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value="tokens" defaultChecked>
+              <div>
+                {fields?.map((item, index) => {
                   return (
-                    <div className="relative">
-                      <div className=" mb-2 flex gap-2">
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <NftInput token={item} {...field} />
-                          </FormControl>
-                        </FormItem>
-                        <MinusSquare
-                          size={44}
-                          className="cursor-pointer text-gray-700 hover:text-red-500"
-                          onClick={() => handleDeleteToken(index)}
-                        />
-                      </div>
-                      <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
-                        {fieldState.error?.message}
-                      </p>
-                    </div>
+                    <FormField
+                      defaultValue=""
+                      key={item.id}
+                      control={form.control}
+                      rules={{
+                        pattern: {
+                          value: /^\d*\.?\d+$/,
+                          message: "Please provide a valid number",
+                        },
+                        validate: {
+                          sufficient: (v) =>
+                            +v < +item.amount || "Insufficient balance",
+                          positive: (v) =>
+                            +v > 0 || "Please provide a positive number",
+                        },
+                      }}
+                      name={`tokens.${index}.value`}
+                      render={({ field, fieldState }) => {
+                        return (
+                          <div className="relative">
+                            <div className=" mb-2 flex gap-2">
+                              <FormItem className="flex-1">
+                                <FormControl>
+                                  <TokenInput token={item} {...field} />
+                                </FormControl>
+                              </FormItem>
+                              <MinusSquare
+                                size={44}
+                                className="cursor-pointer text-gray-700 hover:text-red-500"
+                                onClick={() => handleDeleteToken(index, item)}
+                              />
+                            </div>
+                            <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
+                              {fieldState.error?.message}
+                            </p>
+                          </div>
+                        );
+                      }}
+                    />
                   );
-                }}
+                })}
+              </div>
+              <SelectTokenDropdown
+                tokens={filteredTokens}
+                onTokenSelect={handleSelectToken}
+                title="Add another Token"
               />
-            );
-          })}
-          <SelectTokenDropdown
-            tokens={nfts}
-            onTokenSelect={handleSelectToken}
-            title="Add another NFT"
-          />
+            </TabsContent>
+            <TabsContent value="nfts">
+              <div>
+                {nftFields?.map((item, index) => {
+                  return (
+                    <FormField
+                      defaultValue=""
+                      key={item.id}
+                      control={form.control}
+                      name={`nfts.${index}.tokenId`}
+                      render={({ field, fieldState }) => {
+                        return (
+                          <div className="relative">
+                            <div className=" mb-2 flex gap-2">
+                              <FormItem className="flex-1">
+                                <FormControl>
+                                  <NftInput token={item} {...field} />
+                                </FormControl>
+                              </FormItem>
+                              <MinusSquare
+                                size={44}
+                                className="cursor-pointer text-gray-700 hover:text-red-500"
+                                onClick={() => handleDeleteToken(index, item)}
+                              />
+                            </div>
+                            <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
+                              {fieldState.error?.message}
+                            </p>
+                          </div>
+                        );
+                      }}
+                    />
+                  );
+                })}
+                <SelectTokenDropdown
+                  tokens={filteredNfts}
+                  onTokenSelect={handleSelectToken}
+                  title="Add another NFT"
+                />
+              </div>
+            </TabsContent>
+          </Tabs>
+          <div className="mt-4 flex justify-end">
+            <SendButton
+              hidden={!to}
+              disabled={
+                form.formState.isSubmitting ||
+                !!form.formState.errors.tokens?.length ||
+                !fields.length
+              }
+              isLoading={form.formState.isSubmitting}
+            />
+          </div>
         </form>
       </Form>
-    </>
+    </div>
   );
-};
+}
 
 interface ISendButton {
   hidden: boolean;
@@ -291,12 +275,12 @@ const SendButton = ({ hidden, isLoading, disabled }: ISendButton) => {
   );
 };
 
-interface InputProps extends ControllerRenderProps<Inputs, any> {
+interface TokenInputProps extends ControllerRenderProps<AssetInputs, any> {
   token: InputToken;
   name: string;
 }
 
-const TokenInput = React.forwardRef<HTMLInputElement, InputProps>(
+const TokenInput = React.forwardRef<HTMLInputElement, TokenInputProps>(
   ({ token, name, ...rest }, ref) => {
     const _value = (rest.value ? +rest.value : 0) * +token?.price;
 
@@ -318,46 +302,20 @@ const TokenInput = React.forwardRef<HTMLInputElement, InputProps>(
 );
 TokenInput.displayName = "TokenInput";
 
-interface NftInputProps extends ControllerRenderProps<Inputs, any> {
+interface NftInputProps extends ControllerRenderProps<AssetInputs, any> {
   token: NFTToken;
   name: string;
 }
 const NftInput = React.forwardRef<HTMLInputElement, NftInputProps>(
   ({ token, name, ...rest }, ref) => {
-    const _value = (rest.value ? +rest.value : 0) * +token?.price;
-
     return (
       <>
-        <div className="flex h-full flex-1 items-center bg-gray-1000 rounded-xl px-1 ">
-          <div className="flex justify-between flex-1 bg-gray-800 px-2 rounded-xl py-1.5">
-            <div className="gap-2 flex">
-              <Image
-                // blurDataURL={token.}
-                src={token.tokenUrl ?? "/app_icon.svg"}
-                alt={token.tickerSymbol}
-                width={24}
-                height={24}
-                unoptimized
-              />
-              <div>{token.tickerSymbol}</div>
-            </div>
-            <div className="flex gap-1">
-              <div className="bg-gray-700  text-gray-200">#{token.tokenId}</div>
-              <div>{minifyAddress(token.contractAddress)}</div>
-            </div>
-          </div>
+        <div className="flex h-full flex-1 items-center rounded-xl bg-gray-1000 px-1 ">
+          <NftItem token={token} />
         </div>
         <Input
           type="hidden"
-          className="absolute w-0 h-0"
           wrapperClassName="absolute w-0 h-0"
-          // className="flex-1 pl-24"
-          // rightElement={<div>~${_value.toFixed(2)}</div>}
-          // leftButton={
-          //   <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
-          //     <div>{token?.tickerSymbol}</div>
-          //   </div>
-          // }
           {...rest}
           ref={ref}
         />
