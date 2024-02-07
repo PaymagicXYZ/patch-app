@@ -15,21 +15,25 @@ import { UserId } from "@patchwallet/patch-sdk";
 import { sendTx } from "@/libs/actions/tx";
 import { useSendContextStore } from "@/hooks/useSendContextStore";
 import { UserContext } from "@/context/user-provider";
-import { InputToken, SocialProfile, Token } from "@/types";
+import { InputToken, NFTToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/hooks/useConstructTx";
 import { SelectTokenDropdown } from "./SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "./Spinner";
 import { useRouter } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-
+import Image from "next/image";
+import { minifyAddress } from "@/utils/checkUserId";
 type Inputs = { tokens: InputToken[] };
+type NftInputs = { nfts: NFTToken[] };
 
 export function ChooseTokensSection({
   tokens,
   profile,
+  nfts,
 }: {
   tokens: Token[];
+  nfts: NFTToken[];
   profile: SocialProfile;
 }) {
   const router = useRouter();
@@ -152,6 +156,7 @@ export function ChooseTokensSection({
             <SelectTokenDropdown
               tokens={filteredTokens}
               onTokenSelect={handleSelectToken}
+              title="Add another Token"
             />
             <div className="mt-4 flex justify-end">
               <SendButton
@@ -169,10 +174,91 @@ export function ChooseTokensSection({
       </TabsContent>
       <TabsContent value="nfts">
         {/* <UserLookupServerForm by="address" /> */}
+        <NFTTabContent nfts={nfts} />
       </TabsContent>
     </Tabs>
   );
 }
+
+const NFTTabContent = ({ nfts }: { nfts: NFTToken[] }) => {
+  const form = useForm<NftInputs>({ reValidateMode: "onChange" });
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "nfts",
+  });
+
+  const handleSelectToken = (token: NFTToken) => {
+    append({
+      ...token,
+    });
+  };
+
+  const handleDeleteToken = (index: number) => {
+    remove(index);
+  };
+
+  const onSubmit: SubmitHandler<NftInputs> = async (data) => {
+    console.log("onSubmit");
+  };
+  return (
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          {fields?.map((item, index) => {
+            return (
+              <FormField
+                defaultValue=""
+                key={item.id}
+                control={form.control}
+                rules={
+                  {
+                    // pattern: {
+                    //   value: /^\d*\.?\d+$/,
+                    //   message: "Please provide a valid number",
+                    // },
+                    // validate: {
+                    //   sufficient: (v) =>
+                    //     +v < +item.amount || "Insufficient balance",
+                    //   positive: (v) =>
+                    //     +v > 0 || "Please provide a positive number",
+                    // },
+                  }
+                }
+                name={`nfts.${index}.tokenId`}
+                render={({ field, fieldState }) => {
+                  return (
+                    <div className="relative">
+                      <div className=" mb-2 flex gap-2">
+                        <FormItem className="flex-1">
+                          <FormControl>
+                            <NftInput token={item} {...field} />
+                          </FormControl>
+                        </FormItem>
+                        <MinusSquare
+                          size={44}
+                          className="cursor-pointer text-gray-700 hover:text-red-500"
+                          onClick={() => handleDeleteToken(index)}
+                        />
+                      </div>
+                      <p className="relative -bottom-6 left-2 top-0 text-sm text-red-600">
+                        {fieldState.error?.message}
+                      </p>
+                    </div>
+                  );
+                }}
+              />
+            );
+          })}
+          <SelectTokenDropdown
+            tokens={nfts}
+            onTokenSelect={handleSelectToken}
+            title="Add another NFT"
+          />
+        </form>
+      </Form>
+    </>
+  );
+};
 
 interface ISendButton {
   hidden: boolean;
@@ -231,3 +317,52 @@ const TokenInput = React.forwardRef<HTMLInputElement, InputProps>(
   },
 );
 TokenInput.displayName = "TokenInput";
+
+interface NftInputProps extends ControllerRenderProps<Inputs, any> {
+  token: NFTToken;
+  name: string;
+}
+const NftInput = React.forwardRef<HTMLInputElement, NftInputProps>(
+  ({ token, name, ...rest }, ref) => {
+    const _value = (rest.value ? +rest.value : 0) * +token?.price;
+
+    return (
+      <>
+        <div className="flex h-full flex-1 items-center bg-gray-1000 rounded-xl px-1 ">
+          <div className="flex justify-between flex-1 bg-gray-800 px-2 rounded-xl py-1.5">
+            <div className="gap-2 flex">
+              <Image
+                // blurDataURL={token.}
+                src={token.tokenUrl ?? "/app_icon.svg"}
+                alt={token.tickerSymbol}
+                width={24}
+                height={24}
+                unoptimized
+              />
+              <div>{token.tickerSymbol}</div>
+            </div>
+            <div className="flex gap-1">
+              <div className="bg-gray-700  text-gray-200">#{token.tokenId}</div>
+              <div>{minifyAddress(token.contractAddress)}</div>
+            </div>
+          </div>
+        </div>
+        <Input
+          type="hidden"
+          className="absolute w-0 h-0"
+          wrapperClassName="absolute w-0 h-0"
+          // className="flex-1 pl-24"
+          // rightElement={<div>~${_value.toFixed(2)}</div>}
+          // leftButton={
+          //   <div className="flex items-center rounded-lg border-[0.5px] border-gray-800 bg-gray-900 p-2.5 py-1 text-gray-600">
+          //     <div>{token?.tickerSymbol}</div>
+          //   </div>
+          // }
+          {...rest}
+          ref={ref}
+        />
+      </>
+    );
+  },
+);
+NftInput.displayName = "NftInput";

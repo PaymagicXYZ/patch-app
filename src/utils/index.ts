@@ -1,6 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { SupportedSocialNetworksDetails } from "@/types";
+import { BalanceItem } from "@covalenthq/client-sdk";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -52,3 +53,22 @@ export function getSupportedLookupNetworks(
     },
   };
 }
+
+export const sortCovalentAssetsByType = (assets: BalanceItem[]) => {
+  return assets.reduce(
+    (acc, curr) => {
+      if (curr.type === "nft") {
+        acc["nfts"].push(curr);
+      }
+      if (curr.type === "cryptocurrency") {
+        acc["tokens"].push(curr);
+      }
+
+      return acc;
+    },
+    {
+      nfts: [] as BalanceItem[],
+      tokens: [] as BalanceItem[],
+    },
+  );
+};

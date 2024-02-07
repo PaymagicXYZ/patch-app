@@ -5,12 +5,18 @@ export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   leftButton?: React.ReactNode;
   rightElement?: React.ReactNode;
+  wrapperClassName?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, leftButton, rightElement, ...props }, ref) => {
+  (
+    { className, type, leftButton, rightElement, wrapperClassName, ...props },
+    ref,
+  ) => {
     return (
-      <div className={cn("relative flex h-11 items-end flex-1")}>
+      <div
+        className={cn("relative flex h-11 items-end flex-1", wrapperClassName)}
+      >
         {leftButton && (
           <div className="absolute inset-y-0 left-0 flex items-center pl-2">
             {leftButton}

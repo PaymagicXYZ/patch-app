@@ -1,12 +1,12 @@
 import { covalentService } from "@/libs/services/covalent";
 import WidgetContainer from "./WidgetContainer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { Token } from "@/types";
+import { NFTToken, Token } from "@/types";
 import { Address, Chain } from "@patchwallet/patch-sdk";
 import { formatUnits } from "viem";
 import Image from "next/image";
-import { BalanceItem } from "@covalenthq/client-sdk";
 import { minifyAddress } from "@/utils/checkUserId";
+import { sortCovalentAssetsByType } from "@/utils";
 
 export async function AssetsTab({
   chain,
@@ -18,37 +18,26 @@ export async function AssetsTab({
   const tokenBalance =
     (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];
 
-  const assets = tokenBalance.reduce(
-    (acc, curr) => {
-      if (curr.type === "nft") {
-        acc["nfts"].push(curr);
-      }
-      if (curr.type === "cryptocurrency") {
-        acc["tokens"].push(curr);
-      }
-
-      return acc;
-    },
-    {
-      nfts: [] as BalanceItem[],
-      tokens: [] as BalanceItem[],
-    },
-  );
+  const sortedAssets = sortCovalentAssetsByType(tokenBalance);
 
   return (
     <WidgetContainer className="h-[416px]">
       <Tabs defaultValue="tokens" className="flex h-full flex-col">
         <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
           <TabTrigger
-            count={assets.tokens.length}
+            count={sortedAssets.tokens.length}
             title="Tokens"
             value="tokens"
           />
-          <TabTrigger count={assets.nfts.length} title="NFTs" value="nfts" />
+          <TabTrigger
+            count={sortedAssets.nfts.length}
+            title="NFTs"
+            value="nfts"
+          />
         </TabsList>
         <TabsContent value="tokens" className="h-full flex-1">
           <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
-            {assets?.tokens.map((token) => (
+            {sortedAssets?.tokens.map((token) => (
               <TokenRow
                 key={token.contract_ticker_symbol}
                 tickerSymbol={token.contract_ticker_symbol}
@@ -65,14 +54,14 @@ export async function AssetsTab({
         </TabsContent>
         <TabsContent value="nfts" className="h-full flex-1">
           <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
-            {assets?.nfts.map((token) => {
+            {sortedAssets?.nfts.map((token) => {
               return (
                 <NFTRow
                   key={token.nft_data[0]?.token_id}
                   tickerSymbol={token.contract_display_name}
                   contractAddress={token.contract_address}
                   price={token.quote_rate?.toFixed(2) ?? 0}
-                  tokenUrl={token.nft_data[0]?.token_url}
+                  tokenUrl={token.nft_data[0]?.external_data?.image}
                   tokenId={token.nft_data[0]?.token_id?.toString()}
                 />
               );
@@ -114,11 +103,6 @@ const TokenRow = ({
     </div>
   );
 };
-
-interface NFTToken extends Omit<Token, "amount" | "decimals" | "logoUrl"> {
-  tokenId?: string;
-  tokenUrl?: string;
-}
 
 const NFTRow = ({
   price,

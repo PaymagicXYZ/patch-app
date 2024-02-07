@@ -11,6 +11,7 @@ import { Separator } from "./ui/separator";
 import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
+import { sortCovalentAssetsByType } from "@/utils";
 
 export async function SendDialogContent({
   profile,
@@ -25,7 +26,9 @@ export async function SendDialogContent({
   const authed = _user && isAuthed(profile.patchUserId, _user);
 
   const tokenBalance =
-    (await covalentService.fetchTokenBalance(address, chain)) ?? [];
+    (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];
+
+  const sortedAssets = sortCovalentAssetsByType(tokenBalance);
 
   return authed ? (
     <div className="flex flex-col">
@@ -33,16 +36,28 @@ export async function SendDialogContent({
       <Separator className="my-4" />
       <ChooseTokensSection
         profile={profile}
-        tokens={tokenBalance?.map((token) => {
+        tokens={sortedAssets.tokens?.map((token) => {
           return {
             tickerSymbol: token.contract_ticker_symbol,
             amount: token.balance
               ? formatUnits(token.balance, token.contract_decimals)
               : "0",
             logoUrl: token.logo_url,
-            price: token.quote_rate.toFixed(2),
+            price: token.quote_rate?.toFixed(2),
             contractAddress: token.contract_address,
             decimals: token.contract_decimals,
+          };
+        })}
+        nfts={sortedAssets.nfts?.map((nft) => {
+          return {
+            tickerSymbol: nft.contract_display_name,
+            contractAddress: nft.contract_address,
+            price: nft.quote_rate?.toFixed(2) ?? 0,
+            tokenUrl: nft.nft_data[0]?.external_data?.image,
+            tokenId: nft.nft_data[0]?.token_id?.toString(),
+            amount: nft.balance?.toString() ?? "1",
+            logoUrl: nft.logo_url,
+            decimals: nft.contract_decimals,
           };
         })}
       />

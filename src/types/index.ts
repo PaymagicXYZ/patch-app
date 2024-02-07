@@ -69,6 +69,11 @@ export interface Token {
   decimals: number;
 }
 
+export interface NFTToken extends Token {
+  tokenId?: string;
+  tokenUrl?: string;
+}
+
 export interface InputToken extends Token {
   value: string;
 }

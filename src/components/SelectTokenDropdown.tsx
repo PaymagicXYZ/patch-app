@@ -1,4 +1,4 @@
-import { Token } from "@/types";
+import { NFTToken, Token } from "@/types";
 import React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Button } from "./ui/button";
@@ -15,9 +15,11 @@ import Image from "next/image";
 export function SelectTokenDropdown({
   tokens,
   onTokenSelect,
+  title,
 }: {
-  tokens: Token[];
-  onTokenSelect: (token: Token) => void;
+  tokens: Token[] | NFTToken[];
+  onTokenSelect: (token: Token | NFTToken) => void;
+  title: string;
 }) {
   const [open, setOpen] = React.useState(false);
   return (
@@ -30,7 +32,7 @@ export function SelectTokenDropdown({
           className="mt-2 w-full justify-center border-none bg-gray-850 text-gray-600 hover:bg-gray-850/80 hover:text-gray-600/80"
         >
           <PlusIcon className="mx-2" />
-          {"Add another Token"}
+          {title}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-full bg-gray-900 p-0 sm:w-96 md:w-[600px]">
