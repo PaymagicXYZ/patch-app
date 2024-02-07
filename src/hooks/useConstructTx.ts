@@ -1,6 +1,6 @@
 import { InputToken, MetaTransaction, NFTToken } from "@/types";
 import { ERC1155Abi } from "@/utils/abis";
-import { NATIVE_TOKEN_ADDRESSES } from "@/utils/chain";
+import { NATIVE_TOKEN_ADDRESSES } from "@/utils/constants";
 import { Address, HexString } from "@patchwallet/patch-sdk";
 import { encodeFunctionData, erc20Abi, parseEther, parseUnits, erc721Abi } from "viem";
 

@@ -4,6 +4,7 @@ import type { UserId } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
 import isUserId from "@/utils/checkUserId";
 import { UserContext } from "@/context/user-provider";
+import { isSupportedChain } from "@/utils/chain";
 
 const AccountSelector = ({
   userAddressMap,
@@ -12,17 +13,27 @@ const AccountSelector = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
-  const { setUser, setSelectedAddress, selectedAddress } =
+  const { setUser, setSelectedAddress, selectedAddress, user, chain } =
     useContext(UserContext);
-  const user = pathname.split("/")[1];
-  const chain = pathname.split("/")[2] || "";
 
   useEffect(() => {
-    if (isUserId(user) && userAddressMap[user]) {
-      setUser(user);
-      setSelectedAddress(userAddressMap[user]);
+    if (!user) {
+      const userIds = Object.keys(userAddressMap);
+      const _defaultUser = userIds[userIds.length - 1] as UserId;
+      setUser(_defaultUser);
+      setSelectedAddress(userAddressMap[_defaultUser]);
     }
-  }, [userAddressMap, user, setSelectedAddress, setUser]);
+  }, [userAddressMap, setUser, setSelectedAddress]);
+
+  // useEffect(() => {
+  //   const _user = pathname.split("/")[1];
+  //   const _chain = pathname.split("/")[2] || "";
+  //   if (isUserId(_user) && isSupportedChain(_chain)) {
+  //     // setUser(_user);
+  //     // setSelectedAddress(userAddressMap[_user]);
+  //     router.replace(`/${_user}/${_chain}`);
+  //   }
+  // }, [chain]);
 
   return (
     <div>

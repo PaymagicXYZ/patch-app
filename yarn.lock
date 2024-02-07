@@ -458,14 +458,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@patchwallet/patch-sdk@npm:0.0.6":
-  version: 0.0.6
-  resolution: "@patchwallet/patch-sdk@npm:0.0.6"
+"@patchwallet/patch-sdk@npm:0.0.9":
+  version: 0.0.9
+  resolution: "@patchwallet/patch-sdk@npm:0.0.9"
   dependencies:
     typescript: "npm:^5.3.3"
   peerDependencies:
     typescript: ^5.0.0
-  checksum: faf57e34b4ae6e7db8b6d7366c65cff25fee3aafb8f2b9bc03db7ab50a7d10a689a49938c5bdc050b2e7395a2632a440d1d530dab5997904c34a81e8880170ed
+  checksum: bbf74b08b211370510f0263ef6be909480efa3fe0c2a205bba4df6342f1879260b21654130d213b3fef3e8a715af43446ab1562e2b4938c00b65efb6bcda9456
   languageName: node
   linkType: hard
 
@@ -5002,7 +5002,7 @@ __metadata:
     "@clerk/nextjs": "npm:^4.29.3"
     "@covalenthq/client-sdk": "npm:^0.8.5"
     "@hookform/resolvers": "npm:^3.3.4"
-    "@patchwallet/patch-sdk": "npm:0.0.6"
+    "@patchwallet/patch-sdk": "npm:0.0.9"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@radix-ui/react-label": "npm:^2.0.2"
     "@radix-ui/react-popover": "npm:^1.0.7"
