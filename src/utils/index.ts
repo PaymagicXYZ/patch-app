@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getSupportedLookupNetworks(
   isMobile = false,
-): SupportedSocialNetworksDetails {
+): Omit<SupportedSocialNetworksDetails, "farcaster"> {
   return {
     twitter: {
       id: "twitter",

@@ -1,9 +1,7 @@
 "server-only";
-import { getChainNameFromShortName } from "@/utils/chain";
 import { BalanceItem, CovalentClient } from "@covalenthq/client-sdk";
-import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
-// import { getChainNameFromShortName } from "@patchwallet/patch-sdk/utils";
-// import { getChainNameFromShortName } from "@patchwallet/patch-sdk/utils";
+import { Address, Chain } from "@patchwallet/patch-sdk";
+import { getChainNameFromShortName } from "@patchwallet/patch-sdk/utils";
 
 class CovalentServiceV2 {
   private covalentInstance = new CovalentClient(process.env.COVALENT_API_KEY!);

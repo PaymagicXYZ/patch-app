@@ -4,7 +4,6 @@ import type { UserId } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
 import isUserId from "@/utils/checkUserId";
 import { UserContext } from "@/context/user-provider";
-import { isSupportedChain } from "@/utils/chain";
 
 const AccountSelector = ({
   userAddressMap,
