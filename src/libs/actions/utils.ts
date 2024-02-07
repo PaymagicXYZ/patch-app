@@ -19,7 +19,6 @@ export async function resolveSocialProfile(userId: UserId) {
 
   const profile = await supportedSocialNetworks[network].resolveUser(userName);
   const address = (await client.resolve(userId)) as Address;
-  console.log("RESOLVED profile", profile);
   return {
     profile,
     address,

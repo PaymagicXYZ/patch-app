@@ -34,7 +34,6 @@ class CovalentServiceV2 {
           chainName,
           address as Address,
         );
-      console.log("response", response);
 
       if (response.error) {
         return null;

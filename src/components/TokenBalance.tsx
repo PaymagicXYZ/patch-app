@@ -13,7 +13,6 @@ export const TokenBalance = async ({
   const address = (await client.resolve(wallet)) as Address;
 
   const balance = await covalentService.fetchTokenBalance(address, chain);
-  // console.log("balance", balance)
   return (
     <pre>
       {balance?.map((token) => {

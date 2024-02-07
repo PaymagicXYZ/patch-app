@@ -11,6 +11,7 @@ import { GenericDialog } from "./GenericDialog";
 import { SendDialogContent } from "./SendDialogContent";
 import { Separator } from "./ui/separator";
 import { cn } from "@/utils";
+import Link from "next/link";
 
 async function ProfileWidget({
   address,
@@ -23,15 +24,20 @@ async function ProfileWidget({
   chain: Chain;
   className?: string;
 }) {
-  console.log({ address, profile });
   const whatToVerify =
     profile?.network === "tel"
       ? "phone number"
       : profile?.network === "email"
-        ? "email"
-        : "social account";
+      ? "email"
+      : "social account";
   return (
     <WidgetContainer className={cn("", className)}>
+      {/*For testing purposes */}
+      <Link
+        href={`/success?txHash=0x8f9c8d8347a909e0c7d6bf79087fcda0e298519fc0bd2f3055f8c82792bfb28f&userId=${profile.patchUserId}`}
+      >
+        Go
+      </Link>
       <div className="flex justify-between">
         {address && <ProfileInfo profile={profile} checkMark />}
         <ViewAddressBtn

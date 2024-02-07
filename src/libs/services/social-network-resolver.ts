@@ -61,7 +61,6 @@ const twitter = {
         )
           .then(async (response) => response.json())
           .then((data) => {
-            // console.log("DATA", data)
             if (data && data.data) {
               return {
                 name: data.data.name,
@@ -147,7 +146,6 @@ const tel = {
             patchUserId: `${this.name}:${userName}` as UserId,
           };
         } else {
-          console.log("RESPONSE", response);
           throw new Error("Invalid Phone number");
         }
       });

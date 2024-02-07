@@ -32,9 +32,8 @@ export async function SendDialogContent({
       <ChooseRecipientSection />
       <Separator className="my-4" />
       <ChooseTokensSection
-        userId={profile.patchUserId}
+        profile={profile}
         tokens={tokenBalance?.map((token) => {
-          console.log("TOKEN FROM RESPO", token);
           return {
             tickerSymbol: token.contract_ticker_symbol,
             amount: token.balance

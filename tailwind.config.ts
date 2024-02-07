@@ -44,6 +44,7 @@ const config = {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'top-to-bottom': 'top-to-bottom 10s cubic-bezier(0.645, 0.045, 0.355, 1) infinite',
+        'twitter-pulse': 'pulse 2.25s infinite cubic-bezier(0.66, 0.33, 0, 1)'
       },
       colors: {
         orange: {

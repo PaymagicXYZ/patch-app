@@ -15,7 +15,7 @@ import { UserId } from "@patchwallet/patch-sdk";
 import { sendTx } from "@/libs/actions/tx";
 import { useSendContextStore } from "@/hooks/useSendContextStore";
 import { UserContext } from "@/context/user-provider";
-import { InputToken, Token } from "@/types";
+import { InputToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/hooks/useConstructTx";
 import { SelectTokenDropdown } from "./SelectTokenDropdown";
 import { useEffect } from "react";
@@ -27,10 +27,10 @@ type Inputs = { tokens: InputToken[] };
 
 export function ChooseTokensSection({
   tokens,
-  userId,
+  profile,
 }: {
   tokens: Token[];
-  userId: UserId;
+  profile: SocialProfile;
 }) {
   const router = useRouter();
   const to = useSendContextStore((state) => state.to);
@@ -60,15 +60,14 @@ export function ChooseTokensSection({
 
     const tx = await sendTx(
       chain,
-      userId,
+      profile.patchUserId,
       formattedTxData.to,
       formattedTxData.value,
       formattedTxData.data,
     );
-    console.log("tx", tx);
 
     if (tx && tx.txHash) {
-      router.push(`/success?txHash=${tx.txHash}`);
+      router.push(`/success?txHash=${tx.txHash}&userId=${profile.patchUserId}`);
     }
   };
 

@@ -24,9 +24,8 @@ export default function ModalSlot({ children }: { children: React.ReactNode }) {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-gray-800 flex flex-col justify-center">
+      <DialogContent className="min-w-[260px] max-w-[660px] bg-gray-900 border-none flex flex-col justify-center p-0 bg-gradient-to-b from-[#213409] to-black overflow-hidden">
         {children}
-        
       </DialogContent>
     </Dialog>
   );
