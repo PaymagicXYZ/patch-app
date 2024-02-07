@@ -1,5 +1,6 @@
 import UserDetail from "@/components/User";
 import { auth, UserButton, SignInButton } from "@clerk/nextjs";
+import { Suspense } from "react";
 
 export default function Nav() {
   const { userId } = auth();
@@ -10,7 +11,9 @@ export default function Nav() {
       ) : (
         <SignInButton afterSignInUrl={`/user`} />
       )}
-      <UserDetail />
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserDetail />
+      </Suspense>
     </nav>
   );
 }
