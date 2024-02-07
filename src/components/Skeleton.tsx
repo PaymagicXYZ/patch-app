@@ -20,3 +20,27 @@ export const InventoryTabsSkeleton = () => {
     </Skeleton>
   );
 };
+
+export const ProfileWidgetHeaderSkeleton = () => {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="flex gap-2">
+        <Skeleton className="h-11 w-11 rounded-full" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-4 w-24" />
+        </div>
+      </div>
+      <Skeleton className="h-14 w-[125px]" />
+    </div>
+  );
+};
+
+export const ProfileWidgetMidSectionSkeleton = () => {
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <Skeleton className="my-1 mb-4 h-10 w-32" />
+      <Skeleton className="h-[50px] w-40" />
+    </div>
+  );
+};

@@ -1,10 +1,9 @@
 "use server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserLookupServerForm } from "./UserLookupForm";
-import { SocialProfile } from "@/types";
 import { currentUser } from "@clerk/nextjs/server";
 import isAuthed from "@/utils/isAuthed";
-import { Address, Chain } from "@patchwallet/patch-sdk";
+import { Chain, UserId } from "@patchwallet/patch-sdk";
 import ProfileInfo from "./ProfileInfo";
 import { SignInButton } from "@clerk/nextjs";
 import { Separator } from "./ui/separator";
@@ -12,18 +11,18 @@ import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
 import { sortCovalentAssetsByType } from "@/utils";
+import { resolveSocialProfile } from "@/libs/actions/utils";
 
 export async function SendDialogContent({
-  profile,
   chain,
-  address,
+  userId,
 }: {
-  profile: SocialProfile;
   chain: Chain;
-  address: Address;
+  userId: UserId;
 }) {
   const _user = await currentUser();
-  const authed = _user && isAuthed(profile.patchUserId, _user);
+  const authed = _user && isAuthed(userId, _user);
+  const { address, profile } = await resolveSocialProfile(userId);
 
   const tokenBalance =
     (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];

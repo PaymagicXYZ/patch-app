@@ -2,19 +2,22 @@ import { covalentService } from "@/libs/services/covalent";
 import WidgetContainer from "./WidgetContainer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { NFTToken, Token } from "@/types";
-import { Address, Chain } from "@patchwallet/patch-sdk";
+import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 import { formatUnits } from "viem";
 import Image from "next/image";
 import { minifyAddress } from "@/utils/checkUserId";
 import { sortCovalentAssetsByType } from "@/utils";
+import { resolveSocialProfile } from "@/libs/actions/utils";
 
 export async function AssetsTab({
   chain,
-  address,
+  userId,
 }: {
   chain: Chain;
-  address: Address;
+  userId: UserId;
 }) {
+  const { address } = await resolveSocialProfile(userId);
+
   const tokenBalance =
     (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];
 

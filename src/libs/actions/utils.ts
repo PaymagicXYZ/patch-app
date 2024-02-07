@@ -9,16 +9,22 @@ import { isAddress } from "viem";
 import { client } from "../client";
 import z from "zod";
 import { utilsService } from "../services/utils";
+import { notFound } from "next/navigation";
 
 export async function resolveSocialProfile(userId: UserId) {
   if (!isUserId(userId)) {
-    throw new Error("Invalid userId");
+    notFound();
   }
   const network = userId.split(":")[0] as SocialNetwork;
   const userName = userId.split(":")[1];
 
   const profile = await supportedSocialNetworks[network].resolveUser(userName);
   const address = (await client.resolve(userId)) as Address;
+
+  if (!address) {
+    notFound();
+  }
+
   return {
     profile,
     address,

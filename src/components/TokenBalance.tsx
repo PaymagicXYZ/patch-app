@@ -1,6 +1,7 @@
 import { client } from "@/libs/client";
 import { covalentService } from "@/libs/services/covalent";
 import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
+import { notFound } from "next/navigation";
 
 export const TokenBalance = async ({
   wallet,
@@ -11,6 +12,10 @@ export const TokenBalance = async ({
 }) => {
   if (!wallet) return <div>Wallet not found</div>;
   const address = (await client.resolve(wallet)) as Address;
+
+  if (!address) {
+    notFound();
+  }
 
   const balance = await covalentService.fetchTokenBalance(address, chain);
   return (

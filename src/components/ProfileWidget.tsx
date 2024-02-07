@@ -2,34 +2,38 @@ import { Suspense } from "react";
 import ViewAddressBtn from "./ViewAddressBtn";
 import ProfileInfo from "./ProfileInfo";
 import WidgetContainer from "./WidgetContainer";
-import { SocialProfile } from "@/types";
 import { Skeleton } from "./ui/skeleton";
-import { Address, Chain } from "@patchwallet/patch-sdk";
+import { Chain, UserId } from "@patchwallet/patch-sdk";
 import { AddressTooltip } from "./AddressTooltip";
 import { TotalBalanceUSD } from "./TotalBalance";
 import { GenericDialog } from "./GenericDialog";
 import { SendDialogContent } from "./SendDialogContent";
 import { Separator } from "./ui/separator";
 import { cn } from "@/utils";
-import Link from "next/link";
+import { resolveSocialProfile } from "@/libs/actions/utils";
+import {
+  ProfileWidgetHeaderSkeleton,
+  ProfileWidgetMidSectionSkeleton,
+} from "./Skeleton";
 
 async function ProfileWidget({
-  address,
-  profile,
+  userId,
   chain,
   className,
 }: {
-  address: Address;
-  profile: SocialProfile;
+  userId: UserId;
   chain: Chain;
   className?: string;
 }) {
+  const network = userId.split(":")[0];
+
   const whatToVerify =
-    profile?.network === "tel"
+    network === "tel"
       ? "phone number"
-      : profile?.network === "email"
+      : network === "email"
       ? "email"
       : "social account";
+
   return (
     <WidgetContainer className={cn("", className)}>
       {/*For testing purposes */}
@@ -38,21 +42,16 @@ async function ProfileWidget({
       >
         Go
       </Link> */}
-      <div className="flex justify-between">
-        {address && <ProfileInfo profile={profile} checkMark />}
-        <ViewAddressBtn
-          disabled={!address}
-          url={`https://polygonscan.com/address/${address}`}
-          text="Block Explorer"
-        />
-      </div>
+
+      <Suspense fallback={<ProfileWidgetHeaderSkeleton />}>
+        <ProfileWidgetHeader userId={userId} />
+      </Suspense>
 
       <div className="mt-8 flex w-full flex-col items-center justify-center">
         <p className="text-sm leading-7 text-gray-700">TOTAL BALANCE</p>
-        <Suspense fallback={<Skeleton className="my-1 h-10 w-32 mb-4" />}>
-          <TotalBalanceUSD address={address} chain={chain} />
+        <Suspense fallback={<ProfileWidgetMidSectionSkeleton />}>
+          <ProfileWidgetMiddle chain={chain} userId={userId} />
         </Suspense>
-        <AddressTooltip address={address} />
       </div>
       <div className="mt-7 flex justify-end px-4">
         <GenericDialog
@@ -61,16 +60,41 @@ async function ProfileWidget({
         >
           <Separator />
           <Suspense fallback={<Skeleton className="h-80 w-96" />}>
-            <SendDialogContent
-              profile={profile}
-              chain={chain}
-              address={address}
-            />
+            <SendDialogContent chain={chain} userId={userId} />
           </Suspense>
-          {/* <Separator className="mt-4" /> */}
         </GenericDialog>
       </div>
     </WidgetContainer>
+  );
+}
+
+async function ProfileWidgetHeader({ userId }: { userId: UserId }) {
+  const { address, profile } = await resolveSocialProfile(userId as UserId);
+  return (
+    <div className="flex justify-between">
+      <ProfileInfo profile={profile} checkMark />
+      <ViewAddressBtn
+        disabled={!address}
+        url={`https://polygonscan.com/address/${address}`}
+        text="Block Explorer"
+      />
+    </div>
+  );
+}
+
+async function ProfileWidgetMiddle({
+  userId,
+  chain,
+}: {
+  userId: UserId;
+  chain: Chain;
+}) {
+  const { address } = await resolveSocialProfile(userId as UserId);
+  return (
+    <div className="flex flex-col items-center justify-center">
+      <TotalBalanceUSD address={address} chain={chain} />
+      <AddressTooltip address={address} />
+    </div>
   );
 }
 
