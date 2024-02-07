@@ -27,6 +27,7 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./",\
         "packageDependencies": [\
           ["@clerk/nextjs", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:4.29.3"],\
+          ["@moonpay/moonpay-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.3"],\
           ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
           ["@types/node", "npm:20.10.6"],\
           ["@types/react", "npm:18.2.46"],\
@@ -382,6 +383,28 @@ const RAW_RUNTIME_STATE =
           ["@jridgewell/trace-mapping", "npm:0.3.19"],\
           ["@jridgewell/resolve-uri", "npm:3.1.1"],\
           ["@jridgewell/sourcemap-codec", "npm:1.4.15"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["@moonpay/moonpay-react", [\
+      ["npm:1.5.3", {\
+        "packageLocation": "../../../../.yarn/berry/cache/@moonpay-moonpay-react-npm-1.5.3-f5d6c567a2-10c0.zip/node_modules/@moonpay/moonpay-react/",\
+        "packageDependencies": [\
+          ["@moonpay/moonpay-react", "npm:1.5.3"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.3", {\
+        "packageLocation": "./.yarn/__virtual__/@moonpay-moonpay-react-virtual-36fd0c2055/5/.yarn/berry/cache/@moonpay-moonpay-react-npm-1.5.3-f5d6c567a2-10c0.zip/node_modules/@moonpay/moonpay-react/",\
+        "packageDependencies": [\
+          ["@moonpay/moonpay-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.3"],\
+          ["@types/react", "npm:18.2.46"],\
+          ["react", "npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -4273,6 +4296,7 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["patch-integration", "workspace:."],\
           ["@clerk/nextjs", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:4.29.3"],\
+          ["@moonpay/moonpay-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.3"],\
           ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.5"],\
           ["@types/node", "npm:20.10.6"],\
           ["@types/react", "npm:18.2.46"],\

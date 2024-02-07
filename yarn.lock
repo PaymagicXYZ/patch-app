@@ -242,6 +242,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@moonpay/moonpay-react@npm:^1.5.3":
+  version: 1.5.3
+  resolution: "@moonpay/moonpay-react@npm:1.5.3"
+  peerDependencies:
+    react: ">=16"
+  checksum: 664e47958c8970a2ec916fef08e67f869b4798e1790adebefe7056cb82001dec9669979db68f60dfabb92da3f5ff609d953d628d9934a87c1d2c6ca06c91674a
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:14.0.4":
   version: 14.0.4
   resolution: "@next/env@npm:14.0.4"
@@ -3551,6 +3560,7 @@ __metadata:
   resolution: "patch-integration@workspace:."
   dependencies:
     "@clerk/nextjs": "npm:^4.29.3"
+    "@moonpay/moonpay-react": "npm:^1.5.3"
     "@patchwallet/patch-sdk": "npm:^0.0.5"
     "@types/node": "npm:20.10.6"
     "@types/react": "npm:18.2.46"

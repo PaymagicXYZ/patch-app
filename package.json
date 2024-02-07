@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.3",
+    "@moonpay/moonpay-react": "^1.5.3",
     "@patchwallet/patch-sdk": "^0.0.5",
     "autoprefixer": "10.4.15",
     "eslint": "8.56.0",
