@@ -53,7 +53,7 @@ const SelectChain = ({
 }) => {
   return (
     <Select onValueChange={onValueChange} defaultValue={selectedChain}>
-      <SelectTrigger className="w-60 rounded-lg bg-gray-950">
+      <SelectTrigger className="w-60 rounded-lg bg-gray-950 text-gray-300">
         <SelectValue />
       </SelectTrigger>
       <SelectContent className="px-1">

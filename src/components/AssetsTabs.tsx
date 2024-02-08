@@ -2,7 +2,7 @@ import { covalentService } from "@/libs/services/covalent";
 import WidgetContainer from "./WidgetContainer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { NFTToken, Token } from "@/types";
-import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
+import { Chain, UserId } from "@patchwallet/patch-sdk";
 import { formatUnits } from "viem";
 import Image from "next/image";
 import { minifyAddress } from "@/utils/checkUserId";
@@ -40,9 +40,9 @@ export async function AssetsTab({
         </TabsList>
         <TabsContent value="tokens" className="h-full flex-1">
           <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
-            {sortedAssets?.tokens.map((token) => (
+            {sortedAssets?.tokens.map((token, i) => (
               <TokenRow
-                key={token.contract_ticker_symbol}
+                key={token.contract_ticker_symbol + i}
                 tickerSymbol={token.contract_ticker_symbol}
                 amount={
                   token.balance
