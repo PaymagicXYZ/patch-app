@@ -76,3 +76,7 @@ export const sortCovalentAssetsByType = (assets: BalanceItem[]) => {
 export function isNFT(token: Token | NFTToken): token is NFTToken {
   return (token as NFTToken).tokenId !== undefined;
 }
+
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
