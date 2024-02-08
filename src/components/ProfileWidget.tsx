@@ -15,6 +15,7 @@ import {
   ProfileWidgetHeaderSkeleton,
   ProfileWidgetMidSectionSkeleton,
 } from "./Skeleton";
+import { ArrowUp } from "lucide-react";
 
 async function ProfileWidget({
   userId,
@@ -56,8 +57,10 @@ async function ProfileWidget({
       <div className="mt-7 flex justify-end px-4">
         <GenericDialog
           dialogId="sendDialog"
+          btnTitle="Send"
           title="Send"
           subtitle={`In order to send you need to first verify your ${whatToVerify}`}
+          leftIcon={<ArrowUp />}
         >
           <Separator />
           <Suspense fallback={<Skeleton className="h-80 w-96" />}>
