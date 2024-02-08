@@ -55,6 +55,7 @@ async function ProfileWidget({
       </div>
       <div className="mt-7 flex justify-end px-4">
         <GenericDialog
+          dialogId="sendDialog"
           title="Send"
           subtitle={`In order to send you need to first verify your ${whatToVerify}`}
         >

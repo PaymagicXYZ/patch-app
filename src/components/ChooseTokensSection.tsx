@@ -57,9 +57,9 @@ export function ChooseTokensSection({
     resetForm(true);
   }, []);
 
-  const resetForm = (withAddress = false) => {
+  const resetForm = (resetSelectedAddress = false) => {
     form.reset({ nfts: [], tokens: [] });
-    withAddress && setTo(null);
+    resetSelectedAddress && setTo(null);
   };
 
   const onSubmit: SubmitHandler<AssetInputs> = async (data) => {
