@@ -1,9 +1,17 @@
 "use client";
 import React, { useEffect, useContext } from "react";
 import type { UserId } from "@patchwallet/patch-sdk";
-import { useRouter, usePathname } from "next/navigation";
-import isUserId from "@/utils/checkUserId";
+import { useRouter } from "next/navigation";
 import { UserContext } from "@/context/user-provider";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { cn } from "@/utils";
 
 const AccountSelector = ({
   userAddressMap,
@@ -11,7 +19,6 @@ const AccountSelector = ({
   userAddressMap: Record<string, string>;
 }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const { setUser, setSelectedAddress, selectedAddress, user, chain } =
     useContext(UserContext);
 
@@ -22,42 +29,36 @@ const AccountSelector = ({
       setUser(_defaultUser);
       setSelectedAddress(userAddressMap[_defaultUser]);
     }
-  }, [userAddressMap, setUser, setSelectedAddress]);
+  }, [userAddressMap, setUser, setSelectedAddress, user]);
 
-  // useEffect(() => {
-  //   const _user = pathname.split("/")[1];
-  //   const _chain = pathname.split("/")[2] || "";
-  //   if (isUserId(_user) && isSupportedChain(_chain)) {
-  //     // setUser(_user);
-  //     // setSelectedAddress(userAddressMap[_user]);
-  //     router.replace(`/${_user}/${_chain}`);
-  //   }
-  // }, [chain]);
+  const handleUserChange = (value: string) => {
+    const _userId = value as UserId;
+    setUser(_userId);
+    setSelectedAddress(userAddressMap[_userId]);
+    router.push(`/${value}/${chain}`);
+  };
 
   return (
-    <div>
-      <select
-        value={user}
-        onChange={(e) => {
-          const _userId = e.target.value as UserId;
-          setUser(_userId);
-          setSelectedAddress(userAddressMap[_userId]);
-          router.push(`/${e.target.value}/${chain}`);
-        }}
-      >
-        <option value="" disabled>
-          Select a wallet
-        </option>
-        {Object.keys(userAddressMap).map((username, i) => (
-          <option key={i} value={username}>
-            {username}
-          </option>
-        ))}
-      </select>
-      {user && (
-        <pre className="w-full text-xs md:text-base">{selectedAddress}</pre>
-      )}
-    </div>
+    <Select onValueChange={handleUserChange} value={user}>
+      <SelectTrigger className="w-72 rounded-lg bg-gray-950">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="px-1">
+        <SelectGroup className="flex flex-col gap-2">
+          {Object.keys(userAddressMap).map((username, i) => {
+            return (
+              <SelectItem
+                key={i}
+                value={username}
+                className={cn("focus:bg-gray-850 text-gray-100 px-2")}
+              >
+                {username}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };
 

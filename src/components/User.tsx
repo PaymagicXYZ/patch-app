@@ -31,7 +31,7 @@ export default async function UserDetail() {
     );
 
     return (
-      <div className="w-full">
+      <div className="w-full flex justify-end flex-wrap">
         <AccountSelector userAddressMap={usernameAddressMap} />
         <ChainSelector />
       </div>

@@ -75,7 +75,7 @@ async function ProfileWidget({
 async function ProfileWidgetHeader({ userId }: { userId: UserId }) {
   const { address, profile } = await resolveSocialProfile(userId as UserId);
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-wrap justify-between">
       <ProfileInfo profile={profile} checkMark />
       <ViewAddressBtn
         disabled={!address}

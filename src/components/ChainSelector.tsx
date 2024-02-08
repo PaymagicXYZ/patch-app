@@ -54,7 +54,7 @@ const SelectChain = ({
   return (
     <Select onValueChange={onValueChange} defaultValue={selectedChain}>
       <SelectTrigger className="w-60 rounded-lg bg-gray-950">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue />
       </SelectTrigger>
       <SelectContent className="px-1">
         <SelectGroup className="flex flex-col gap-2">
