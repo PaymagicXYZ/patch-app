@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { cn, getSupportedLookupNetworks } from "@/utils";
 import { Button } from "./ui/button";
 import { useDebouncedCallback } from "use-debounce";
-import { useContext } from "react";
+import { FormEvent, useContext } from "react";
 import { UserContext } from "@/context/user-provider";
 import { SupportedSocialNetworkIds, UserLookupBy } from "@/types";
 import { useModifyQueryParams } from "@/hooks/useModifyQueryParams";
@@ -28,7 +28,8 @@ export const UserLookupClientForm = () => {
 
   const withDebounce = useDebouncedCallback(modifyQueryParams, 300);
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     const params = new URLSearchParams(searchParams);
 
     if (!params.get("provider")) {
@@ -44,21 +45,26 @@ export const UserLookupClientForm = () => {
   const queryString = searchParams.get("query")?.toString();
 
   return (
-    <div className="flex w-full gap-2 sm:w-4/6 sm:max-w-[520px]">
-      <LookupInput
-        onInputChange={(e) => withDebounce("query", e.target.value)}
-        onSelectChange={(value) => modifyQueryParams("provider", value)}
-        defaultValue={queryString}
-        placeholder={lookupProviderDetails.placeholder}
-        className="w-full"
-      />
-      <Button
-        onClick={handleOnSubmit}
-        disabled={!queryString}
-        className="rounded-lg bg-orange-100 text-gray-1000"
+    <div className="flex sm:w-4/6 sm:max-w-[520px]">
+      <form
+        className="flex w-full flex-1 items-center gap-2"
+        onSubmit={handleOnSubmit}
       >
-        Look up wallet
-      </Button>
+        <LookupInput
+          onInputChange={(e) => withDebounce("query", e.target.value)}
+          onSelectChange={(value) => modifyQueryParams("provider", value)}
+          defaultValue={queryString}
+          placeholder={lookupProviderDetails.placeholder}
+          className="w-full"
+        />
+        <Button
+          type="submit"
+          disabled={!queryString}
+          className="rounded-lg bg-orange-100 text-gray-1000"
+        >
+          Look up wallet
+        </Button>
+      </form>
     </div>
   );
 };
