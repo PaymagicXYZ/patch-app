@@ -8,6 +8,7 @@ import { Chain } from "@patchwallet/patch-sdk";
 import { redirect } from "next/navigation";
 import { User } from "@clerk/nextjs/server";
 import { SignBtn } from "@/components/SignBtn";
+import Link from "next/link";
 
 export default async function Page({
   params,
@@ -26,7 +27,10 @@ export default async function Page({
         <TokenBalance wallet={userId} chain={chain as Chain} />
         <NFTBalance wallet={userId} chain={chain as Chain} />
         {user && isAuthed(userId, user) && (
-          <SignBtn userId={userId} token={token} />
+          <>
+            <SignBtn userId={userId} token={token} />
+            <Link href={`/${userId}/${chain}/buy`}>Buy some tokens</Link>
+          </>
         )}
       </main>
     );
