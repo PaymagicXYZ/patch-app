@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 import Image from "next/image";
 
 type Props = {

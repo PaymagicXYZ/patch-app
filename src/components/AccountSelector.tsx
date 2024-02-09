@@ -11,8 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
-import { cn } from "@/utils";
-import isUserId from "@/utils/checkUserId";
+import { cn } from "@/libs/utils";
+import isUserId from "@/libs/utils/checkUserId";
 
 const AccountSelector = ({
   userAddressMap,

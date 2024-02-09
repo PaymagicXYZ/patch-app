@@ -1,5 +1,5 @@
 "use server";
-import isUserId from "@/utils/checkUserId";
+import isUserId from "@/libs/utils/checkUserId";
 import {
   SocialNetwork,
   supportedSocialNetworks,

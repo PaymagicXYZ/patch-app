@@ -5,8 +5,8 @@ import { NFTToken, Token } from "@/types";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 import { formatUnits } from "viem";
 import Image from "next/image";
-import { minifyAddress } from "@/utils/checkUserId";
-import { sortCovalentAssetsByType } from "@/utils";
+import { minifyAddress } from "@/libs/utils/checkUserId";
+import { sortCovalentAssetsByType } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 
 export async function AssetsTab({

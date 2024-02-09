@@ -8,8 +8,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { DialogId, useDialogActions, useDialogIsOpen } from "@/hooks/useDialog";
-import { cn } from "@/utils";
+import { DialogId, useDialogActions, useDialogIsOpen } from "@/libs/hooks/useDialog";
+import { cn } from "@/libs/utils";
 
 export function GenericDialog({
   children,

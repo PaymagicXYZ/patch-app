@@ -2,7 +2,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { UserLookupServerForm } from "../../../../components/UserLookupForm";
 import { currentUser } from "@clerk/nextjs/server";
-import isAuthed from "@/utils/isAuthed";
+import isAuthed from "@/libs/utils/isAuthed";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 import ProfileInfo from "./ProfileInfo";
 import { SignInButton } from "@clerk/nextjs";
@@ -10,7 +10,7 @@ import { Separator } from "../../../../components/ui/separator";
 import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
-import { sortCovalentAssetsByType } from "@/utils";
+import { sortCovalentAssetsByType } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 
 export async function SendDialogContent({

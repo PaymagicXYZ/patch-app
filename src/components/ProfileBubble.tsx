@@ -1,4 +1,4 @@
-import { parseUserId } from "@/utils/checkUserId";
+import { parseUserId } from "@/libs/utils/checkUserId";
 import { UserId } from "@patchwallet/patch-sdk";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";

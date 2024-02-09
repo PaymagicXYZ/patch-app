@@ -1,4 +1,4 @@
-import isUserId from "@/utils/checkUserId";
+import isUserId from "@/libs/utils/checkUserId";
 import { notFound, redirect } from "next/navigation";
 
 export default function Page({ params }: { params: { userId: string } }) {

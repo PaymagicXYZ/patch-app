@@ -6,7 +6,7 @@ import Nav from "../components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 import ModalSlot from "@/app/@modal/components/ModalSlot";
 import UserProvider from "@/context/user-provider";
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 

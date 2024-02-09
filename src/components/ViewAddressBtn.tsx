@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 import { ArrowUpRight } from "lucide-react";
 
 type Props = {

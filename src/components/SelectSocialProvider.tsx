@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useState } from "react";
-import { cn, getSupportedLookupNetworks } from "@/utils";
+import { cn, getSupportedLookupNetworks } from "@/libs/utils";
 import { useSearchParams } from "next/navigation";
 import { SupportedSocialNetworkIds } from "@/types/";
 

@@ -9,7 +9,7 @@ import { TotalBalanceUSD } from "./TotalBalance";
 import { GenericDialog } from "../../../../components/GenericDialog";
 import { SendDialogContent } from "./SendDialogContent";
 import { Separator } from "../../../../components/ui/separator";
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 import {
   ProfileWidgetHeaderSkeleton,

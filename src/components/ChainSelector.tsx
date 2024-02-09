@@ -11,12 +11,12 @@ import {
   SelectValue,
 } from "./ui/select";
 import { UserContext } from "@/context/user-provider";
-import isUserId from "@/utils/checkUserId";
+import isUserId from "@/libs/utils/checkUserId";
 import {
   getChainNameFromShortName,
   supportedShortNames,
 } from "@patchwallet/patch-sdk/utils";
-import { capitalize, cn } from "@/utils";
+import { capitalize, cn } from "@/libs/utils";
 import Image from "next/image";
 
 const ChainSelector = () => {

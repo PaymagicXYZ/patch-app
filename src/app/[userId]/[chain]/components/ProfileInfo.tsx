@@ -3,7 +3,7 @@
 import Image from "next/image";
 import ProfileImg from "./ProfileImg";
 import { SocialProfile } from "@/types";
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 import { PhoneNumberUtil, PhoneNumberFormat } from "google-libphonenumber";
 
 const phoneUtil = PhoneNumberUtil.getInstance();

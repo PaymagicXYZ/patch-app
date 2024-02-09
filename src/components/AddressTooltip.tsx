@@ -1,7 +1,7 @@
 "use client";
 
-import { cn } from "@/utils";
-import { minifyAddress } from "@/utils/checkUserId";
+import { cn } from "@/libs/utils";
+import { minifyAddress } from "@/libs/utils/checkUserId";
 import { Address } from "@patchwallet/patch-sdk";
 import { Copy } from "lucide-react";
 import { useState } from "react";

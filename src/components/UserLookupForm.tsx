@@ -1,15 +1,15 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { cn, getSupportedLookupNetworks } from "@/utils";
+import { cn, getSupportedLookupNetworks } from "@/libs/utils";
 import { Button } from "./ui/button";
 import { useDebouncedCallback } from "use-debounce";
 import { FormEvent, use, useContext, useState } from "react";
 import { UserContext } from "@/context/user-provider";
 import { SupportedSocialNetworkIds, UserLookupBy } from "@/types";
-import { useModifyQueryParams } from "@/hooks/useModifyQueryParams";
+import { useModifyQueryParams } from "@/libs/hooks/useModifyQueryParams";
 import { LookupInput } from "./ui/lookup-input";
-import { useUserLookupBy } from "@/hooks/useUserLookupBy";
+import { useUserLookupBy } from "@/libs/hooks/useUserLookupBy";
 import { FormSubmissionLoader } from "./FormSubmissionLoader";
 
 /**

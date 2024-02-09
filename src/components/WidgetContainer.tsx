@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 
 function WidgetContainer(props: {
   children: React.ReactNode;

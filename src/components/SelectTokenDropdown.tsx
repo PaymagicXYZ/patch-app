@@ -11,8 +11,8 @@ import {
   CommandItem,
 } from "./ui/command";
 import Image from "next/image";
-import { isNFT } from "@/utils";
-import { minifyAddress } from "@/utils/checkUserId";
+import { isNFT } from "@/libs/utils";
+import { minifyAddress } from "@/libs/utils/checkUserId";
 
 export function SelectTokenDropdown({
   tokens,
