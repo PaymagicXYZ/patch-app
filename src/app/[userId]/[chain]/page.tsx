@@ -1,6 +1,6 @@
 import { Chain, UserId } from "@patchwallet/patch-sdk";
-import ProfileWidget from "@/components/ProfileWidget";
-import { AssetsTab } from "@/components/AssetsTabs";
+import ProfileWidget from "@/app/[userId]/[chain]/components/ProfileWidget";
+import { AssetsTab } from "@/app/[userId]/[chain]/components/AssetsTabs";
 import { Suspense } from "react";
 import { InventoryTabsSkeleton } from "@/components/Skeleton";
 

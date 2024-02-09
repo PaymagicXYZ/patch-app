@@ -3,7 +3,7 @@
 import { useSelectedLayoutSegment } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent } from "./ui/dialog";
+import { Dialog, DialogContent } from "../../../components/ui/dialog";
 import { useDialogActions } from "@/hooks/useDialog";
 
 export default function ModalSlot({ children }: { children: React.ReactNode }) {

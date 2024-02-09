@@ -1,11 +1,11 @@
-import UserDetail from "@/components/User";
+import UserDetail from "@/components/layout/User";
 import { Suspense } from "react";
 import { NavSignIn } from "./NavSignIn";
 import Image from "next/image";
-import walletLogo from "../../public/wallet_logo.svg";
-import { HeaderLookupForm } from "./UserLookupForm";
+import walletLogo from "../../../public/wallet_logo.svg";
+import { HeaderLookupForm } from "../UserLookupForm";
 import Link from "next/link";
-import { HeaderSkeleton } from "./Skeleton";
+import { HeaderSkeleton } from "../Skeleton";
 import AlphaBanner from "./AlphaBanner";
 
 export default function Nav() {

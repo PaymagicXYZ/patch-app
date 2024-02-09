@@ -18,10 +18,13 @@ class CovalentServiceV2 {
             nft: withNFTs,
           },
         );
-      // console.log("data result", response);
-      return response.data?.items;
+
+      return {
+        data: response.data?.items || [],
+        error: response.error_message,
+      };
     } else {
-      return null;
+      return { data: [], error: "Invalid Chain" };
     }
   }
 

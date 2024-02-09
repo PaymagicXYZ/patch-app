@@ -9,8 +9,8 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem } from "./ui/form";
-import { Input } from "./ui/input";
+import { Form, FormControl, FormField, FormItem } from "../../../../components/ui/form";
+import { Input } from "../../../../components/ui/input";
 import { Address } from "@patchwallet/patch-sdk";
 import {
   useSendContextActions,
@@ -19,11 +19,11 @@ import {
 import { UserContext } from "@/context/user-provider";
 import { InputToken, NFTToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/hooks/useConstructTx";
-import { NftItem, SelectTokenDropdown } from "./SelectTokenDropdown";
+import { NftItem, SelectTokenDropdown } from "../../../../components/SelectTokenDropdown";
 import { useEffect } from "react";
-import { LoadingSpinner } from "./Spinner";
+import { LoadingSpinner } from "../../../../components/Spinner";
 import { useRouter } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../components/ui/tabs";
 import { sendTx } from "@/libs/actions/tx";
 
 type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };

@@ -1,12 +1,12 @@
 "use server";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserLookupServerForm } from "./UserLookupForm";
+import { UserLookupServerForm } from "../../../../components/UserLookupForm";
 import { currentUser } from "@clerk/nextjs/server";
 import isAuthed from "@/utils/isAuthed";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 import ProfileInfo from "./ProfileInfo";
 import { SignInButton } from "@clerk/nextjs";
-import { Separator } from "./ui/separator";
+import { Separator } from "../../../../components/ui/separator";
 import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
@@ -24,10 +24,10 @@ export async function SendDialogContent({
   const authed = _user && isAuthed(userId, _user);
   const { address, profile } = await resolveSocialProfile(userId);
 
-  const tokenBalance =
+  const { data } =
     (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];
 
-  const sortedAssets = sortCovalentAssetsByType(tokenBalance);
+  const sortedAssets = sortCovalentAssetsByType(data || []);
 
   return authed ? (
     <div className="flex flex-col">

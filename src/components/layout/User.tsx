@@ -3,7 +3,7 @@ import type { User } from "@clerk/nextjs/api";
 import { client } from "@/libs/client";
 import type { UserId } from "@patchwallet/patch-sdk";
 import AccountSelector from "@/components/AccountSelector";
-import ChainSelector from "./ChainSelector";
+import ChainSelector from "../ChainSelector";
 export default async function UserDetail() {
   const user: User | null = await currentUser();
 

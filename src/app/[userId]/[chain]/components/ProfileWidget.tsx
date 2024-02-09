@@ -1,20 +1,20 @@
 import { Suspense } from "react";
-import ViewAddressBtn from "./ViewAddressBtn";
+import ViewAddressBtn from "../../../../components/ViewAddressBtn";
 import ProfileInfo from "./ProfileInfo";
-import WidgetContainer from "./WidgetContainer";
-import { Skeleton } from "./ui/skeleton";
+import WidgetContainer from "../../../../components/WidgetContainer";
+import { Skeleton } from "../../../../components/ui/skeleton";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
-import { AddressTooltip } from "./AddressTooltip";
+import { AddressTooltip } from "../../../../components/AddressTooltip";
 import { TotalBalanceUSD } from "./TotalBalance";
-import { GenericDialog } from "./GenericDialog";
+import { GenericDialog } from "../../../../components/GenericDialog";
 import { SendDialogContent } from "./SendDialogContent";
-import { Separator } from "./ui/separator";
+import { Separator } from "../../../../components/ui/separator";
 import { cn } from "@/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 import {
   ProfileWidgetHeaderSkeleton,
   ProfileWidgetMidSectionSkeleton,
-} from "./Skeleton";
+} from "../../../../components/Skeleton";
 import { ArrowUp } from "lucide-react";
 
 async function ProfileWidget({
