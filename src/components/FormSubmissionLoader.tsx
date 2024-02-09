@@ -1,3 +1,4 @@
+"use client"
 import { useFormStatus } from "react-dom";
 import { LoadingSpinner } from "./Spinner";
 import { cn } from "@/libs/utils";

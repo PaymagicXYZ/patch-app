@@ -1,17 +1,15 @@
 "use server";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserLookupServerForm } from "../../../../components/UserLookupForm";
 import { currentUser } from "@clerk/nextjs/server";
 import isAuthed from "@/libs/utils/isAuthed";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
-import ProfileInfo from "./ProfileInfo";
-import { SignInButton } from "@clerk/nextjs";
 import { Separator } from "../../../../components/ui/separator";
 import { ChooseTokensSection } from "./ChooseTokensSection";
 import { covalentService } from "@/libs/services/covalent";
 import { formatUnits } from "viem";
 import { sortCovalentAssetsByType } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
+import { ChooseRecipientSection } from "./ChooseRecipientSection";
+import { DialogNonAuth } from "./DialogNonAuth";
 
 export async function SendDialogContent({
   chain,
@@ -63,39 +61,6 @@ export async function SendDialogContent({
       />
     </div>
   ) : (
-    <div className="mt-4 flex w-full items-center justify-between rounded-xl border-[0.5px] border-gray-800 bg-gray-950 p-2">
-      <ProfileInfo profile={profile} checkMark />
-      <SignInButton redirectUrl={`/${profile.patchUserId}/${chain}`} />
-    </div>
-  );
-}
-
-function ChooseRecipientSection() {
-  return (
-    <Tabs defaultValue="patch-user" className="inline-block">
-      <div className="mb-1 flex text-sm uppercase leading-4 text-gray-400">
-        choose recipient
-      </div>
-      <TabsList className="grid w-full grid-cols-3 gap-1 bg-gray-1000">
-        <TabsTrigger value="patch-user" className="">
-          Patch User
-        </TabsTrigger>
-        <TabsTrigger value="address" className="">
-          Address
-        </TabsTrigger>
-        <TabsTrigger value="domain" className="">
-          Domain
-        </TabsTrigger>
-      </TabsList>
-      <TabsContent value="patch-user" defaultChecked>
-        <UserLookupServerForm by={"default"} />
-      </TabsContent>
-      <TabsContent value="address">
-        <UserLookupServerForm by="address" />
-      </TabsContent>
-      <TabsContent value="domain">
-        <UserLookupServerForm by="domain" />
-      </TabsContent>
-    </Tabs>
+    <DialogNonAuth chain={chain} profile={profile} />
   );
 }
