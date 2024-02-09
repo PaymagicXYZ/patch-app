@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useContext } from "react";
 import type { UserId } from "@patchwallet/patch-sdk";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { UserContext } from "@/context/user-provider";
 import {
   Select,
@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { cn } from "@/utils";
+import isUserId from "@/utils/checkUserId";
 
 const AccountSelector = ({
   userAddressMap,
@@ -19,17 +20,24 @@ const AccountSelector = ({
   userAddressMap: Record<string, string>;
 }) => {
   const router = useRouter();
-  const { setUser, setSelectedAddress, selectedAddress, user, chain } =
-    useContext(UserContext);
+  const { setUser, setSelectedAddress, user, chain } = useContext(UserContext);
+  const pathname = usePathname();
 
   useEffect(() => {
-    if (!user) {
-      const userIds = Object.keys(userAddressMap);
-      const _defaultUser = userIds[userIds.length - 1] as UserId;
-      setUser(_defaultUser);
-      setSelectedAddress(userAddressMap[_defaultUser]);
+    // Note: User's wallet shouldn't be set on the home page
+    if (pathname === "/") {
+      setUser("");
+      setSelectedAddress("");
+      return;
     }
-  }, [userAddressMap, setUser, setSelectedAddress, user]);
+
+    const _user = pathname.split("/")[1].toLowerCase();
+
+    if (isUserId(_user) && userAddressMap[_user]) {
+      setSelectedAddress(userAddressMap[_user]);
+      setUser(_user);
+    }
+  }, [pathname, userAddressMap, setUser, setSelectedAddress]);
 
   const handleUserChange = (value: string) => {
     const _userId = value as UserId;
@@ -41,7 +49,7 @@ const AccountSelector = ({
   return (
     <Select onValueChange={handleUserChange} value={user}>
       <SelectTrigger className="w-72 rounded-lg bg-gray-950 text-gray-300">
-        <SelectValue />
+        <SelectValue placeholder="Select account" />
       </SelectTrigger>
       <SelectContent className="px-1">
         <SelectGroup className="flex flex-col gap-2">

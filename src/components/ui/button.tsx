@@ -6,7 +6,7 @@ import { cn } from "@/utils/index";
 
 // eslint-disable-next-line tailwindcss/no-custom-classname
 const buttonVariants = cva(
-  "ring-offset-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-gray-950 dark:focus-visible:ring-gray-300",
+  "ring-offset-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-30 dark:ring-offset-gray-950 dark:focus-visible:ring-gray-300",
   {
     variants: {
       variant: {

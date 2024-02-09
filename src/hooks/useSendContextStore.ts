@@ -3,7 +3,9 @@ import { create } from "zustand";
 
 interface SendContextStore {
   to: Address | null;
-  setTo: (to: Address | null) => void;
+  actions: {
+    setTo: (to: Address | null) => void;
+  };
 }
 
 // Note: As much as I want to avoid client state, I think that's the *only* place where it would become pretty messy if we don't use it
@@ -11,5 +13,11 @@ interface SendContextStore {
 // That would increase the loading time of the page because the authChecks would need to happen before showing the page and right now they are pre-rendered inside the "Send" modal.
 export const useSendContextStore = create<SendContextStore>((set) => ({
   to: null,
-  setTo: (to: Address | null) => set({ to }),
+  actions: {
+    setTo: (to) => set({ to }),
+  },
 }));
+
+export const useSendContextTo = () => useSendContextStore((state) => state.to);
+export const useSendContextActions = () =>
+  useSendContextStore((state) => state.actions);

@@ -18,7 +18,8 @@ class CovalentServiceV2 {
             nft: withNFTs,
           },
         );
-      return response.data.items;
+      // console.log("data result", response);
+      return response.data?.items;
     } else {
       return null;
     }

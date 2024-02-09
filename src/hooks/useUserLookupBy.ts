@@ -4,7 +4,7 @@ import { Address, UserId } from "@patchwallet/patch-sdk";
 import { useEffect, useRef } from "react";
 import { useFormState } from "react-dom";
 import { useDebouncedCallback } from "use-debounce";
-import { useSendContextStore } from "./useSendContextStore";
+import { useSendContextActions } from "./useSendContextStore";
 
 const initialServerFormState = {
   address: "" as UserId,
@@ -16,8 +16,8 @@ const initialServerFormState = {
 export const useUserLookupBy = ({
   by = "default",
 }: { by?: UserLookupBy } = {}) => {
-  const setTo = useSendContextStore((state) => state.setTo);
   const formRef = useRef<HTMLFormElement>(null);
+  const { setTo } = useSendContextActions();
   const fireSubmitWithDebounce = useDebouncedCallback(() => {
     formRef.current?.requestSubmit();
   }, 500);

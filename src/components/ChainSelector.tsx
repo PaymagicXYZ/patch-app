@@ -59,7 +59,14 @@ const SelectChain = ({
       <SelectContent className="px-1">
         <SelectGroup className="flex flex-col gap-2">
           {(supportedShortNames as string[]).map((chain, i) => {
-            const _chain = getChainNameFromShortName(chain);
+            let formattedChainName: string;
+            if (chain === "maticmum") {
+              formattedChainName = "Mumbai";
+            } else {
+              formattedChainName = capitalize(
+                getChainNameFromShortName(chain).split("-")[0],
+              );
+            }
             return (
               <SelectItem
                 key={i}
@@ -74,7 +81,7 @@ const SelectChain = ({
                     width={28}
                     height={28}
                   />
-                  {capitalize(_chain.split("-")[0])}
+                  {capitalize(formattedChainName)}
                 </div>
               </SelectItem>
             );

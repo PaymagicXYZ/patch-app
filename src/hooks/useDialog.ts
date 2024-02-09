@@ -11,7 +11,7 @@ interface DialogProps {
   };
 }
 
-export const useDialogStore = create<DialogProps>((set) => ({
+const useDialogStore = create<DialogProps>((set) => ({
   modalIds: ["successDialog", "sendDialog"],
   openedModals: { successDialog: false, sendDialog: false },
   actions: {

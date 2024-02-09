@@ -81,7 +81,7 @@ const NftCommandItem = ({
     <CommandItem
       key={token.tickerSymbol}
       value={token.tickerSymbol}
-      className="flex items-center justify-between bg-gray-900 text-gray-50"
+      className="flex items-center justify-between bg-gray-900 text-gray-300 aria-selected:text-gray-100"
       onSelect={onSelect}
     >
       <NftItem token={token} />
@@ -100,10 +100,12 @@ export const NftItem = ({ token }: { token: NFTToken }) => {
           height={24}
           unoptimized
         />
-        <div>{token.tickerSymbol}</div>
+        <div className="flex flex-col items-start md:items-center md:flex-row md:gap-2">
+          <div>{token.tickerSymbol}</div>
+          <div className="rounded-md  bg-gray-700 text-gray-400">#{token.tokenId}</div>
+        </div>
       </div>
-      <div className="flex gap-1">
-        <div className="bg-gray-700  text-gray-200">#{token.tokenId}</div>
+      <div className="flex-col gap-1 md:flex-row text-gray-500">
         <div>{minifyAddress(token.contractAddress)}</div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import Nav from "../components/Nav";
 import { Footer } from "@/components/Footer";
 import ModalSlot from "@/components/ModalSlot";
 import UserProvider from "@/context/user-provider";
+import { cn } from "@/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,7 @@ export default function RootLayout({
     <ClerkProvider>
       <UserProvider>
         <html lang="en">
-          <body className={inter.className}>
+          <body className={cn(inter.className, "light")}>
             <div className="flex min-h-screen flex-col">
               <Nav />
               {children}

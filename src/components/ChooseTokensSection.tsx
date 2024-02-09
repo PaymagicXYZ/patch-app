@@ -12,7 +12,10 @@ import {
 import { Form, FormControl, FormField, FormItem } from "./ui/form";
 import { Input } from "./ui/input";
 import { Address } from "@patchwallet/patch-sdk";
-import { useSendContextStore } from "@/hooks/useSendContextStore";
+import {
+  useSendContextActions,
+  useSendContextTo,
+} from "@/hooks/useSendContextStore";
 import { UserContext } from "@/context/user-provider";
 import { InputToken, NFTToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/hooks/useConstructTx";
@@ -35,8 +38,8 @@ export function ChooseTokensSection({
   profile: SocialProfile;
 }) {
   const router = useRouter();
-  const to = useSendContextStore((state) => state.to);
-  const setTo = useSendContextStore((state) => state.setTo);
+  const to = useSendContextTo();
+  const { setTo } = useSendContextActions();
   const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
   const form = useForm<AssetInputs>({ reValidateMode: "onChange" });
