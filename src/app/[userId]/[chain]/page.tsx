@@ -18,7 +18,7 @@ export default async function Wallet({
           <div className="mb-auto mt-6 flex justify-center md:mt-[108px] ">
             <div className="flex w-full flex-col gap-4 md:w-[600px]">
               <div className="flex basis-0 flex-col flex-wrap md:flex-nowrap">
-                <Suspense>
+                <Suspense fallback={<div className="w-full md:w-[600px] h-[328px] rounded-2xl bg-gray-900"></div>}>
                   <ProfileWidget
                     userId={_userId as UserId}
                     chain={params.chain}
