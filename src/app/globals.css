@@ -34,4 +34,5 @@
 body {
   color: rgb(var(--foreground-rgb));
   background-color: #111112 !important;
+  color: #ebedf0;
 }
