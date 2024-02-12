@@ -43,13 +43,13 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
     profile?.network === "twitter"
       ? `@${profile?.handle}`
       : profile?.network === "tel"
-        ? formatPhoneNumber(profile?.handle)
-        : profile?.handle;
+      ? formatPhoneNumber(profile?.handle)
+      : profile?.handle;
   return (
     <div className="flex">
       <ProfileImg
         size={size}
-        imageSrc={profile.image ?? `${profile.network}.svg`}
+        imageSrc={profile.image || `/${profile.network}.svg`}
       />
       <div className="m-auto ml-2 flex-col items-center gap-1">
         <div className="flex justify-between">
