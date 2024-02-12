@@ -25,7 +25,7 @@ export async function AssetsTab({
 
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
 
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
     <WidgetContainer className="h-[416px]">
