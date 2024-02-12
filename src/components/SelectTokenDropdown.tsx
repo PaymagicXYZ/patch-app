@@ -136,7 +136,7 @@ const TokenItem = ({
         />
         <div>{token.tickerSymbol}</div>
       </div>
-      <div className="text-gray-100">{token.amount}</div>
+      <div className="text-gray-100">{token.balance}</div>
     </CommandItem>
   );
 };

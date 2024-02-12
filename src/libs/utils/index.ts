@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { NFTToken, SupportedSocialNetworksDetails, Token } from "@/types";
 import { BalanceItem } from "@covalenthq/client-sdk";
+import { formatUnits } from "viem";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -54,21 +55,47 @@ export function getSupportedLookupNetworks(
   };
 }
 
-export const sortCovalentAssetsByType = (assets: BalanceItem[]) => {
+export const sortCovalentAssetsByType = (
+  assets: BalanceItem[],
+  includeFiatValue = false,
+) => {
   return assets.reduce(
     (acc, curr) => {
       if (curr.type === "nft") {
-        acc["nfts"].push(curr);
-      }
-      if (curr.type === "cryptocurrency") {
-        acc["tokens"].push(curr);
+        acc["nfts"].push({
+          tickerSymbol: curr.contract_display_name,
+          contractAddress: curr.contract_address,
+          price: curr.quote_rate?.toFixed(2) ?? 0,
+          tokenUrl: curr.nft_data[0]?.external_data?.image,
+          tokenId: curr.nft_data[0]?.token_id?.toString() ?? "0",
+          balance: curr.balance?.toString() ?? "1",
+          logoUrl: curr.logo_url,
+          decimals: curr.contract_decimals,
+          supportedERCStandards: curr.supports_erc as unknown as string[],
+        });
+      } else {
+        acc["tokens"].push({
+          tickerSymbol: curr.contract_ticker_symbol,
+          balance: curr.balance
+            ? formatUnits(curr.balance, curr.contract_decimals)
+            : "0",
+          logoUrl: curr.logo_url,
+          price: curr.quote_rate?.toFixed(2),
+          contractAddress: curr.contract_address,
+          decimals: curr.contract_decimals,
+        });
+
+        if (includeFiatValue) {
+          acc["fiatValue"] += curr.quote;
+        }
       }
 
       return acc;
     },
     {
-      nfts: [] as BalanceItem[],
-      tokens: [] as BalanceItem[],
+      nfts: [] as NFTToken[],
+      tokens: [] as Token[],
+      fiatValue: 0,
     },
   );
 };

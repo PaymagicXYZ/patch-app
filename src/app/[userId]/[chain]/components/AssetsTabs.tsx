@@ -1,6 +1,10 @@
-import { covalentService } from "@/libs/services/covalent";
 import WidgetContainer from "../../../../components/WidgetContainer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../../../components/ui/tabs";
 import { NFTToken, Token } from "@/types";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 import { formatUnits } from "viem";
@@ -8,6 +12,7 @@ import Image from "next/image";
 import { minifyAddress } from "@/libs/utils/checkUserId";
 import { sortCovalentAssetsByType } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
+import { fetchTokenBalance } from "@/libs/actions/tokens";
 
 export async function AssetsTab({
   chain,
@@ -18,41 +23,26 @@ export async function AssetsTab({
 }) {
   const { address } = await resolveSocialProfile(userId);
 
-  const { data, error } =
-    (await covalentService.fetchTokenBalance(address, chain, true)) ?? [];
+  const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
 
-  const sortedAssets = sortCovalentAssetsByType(data);
+  console.log("data", data);
 
   return (
     <WidgetContainer className="h-[416px]">
       <Tabs defaultValue="tokens" className="flex h-full flex-col">
         <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
           <TabTrigger
-            count={sortedAssets.tokens.length}
+            count={data.tokens?.length}
             title="Tokens"
             value="tokens"
           />
-          <TabTrigger
-            count={sortedAssets.nfts.length}
-            title="NFTs"
-            value="nfts"
-          />
+          <TabTrigger count={data.nfts?.length} title="NFTs" value="nfts" />
         </TabsList>
         <TabsContent value="tokens" className="h-full flex-1">
           <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
             {!error ? (
-              sortedAssets?.tokens.map((token, i) => (
-                <TokenRow
-                  key={token.contract_ticker_symbol + i}
-                  tickerSymbol={token.contract_ticker_symbol}
-                  amount={
-                    token.balance
-                      ? formatUnits(token.balance, token.contract_decimals)
-                      : "0"
-                  }
-                  logoUrl={token.logo_url}
-                  price={token.quote_rate?.toFixed(2)}
-                />
+              data?.tokens.map((token, i) => (
+                <TokenRow key={token.tickerSymbol + i} {...token} />
               ))
             ) : (
               <ErrorFallback />
@@ -62,15 +52,8 @@ export async function AssetsTab({
         <TabsContent value="nfts" className="h-full flex-1">
           <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
             {!error ? (
-              sortedAssets?.nfts.map((token) => (
-                <NFTRow
-                  key={token.nft_data[0]?.token_id}
-                  tickerSymbol={token.contract_display_name}
-                  contractAddress={token.contract_address}
-                  price={token.quote_rate?.toFixed(2) ?? 0}
-                  tokenUrl={token.nft_data[0]?.external_data?.image}
-                  tokenId={token.nft_data[0]?.token_id?.toString() ?? ""}
-                />
+              data?.nfts.map((token) => (
+                <NFTRow key={token.tokenId} {...token} />
               ))
             ) : (
               <ErrorFallback />
@@ -83,7 +66,7 @@ export async function AssetsTab({
 }
 
 const TokenRow = ({
-  amount,
+  balance,
   logoUrl,
   price,
   tickerSymbol,
@@ -105,9 +88,9 @@ const TokenRow = ({
             />
           </div>
           <div>{tickerSymbol}</div>
-          <div>{amount}</div>
+          <div>{balance}</div>
         </div>
-        <div>~${(+amount * +price)?.toFixed(2)}</div>
+        <div>~${(+balance * +price)?.toFixed(2)}</div>
       </div>
     </div>
   );

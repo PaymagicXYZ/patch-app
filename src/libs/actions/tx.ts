@@ -2,6 +2,7 @@
 import type { UserId, Chain, Address, HexString } from "@patchwallet/patch-sdk";
 import { auth } from "@clerk/nextjs";
 import { client } from "../client";
+import { revalidateTag } from "next/cache";
 
 export async function sendTx(
   chain: Chain,
@@ -10,6 +11,7 @@ export async function sendTx(
   value: String[],
   data: HexString[],
 ) {
+  // return;
   const { getToken } = auth();
   const _token = await getToken({
     template: "patchwallet",
@@ -30,6 +32,8 @@ export async function sendTx(
     delegatecall: 0,
     auth: _token,
   });
+
+  revalidateTag("token_balance");
 
   if ("txHash" in tx) {
     return {
