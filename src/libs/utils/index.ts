@@ -73,7 +73,8 @@ export const sortCovalentAssetsByType = (
           decimals: curr.contract_decimals,
           supportedERCStandards: curr.supports_erc as unknown as string[],
         });
-      } else {
+      }
+      if (curr.type === "cryptocurrency") {
         acc["tokens"].push({
           tickerSymbol: curr.contract_ticker_symbol,
           balance: curr.balance
@@ -84,10 +85,10 @@ export const sortCovalentAssetsByType = (
           contractAddress: curr.contract_address,
           decimals: curr.contract_decimals,
         });
+      }
 
-        if (includeFiatValue) {
-          acc["fiatValue"] += curr.quote;
-        }
+      if (includeFiatValue) {
+        acc["fiatValue"] += curr.quote;
       }
 
       return acc;
