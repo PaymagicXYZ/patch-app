@@ -15,21 +15,19 @@ export default async function UserDetail() {
         .filter((account) => account.provider)
         .map(
           (account) =>
-            `${account.provider.split("_")[1]}:${
-              account.username || account.externalId
-            }`
+            `${account.provider.split("_")[1]}:${account.username || account.externalId}`,
         ),
     ] as UserId[];
     const wallets = (await client.resolve(availableWallets)) as string[];
 
     return (
-      <>
+      <div className="w-full">
         <AccountSelector
           availableWallets={availableWallets}
           wallets={wallets}
         />
         <ChainSelector />
-      </>
+      </div>
     );
   }
 }

@@ -1,7 +1,7 @@
 "use server";
-
-import { client } from "../client";
 import type { UserId, Chain, Address, HexString } from "@patchwallet/patch-sdk";
+import { auth } from "@clerk/nextjs";
+import { client } from "../client";
 
 export async function sendTx(
   chain: Chain,
@@ -9,8 +9,18 @@ export async function sendTx(
   to: Address[],
   value: String[],
   data: HexString[],
-  auth: string
 ) {
+  const { getToken } = auth();
+  const _token = await getToken({
+    template: "patchwallet",
+  });
+
+  console.log({ chain, userId, to, value, data, _token });
+
+  if (!_token) {
+    throw new Error("Not authenticated");
+  }
+
   const tx = await client.tx({
     userId,
     chain,
@@ -18,7 +28,18 @@ export async function sendTx(
     value,
     data,
     delegatecall: 0,
-    auth,
+    auth: _token,
   });
-  return tx;
+
+  if ("txHash" in tx) {
+    return {
+      txHash: tx.txHash,
+    };
+  }
+
+  if ("error" in tx) {
+    return {
+      error: tx.error,
+    };
+  }
 }

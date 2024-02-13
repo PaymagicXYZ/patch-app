@@ -1,5 +1,6 @@
-import { fetchTokenBalance } from "@/libs/fetchTokenBalance";
-import { Chain, UserId } from "@patchwallet/patch-sdk";
+import { client } from "@/libs/client";
+import { covalentService } from "@/libs/services/covalent";
+import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 
 export const TokenBalance = async ({
   wallet,
@@ -9,6 +10,16 @@ export const TokenBalance = async ({
   chain: Chain;
 }) => {
   if (!wallet) return <div>Wallet not found</div>;
-  const balance = await fetchTokenBalance(wallet, chain);
-  return <pre>{JSON.stringify({ balance })}</pre>;
+  const address = (await client.resolve(wallet)) as Address;
+
+  const balance = await covalentService.fetchTokenBalance(address, chain);
+  return (
+    <pre>
+      {balance?.map((token) => {
+        return (
+          <div key={token.contract_address}>{token.contract_ticker_symbol}</div>
+        );
+      })}
+    </pre>
+  );
 };

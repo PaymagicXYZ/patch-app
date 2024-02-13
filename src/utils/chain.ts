@@ -55,16 +55,16 @@ export const ChainIdForChainName: ChainDetail = {
   },
 };
 export const supportedNetworks = Object.values(ChainIdForChainName).map(
-  (chain) => chain.AlchemyChainNetwork
+  (chain) => chain.AlchemyChainNetwork,
 );
 export const supportedChainNames = Object.values(ChainIdForChainName).map(
-  (chain) => chain.CovalentChainName
+  (chain) => chain.CovalentChainName,
 );
 export const supportedChainIds = Object.keys(ChainIdForChainName).map(
-  (chainIdStr) => Number(chainIdStr)
+  (chainIdStr) => Number(chainIdStr),
 );
 export const supportedShortNames = Object.values(ChainIdForChainName).map(
-  (chain) => chain.shortName
+  (chain) => chain.shortName,
 );
 export type Networks = (typeof supportedNetworks)[number];
 export type ChainName = (typeof supportedChainNames)[number];
@@ -78,24 +78,28 @@ export const getChainNameFromChainId = (chainId: ChainId): ChainName =>
 
 export const getChainIdFromNetwork = (network: Networks): ChainId => {
   const chainId = Object.keys(ChainIdForChainName).find(
-    (key) => ChainIdForChainName[Number(key)].AlchemyChainNetwork === network
+    (key) => ChainIdForChainName[Number(key)].AlchemyChainNetwork === network,
   );
   return Number(chainId);
 };
 
 export const getChainNameFromShortName = (shortName: ShortName): ChainName => {
   const chainName = Object.keys(ChainIdForChainName).find(
-    (key) => ChainIdForChainName[Number(key)].shortName === shortName
+    (key) => ChainIdForChainName[Number(key)].shortName === shortName,
   );
   return ChainIdForChainName[Number(chainName)].CovalentChainName;
 };
 
 export const getNetworkfromShortName = (shortName: ShortName): Networks => {
   const network = Object.keys(ChainIdForChainName).find(
-    (key) => ChainIdForChainName[Number(key)].shortName === shortName
+    (key) => ChainIdForChainName[Number(key)].shortName === shortName,
   );
   return ChainIdForChainName[Number(network)].AlchemyChainNetwork;
 };
 
 export const isSupportedChain = (chain: ShortName): boolean =>
   supportedShortNames.includes(chain);
+
+export const NATIVE_TOKEN_ADDRESSES = [
+  "0x0000000000000000000000000000000000001010",
+];

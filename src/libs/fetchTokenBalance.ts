@@ -12,7 +12,7 @@ export async function fetchTokenBalance(userId: UserId, chain: Chain) {
       headers: {
         "Accept-Encoding": "*",
         "Content-Type": "application/json",
-        Authorization: "Basic " + process.env.COVALENT_API_KEY,
+        Authorization: "Basic " + process.env.COVALENT_API_KEY2,
       },
     }).then((res) => res.json());
     return res.data.items;
