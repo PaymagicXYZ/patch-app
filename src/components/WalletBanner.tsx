@@ -1,4 +1,4 @@
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 
 function WalletBanner({ type }: { type: "about" | "claim" }) {
   return (

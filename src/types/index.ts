@@ -20,7 +20,10 @@ export type User = {
   userId: UserId;
 };
 
-export type SupportedSocialNetworkIds = Exclude<SocialNetwork, "discord">;
+export type SupportedSocialNetworkIds = Exclude<
+  SocialNetwork,
+  "discord" | "farcaster"
+>;
 
 export type SupportedSocialNetworksDetails = Record<
   SupportedSocialNetworkIds,
@@ -62,11 +65,17 @@ export type UserLookupBy = "address" | "domain" | "default";
 
 export interface Token {
   tickerSymbol: string;
-  amount: string;
+  balance: string;
   logoUrl: string;
   price: string;
   contractAddress: string;
   decimals: number;
+}
+
+export interface NFTToken extends Token {
+  tokenId: string;
+  tokenUrl?: string;
+  supportedERCStandards: string[];
 }
 
 export interface InputToken extends Token {

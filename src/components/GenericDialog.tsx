@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -6,43 +7,56 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { cn } from "@/utils";
-import { ArrowUp } from "lucide-react";
+import { DialogId, useDialogActions, useDialogIsOpen } from "@/libs/hooks/useDialog";
+import { cn } from "@/libs/utils";
 
 export function GenericDialog({
   children,
   className,
   title,
   subtitle,
-  TriggerComponent,
   FooterComponent,
+  dialogId,
+  isOpen,
+  onOpen,
+  leftIcon,
+  btnTitle,
 }: {
   children: React.ReactNode;
   className?: string;
   title: string;
   subtitle: string;
-  TriggerComponent?: React.ReactNode;
   FooterComponent?: React.ReactNode;
+  dialogId: DialogId;
+  isOpen?: boolean;
+  onOpen?: () => void;
+  leftIcon?: React.ReactNode;
+  btnTitle: string;
 }) {
+  const _isOpen = useDialogIsOpen(dialogId);
+  const { close, open } = useDialogActions();
+  const handleOnTriggerClick = () => {
+    open(dialogId);
+    onOpen?.();
+  };
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {TriggerComponent ? (
-          TriggerComponent
-        ) : (
-          <Button
-            className="cursor-pointer bg-orange-900 px-12 text-orange-100 hover:bg-orange-900/80"
-            asChild
-          >
-            <div className="flex items-center gap-1">
-              <ArrowUp />
-              <div>Send</div>
-            </div>
-          </Button>
-        )}
-      </DialogTrigger>
+    <Dialog
+      open={isOpen ?? _isOpen}
+      onOpenChange={() => close(dialogId)}
+      modal
+      defaultOpen={isOpen}
+    >
+      <Button
+        className="cursor-pointer bg-orange-900 px-12 text-orange-100 hover:bg-orange-900/80"
+        asChild
+        onClick={handleOnTriggerClick}
+      >
+        <div className="flex items-center gap-1">
+          {leftIcon}
+          <div>{btnTitle}</div>
+        </div>
+      </Button>
       <DialogContent
         className={cn(
           "min-w-[260px] max-w-[660px] bg-gray-900 border-none flex flex-col justify-center pb-0",

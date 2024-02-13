@@ -1,7 +1,7 @@
 import { ChangeEvent, HTMLInputTypeAttribute } from "react";
 import { Input } from "./input";
 import { SelectSocialProvider } from "../SelectSocialProvider";
-import { cn } from "@/utils";
+import { cn } from "@/libs/utils";
 
 type Props = {
   onInputChange: (value: ChangeEvent<HTMLInputElement>) => void;

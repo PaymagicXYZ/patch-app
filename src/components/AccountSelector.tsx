@@ -1,51 +1,72 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import type { UserId } from "@patchwallet/patch-sdk";
-import { useRouter, usePathname } from "next/navigation";
-import isUserId from "@/utils/checkUserId";
+import { usePathname, useRouter } from "next/navigation";
+import { UserContext } from "@/context/user-provider";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { cn } from "@/libs/utils";
+import isUserId from "@/libs/utils/checkUserId";
 
 const AccountSelector = ({
-  availableWallets,
-  wallets,
+  userAddressMap,
 }: {
-  availableWallets: UserId[];
-  wallets: string[];
+  userAddressMap: Record<string, string>;
 }) => {
   const router = useRouter();
+  const { setUser, setSelectedAddress, user, chain } = useContext(UserContext);
   const pathname = usePathname();
-  const [selectedAccount, setSelectedAccount] = useState<UserId | "">("");
-  const user = pathname.split("/")[1];
-  const chain = pathname.split("/")[2] || "";
+
   useEffect(() => {
-    if (isUserId(user) && availableWallets.lastIndexOf(user) > -1) {
-      setSelectedAccount(user);
+    // Note: User's wallet shouldn't be set on the home page
+    if (pathname === "/") {
+      setUser("");
+      setSelectedAddress("");
+      return;
     }
-  }, [availableWallets, user]);
+
+    const _user = pathname.split("/")[1].toLowerCase();
+
+    if (isUserId(_user) && userAddressMap[_user]) {
+      setSelectedAddress(userAddressMap[_user]);
+      setUser(_user);
+    }
+  }, [pathname, userAddressMap, setUser, setSelectedAddress]);
+
+  const handleUserChange = (value: string) => {
+    const _userId = value as UserId;
+    setUser(_userId);
+    setSelectedAddress(userAddressMap[_userId]);
+    router.push(`/${value}/${chain}`);
+  };
 
   return (
-    <div>
-      <select
-        value={selectedAccount}
-        onChange={(e) => {
-          setSelectedAccount((e.target.value as UserId) || "");
-          router.push(`/${e.target.value}/${chain}`);
-        }}
-      >
-        <option value="" disabled>
-          Select a wallet
-        </option>
-        {availableWallets.map((account, i) => (
-          <option key={i} value={account}>
-            {account}
-          </option>
-        ))}
-      </select>
-      {selectedAccount && (
-        <pre className="md:text-base w-full text-xs">
-          {wallets[availableWallets.indexOf(selectedAccount)]}
-        </pre>
-      )}
-    </div>
+    <Select onValueChange={handleUserChange} value={user}>
+      <SelectTrigger className="w-72 rounded-lg border border-solid bg-gray-950 text-gray-300 ">
+        <SelectValue placeholder="Select account" />
+      </SelectTrigger>
+      <SelectContent className="px-1">
+        <SelectGroup className="flex flex-col gap-2">
+          {Object.keys(userAddressMap).map((username, i) => {
+            return (
+              <SelectItem
+                key={i}
+                value={username}
+                className={cn("focus:bg-gray-850 text-gray-100 px-2")}
+              >
+                {username}
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 };
 
