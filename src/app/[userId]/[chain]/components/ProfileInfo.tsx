@@ -46,7 +46,7 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
       ? formatPhoneNumber(profile?.handle)
       : profile?.handle;
   return (
-    <div className="flex">
+    <div className="flex items-center">
       <ProfileImg
         size={size}
         imageSrc={profile.image || `/${profile.network}.svg`}
