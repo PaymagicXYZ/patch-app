@@ -13,7 +13,7 @@
     "@covalenthq/client-sdk": "^0.8.5",
     "@hookform/resolvers": "^3.3.4",
     "@moonpay/moonpay-react": "^1.5.3",
-    "@patchwallet/patch-sdk": "0.0.10",
+    "@patchwallet/patch-sdk": "0.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-popover": "^1.0.7",
