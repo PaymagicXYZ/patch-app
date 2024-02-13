@@ -11,9 +11,14 @@ const MoonPayBuyWidget = dynamic(
   { ssr: false }
 );
 
+import { signMoonPayURL } from "@/libs/actions/signMoonPayURL";
+
 export const MoonPay = (props: { walletAddress: string; chain: string }) => {
   return (
-    <MoonPayProvider apiKey="pk_test_4db4XRAYQN73TdyRb088dxlOc1OnIX" debug>
+    <MoonPayProvider
+      apiKey={process.env.NEXT_PUBLIC_MOONPAY_PUBLIC_KEY || ""}
+      debug={process.env.NEXT_PUBLIC_VERCEL_ENV !== "production"}
+    >
       <p>
         This is the buy page for {props.walletAddress} on {props.chain}
       </p>
@@ -21,9 +26,9 @@ export const MoonPay = (props: { walletAddress: string; chain: string }) => {
         variant="embedded"
         baseCurrencyCode="usd"
         baseCurrencyAmount="100"
-        currencyCode="eth_POLYGON"
+        currencyCode="USDC_BASE"
         walletAddress={props.walletAddress}
-        //   onLogin={() => console.log("Customer logged in!")}
+        onUrlSignatureRequested={async (url) => await signMoonPayURL(url)}
         visible
       />
     </MoonPayProvider>
