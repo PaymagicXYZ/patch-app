@@ -51,9 +51,9 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
         size={size}
         imageSrc={profile.image || `/${profile.network}.svg`}
       />
-      <div className="m-auto ml-2 flex-col items-center gap-1">
+      <div className="m-auto ml-2 flex-col items-center gap-5">
         <div className="flex justify-between">
-          <div className="mb-1 flex gap-1">
+          <div className="flex gap-1">
             {shouldShowNetworkLogo && (
               <Image
                 className="shrink-0"
@@ -83,7 +83,7 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
         </div>
         <div className="flex items-center">
           <p
-            className={cn("text-gray-600 leading-[16px] text-sm md:text-base", {
+            className={cn("text-gray-600 text-sm md:text-base", {
               "text-sm": small,
             })}
           >

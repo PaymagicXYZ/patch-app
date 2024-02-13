@@ -17,7 +17,7 @@ function ProfileImg({ size, imageSrc }: Props) {
       <Image
         src={imageSrc as string}
         unoptimized // Note: better to whitelist the domain in the next.config.js
-        alt={"test"}
+        alt="PFP"
         width={size || 44}
         height={size || 44}
       />

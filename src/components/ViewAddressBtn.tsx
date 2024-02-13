@@ -13,7 +13,7 @@ function ViewAddressBtn({ url, text, disabled }: Props) {
       target="_blank"
       rel="noreferrer"
       className={cn(
-        "flex justify-between text-gray-300 text-xs md:text-md rounded-lg bg-gray-850 items-center px-3 py-[10px] leading-[16px] whitespace-nowrap",
+        "flex justify-between text-gray-300 text-xs md:text-sm rounded-lg bg-gray-850 items-center px-3 leading-[16px] whitespace-nowrap",
         {
           "opacity-30 pointer-events-none": disabled,
         },

@@ -54,7 +54,7 @@ async function ProfileWidget({
           <ProfileWidgetMiddle chain={chain} userId={userId} />
         </Suspense>
       </div>
-      <div className="mt-7 flex justify-end px-4">
+      <div className="mt-7 flex justify-center px-4">
         <GenericDialog
           dialogId="sendDialog"
           btnTitle="Send"
