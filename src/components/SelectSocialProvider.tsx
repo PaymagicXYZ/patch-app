@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Select,
@@ -56,14 +56,22 @@ export function SelectSocialProvider({
                 key={_socialNetwork.id}
                 value={_socialNetwork.id}
                 className={cn(
-                  "transition-all focus:rounded-lg text-gray-200 focus:bg-gray-600 py-2 radius focus:text-gray-200 active:bg-gray-800 data-[state=active]:bg-gray-800",
+                  "transition-all focus:rounded-lg text-gray-200 focus:bg-gray-600 py-2 radius focus:text-gray-200 active:bg-gray-800 data-[state=active]:bg-gray-800 px-2",
                   {
                     "bg-gray-800 rounded-lg":
                       _socialNetwork.id === selectedProvider,
                   },
                 )}
               >
-                {_socialNetwork.label}
+                <div className="flex items-center gap-2">
+                  <Image
+                    src={`/${_socialNetwork.id}.svg`}
+                    width={24}
+                    height={24}
+                    alt={_socialNetwork.label}
+                  />
+                  {_socialNetwork.label}
+                </div>
               </SelectItem>
             );
           })}
