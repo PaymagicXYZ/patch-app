@@ -6,7 +6,7 @@ export async function signedMoonPayURL(
   walletAddress: string
 ) {
   const originalUrl = `https://buy${
-    process.env.NODE_ENV !== "production" && "-sandbox"
+    process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && "-sandbox"
   }.moonpay.com?apiKey=${
     process.env.NEXT_PUBLIC_MOONPAY_PUBLIC_KEY
   }&currencyCode=${currency}&walletAddress=${walletAddress}`;
@@ -17,7 +17,6 @@ export async function signedMoonPayURL(
   const urlWithSignature = `${originalUrl}&signature=${encodeURIComponent(
     signature
   )}`;
-  console.log(urlWithSignature);
   return urlWithSignature;
 }
 
