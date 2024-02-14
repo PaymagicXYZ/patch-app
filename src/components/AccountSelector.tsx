@@ -48,7 +48,7 @@ const AccountSelector = ({
 
   return (
     <Select onValueChange={handleUserChange} value={user}>
-      <SelectTrigger className="w-72 rounded-lg border border-solid bg-gray-950 text-gray-300 ">
+      <SelectTrigger className="w-48 rounded-lg border border-solid bg-gray-950 text-gray-300 md:w-72 ">
         <SelectValue placeholder="Select account" />
       </SelectTrigger>
       <SelectContent className="px-1">
