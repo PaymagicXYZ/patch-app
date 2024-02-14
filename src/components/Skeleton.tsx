@@ -47,7 +47,7 @@ export const ProfileWidgetMidSectionSkeleton = () => {
 
 export const HeaderSkeleton = () => {
   return (
-    <div className="flex flex-1 flex-row-reverse items-center gap-4">
+    <div className="flex h-10 flex-1 flex-row-reverse items-center gap-4">
       <Skeleton className="h-8 w-8 rounded-full" />
       <div className="flex flex-col items-end justify-end gap-2 md:flex-row ">
         <Skeleton className="h-9 w-44 items-center md:w-60" />

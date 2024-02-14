@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 export default function NotFound() {
   return (
     <main className="flex flex-1 flex-col items-center">
-      <h1 className="text-[40px] text-gray-100">Profile not found</h1>
+      <h1 className="mt-24 text-[40px] text-gray-100">Profile not found</h1>
       <p className="text-center text-gray-700">TRY AGAIN</p>
       <div></div>
       <Link href="/" className="mt-32">
