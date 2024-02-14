@@ -7,12 +7,13 @@ import {
 } from "../../../../components/ui/tabs";
 import { NFTToken, Token } from "@/types";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
-import { formatUnits } from "viem";
 import Image from "next/image";
 import { minifyAddress } from "@/libs/utils/checkUserId";
-import { sortCovalentAssetsByType } from "@/libs/utils";
+import { isNFT } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 import { fetchTokenBalance } from "@/libs/actions/tokens";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ArrowUp } from "lucide-react";
 
 export async function AssetsTab({
   chain,
@@ -25,11 +26,9 @@ export async function AssetsTab({
 
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
 
-  // console.log("data", data);
-
   return (
     <WidgetContainer className="h-[416px]">
-      <Tabs defaultValue="tokens" className="flex h-full flex-col">
+      <Tabs defaultValue="tokens" className="flex h-full flex-col gap-2">
         <TabsList className="grid w-full grid-cols-2 gap-1 bg-gray-1000">
           <TabTrigger
             count={data.tokens?.length}
@@ -38,32 +37,56 @@ export async function AssetsTab({
           />
           <TabTrigger count={data.nfts?.length} title="NFTs" value="nfts" />
         </TabsList>
-        <TabsContent value="tokens" className="h-full flex-1">
-          <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
-            {!error ? (
-              data?.tokens.map((token, i) => (
-                <TokenRow key={token.tickerSymbol + i} {...token} />
-              ))
-            ) : (
-              <ErrorFallback />
-            )}
-          </div>
-        </TabsContent>
-        <TabsContent value="nfts" className="h-full flex-1">
-          <div className="h-full rounded-xl border border-gray-800 bg-gray-1000">
-            {!error ? (
-              data?.nfts.map((token) => (
-                <NFTRow key={token.tokenId} {...token} />
-              ))
-            ) : (
-              <ErrorFallback />
-            )}
-          </div>
-        </TabsContent>
+        <ScrollArea className="flex-1 rounded-xl border border-gray-800 bg-gray-1000">
+          <TabsContent value="tokens" className="mt-0">
+            <Contents tokens={data.tokens} error={error} />
+          </TabsContent>
+          <TabsContent value="nfts" className="mt-0 ">
+            <Contents tokens={data.nfts} error={error} />
+          </TabsContent>
+        </ScrollArea>
       </Tabs>
     </WidgetContainer>
   );
 }
+
+const Contents = ({
+  tokens,
+  error,
+}: {
+  tokens: NFTToken[] | Token[];
+  error: string;
+}) => {
+  if (error) {
+    return <ErrorState />;
+  }
+
+  if (tokens.length === 0) {
+    return (
+      <div className="rounded-xl border border-gray-800 bg-gray-1000">
+        <EmptyState />
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 rounded-xl bg-gray-1000">
+      {tokens.map((token, idx) => {
+        if (isNFT(token)) {
+          return (
+            <NFTRow key={token.contractAddress + token.tokenId} {...token} />
+          );
+        }
+        return (
+          <TokenRow
+            key={token.contractAddress + token.tickerSymbol}
+            {...token}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
 const TokenRow = ({
   balance,
@@ -158,10 +181,43 @@ const TabTrigger = ({
   );
 };
 
-const ErrorFallback = () => {
+const ErrorState = () => {
   return (
-    <div className="flex h-full items-center justify-center text-gray-300">
-      Error fetching tokens
+    <div className="absolute inset-x-0 bottom-0 top-2 flex flex-1 items-center justify-center text-gray-300">
+      <div>Error fetching tokens</div>
     </div>
   );
+};
+
+const EmptyState = () => {
+  return (
+    <>
+      <div className="absolute inset-x-0 bottom-0 top-2 flex-1 overflow-hidden rounded-xl bg-gradient-to-t from-gray-1000">
+        <div className="relative top-14 flex h-full flex-1 flex-col items-center ">
+          <ArrowUp size={34} className="text-gray-300" />
+          <p className="mt-4 text-[0.938rem] uppercase leading-4 text-gray-600">
+            unfortunately,
+          </p>
+          <p className="mt-3 text-xl leading-5 text-gray-100">
+            This wallet is empty for now {":("}
+          </p>
+        </div>
+      </div>
+      <div className="">
+        {new Array(10).fill(placeholderToken).map((token, idx) => {
+          return <TokenRow key={idx} {...token} />;
+        })}
+      </div>
+    </>
+  );
+};
+
+const placeholderToken: Token = {
+  tickerSymbol: "USDT",
+  balance: "0",
+  logoUrl:
+    "https://logos.covalenthq.com/tokens/1/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+  price: "1.00",
+  contractAddress: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+  decimals: 6,
 };
