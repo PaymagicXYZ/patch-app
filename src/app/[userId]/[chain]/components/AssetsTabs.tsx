@@ -6,14 +6,14 @@ import {
   TabsTrigger,
 } from "../../../../components/ui/tabs";
 import { NFTToken, Token } from "@/types";
-import { Chain, UserId } from "@patchwallet/patch-sdk";
+import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 import Image from "next/image";
 import { minifyAddress } from "@/libs/utils/checkUserId";
 import { isNFT } from "@/libs/utils";
-import { resolveSocialProfile } from "@/libs/actions/utils";
 import { fetchTokenBalance } from "@/libs/actions/tokens";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUp } from "lucide-react";
+import { client } from "@/libs/client";
 
 export async function AssetsTab({
   chain,
@@ -22,8 +22,7 @@ export async function AssetsTab({
   chain: Chain;
   userId: UserId;
 }) {
-  const { address } = await resolveSocialProfile(userId);
-
+  const address = (await client.resolve(userId)) as Address;
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
 
   return (
