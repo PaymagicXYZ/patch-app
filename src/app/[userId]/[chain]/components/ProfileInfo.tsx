@@ -46,14 +46,14 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
       ? formatPhoneNumber(profile?.handle)
       : profile?.handle;
   return (
-    <div className="flex items-center">
+    <div className="flex w-full flex-1 items-center">
       <ProfileImg
         size={size}
         imageSrc={profile.image || `/${profile.network}.svg`}
       />
       <div className="m-auto ml-2 flex-col items-center gap-5">
-        <div className="flex justify-between">
-          <div className="flex gap-1">
+        <div className="flex w-full flex-1 justify-between">
+          <div className="flex w-full flex-1 gap-1">
             {shouldShowNetworkLogo && (
               <Image
                 className="shrink-0"
@@ -65,7 +65,7 @@ function ProfileInfo({ profile, size, small, checkMark }: Props) {
             )}
             <p
               className={cn(
-                "overflow-hidden text-ellipsis leading-5 text-gray-100 text-base md:text-xl",
+                "flex-1 overflow-hidden text-ellipsis leading-5 text-gray-100 text-base md:text-xl whitespace-nowrap w-full",
                 { "text-base": small },
               )}
             >

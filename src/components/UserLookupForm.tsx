@@ -49,7 +49,7 @@ export const UserLookupClientForm = () => {
         onSubmit={handleOnSubmit}
       >
         <LookupInput
-          onInputChange={(e) => withDebounce("query", e.target.value)}
+          onInputChange={(e) => modifyQueryParams("query", e.target.value)}
           onSelectChange={(value) => modifyQueryParams("provider", value)}
           defaultValue={queryString}
           placeholder={lookupProviderDetails.placeholder}

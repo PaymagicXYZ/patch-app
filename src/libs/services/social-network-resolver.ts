@@ -1,7 +1,9 @@
 import { SocialProfile, SupportedSocialNetworkIds } from "@/types";
 import { UserId, SocialNetwork as Network } from "@patchwallet/patch-sdk";
 
-type ResolveResponse = (username: string) => Promise<SocialProfile>;
+type ResolveResponse = (
+  username: string,
+) => Promise<SocialProfile | { error: string }>;
 
 const email = {
   name: "email" as Network,
@@ -36,7 +38,9 @@ const email = {
               patchUserId: `${this.name}:${userName}` as UserId,
             };
           } else {
-            throw new Error("Invalid Email");
+            return {
+              error: "Invalid email address",
+            };
           }
         });
     };
@@ -82,7 +86,9 @@ const twitter = {
             }
           });
       } else {
-        throw new Error("Invalid Twitter username");
+        return {
+          error: "Twitter user not found",
+        };
       }
     };
   },
@@ -115,7 +121,9 @@ const github = {
               patchUserId: `${this.name}:${userName}` as UserId,
             };
           } else {
-            throw new Error("Invalid Github username");
+            return {
+              error: "Github user not found",
+            };
           }
         });
     };
@@ -146,7 +154,9 @@ const tel = {
             patchUserId: `${this.name}:${userName}` as UserId,
           };
         } else {
-          throw new Error("Invalid Phone number");
+          return {
+            error: "Phone number format not supported",
+          };
         }
       });
     };
@@ -198,8 +208,9 @@ const farcaster = {
       }
       return null;
     } catch (error) {
-      console.error("Error fetching recent reactions from FC:", error);
-      throw error;
+      return {
+        error: "Error fetching recent reactions from FC:",
+      };
     }
   },
   async resolveByFID(fid: string) {

@@ -21,7 +21,7 @@ export async function resolveSocialProfile(userId: UserId) {
   const profile = await supportedSocialNetworks[network].resolveUser(userName);
   const address = (await client.resolve(userId)) as Address;
 
-  if (!address) {
+  if ("error" in profile || !address) {
     notFound();
   }
 

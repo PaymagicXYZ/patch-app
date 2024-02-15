@@ -3,7 +3,7 @@ import ViewAddressBtn from "../../../../components/ViewAddressBtn";
 import ProfileInfo from "./ProfileInfo";
 import WidgetContainer from "../../../../components/WidgetContainer";
 import { Skeleton } from "../../../../components/ui/skeleton";
-import { Chain, UserId } from "@patchwallet/patch-sdk";
+import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 import { AddressTooltip } from "../../../../components/AddressTooltip";
 import { TotalBalanceUSD } from "./TotalBalance";
 import { GenericDialog } from "../../../../components/GenericDialog";
@@ -16,6 +16,7 @@ import {
   ProfileWidgetMidSectionSkeleton,
 } from "../../../../components/Skeleton";
 import { ArrowUp } from "lucide-react";
+import { client } from "@/libs/client";
 
 async function ProfileWidget({
   userId,
@@ -93,7 +94,8 @@ async function ProfileWidgetMiddle({
   userId: UserId;
   chain: Chain;
 }) {
-  const { address } = await resolveSocialProfile(userId as UserId);
+  const address = (await client.resolve(userId)) as Address;
+
   return (
     <div className="flex flex-col items-center justify-center">
       <TotalBalanceUSD address={address} chain={chain} />
