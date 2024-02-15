@@ -1,5 +1,5 @@
 // ./components/modal/TestModal/TestModal.tsx
-"use client"
+"use client";
 import {
   DialogClose,
   DialogContent,
@@ -27,7 +27,6 @@ export default function SuccessDialog(props: ITestModalProps) {
     props.onClose?.();
     close("sendDialog");
   };
-  // console.log("meta", props.title);
   return (
     <BaseModal onClose={handleOnClose} isOpen={props.isOpen}>
       <DialogContent className="flex min-w-[260px] max-w-[660px] flex-col justify-center overflow-hidden border-none bg-gray-900 bg-gradient-to-b from-[#213409] to-black p-0">
@@ -43,7 +42,7 @@ export default function SuccessDialog(props: ITestModalProps) {
               You did it!
             </h3>
             <div className="mt-2 grid w-full text-center text-xl md:grid-cols-1 md:text-2xl ">
-              <div className="">You just claimed funds from</div>
+              <div className="">You just sent funds from</div>
               <div className="text-orange-300">
                 {props.profile?.network === "twitter" ? "@" : ""}
                 {props.profile?.handle}

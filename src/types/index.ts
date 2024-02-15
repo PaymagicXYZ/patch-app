@@ -20,10 +20,7 @@ export type User = {
   userId: UserId;
 };
 
-export type SupportedSocialNetworkIds = Exclude<
-  SocialNetwork,
-  "discord" | "farcaster"
->;
+export type SupportedSocialNetworkIds = Exclude<SocialNetwork, "discord">;
 
 export type SupportedSocialNetworksDetails = Record<
   SupportedSocialNetworkIds,

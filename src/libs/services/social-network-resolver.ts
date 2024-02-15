@@ -192,7 +192,9 @@ const farcaster = {
     try {
       const response = await fetch(endpoint);
       if (!response.ok) {
-        throw new Error(`FC API returned an error: ${response.statusText}`);
+        return {
+          error: "FC Api returned an error",
+        };
       }
       const data = await response.json();
       const profile = data.result.user;
@@ -206,10 +208,12 @@ const farcaster = {
           patchUserId: `${this.name}:${profile.fid}` as UserId,
         };
       }
-      return null;
+      return {
+        error: "Error fetching user",
+      };
     } catch (error) {
       return {
-        error: "Error fetching recent reactions from FC:",
+        error: "Error fetching recent reactions from FC",
       };
     }
   },
@@ -223,7 +227,7 @@ const farcaster = {
       return this.resolveFarcasterUser(endpoint);
     };
   },
-  get resolveUser() {
+  get resolveUser(): ResolveResponse {
     return async (fidOrUsername: string) => {
       const isInt = /^[0-9]+$/.test(fidOrUsername);
       try {
@@ -242,7 +246,7 @@ export const supportedSocialNetworks = {
   github,
   tel,
   passphrase,
-  //   farcaster, TODO: Uncomment this when FC is ready
+  farcaster,
 };
 
 export type SocialNetwork = keyof typeof supportedSocialNetworks;

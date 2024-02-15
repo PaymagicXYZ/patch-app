@@ -6,22 +6,26 @@ import {
 } from "../services/social-network-resolver";
 import { Address, UserId } from "@patchwallet/patch-sdk";
 import { isAddress } from "viem";
-import { client } from "../client";
 import z from "zod";
 import { utilsService } from "../services/utils";
 import { notFound } from "next/navigation";
+import { resolve } from "./resolve";
 
 export async function resolveSocialProfile(userId: UserId) {
   if (!isUserId(userId)) {
     notFound();
   }
-  const network = userId.split(":")[0] as SocialNetwork;
-  const userName = userId.split(":")[1];
+
+  const [network, userName] = userId.split(":") as [SocialNetwork, string];
 
   const profile = await supportedSocialNetworks[network].resolveUser(userName);
-  const address = (await client.resolve(userId)) as Address;
+  if ("error" in profile) {
+    notFound();
+  }
 
-  if ("error" in profile || !address) {
+  const address = (await resolve(profile.patchUserId)) as Address;
+
+  if (!address) {
     notFound();
   }
 
@@ -65,7 +69,7 @@ export async function fetchUserAddress(prevState: any, formData: FormData) {
   const _userId = `${data.provider}:${data.userId}`;
 
   if (isUserId(_userId)) {
-    const address = (await client.resolve(_userId as UserId)) as Address;
+    const address = (await resolve(_userId as UserId)) as Address;
 
     return {
       address,

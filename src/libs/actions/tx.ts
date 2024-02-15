@@ -11,13 +11,10 @@ export async function sendTx(
   value: String[],
   data: HexString[],
 ) {
-  // return;
   const { getToken } = auth();
   const _token = await getToken({
     template: "patchwallet",
   });
-
-  console.log({ chain, userId, to, value, data, _token });
 
   if (!_token) {
     throw new Error("Not authenticated");

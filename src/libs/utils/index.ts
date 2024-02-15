@@ -10,7 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function getSupportedLookupNetworks(
   isMobile = false,
-): Omit<SupportedSocialNetworksDetails, "farcaster"> {
+): SupportedSocialNetworksDetails {
   return {
     twitter: {
       id: "twitter",
@@ -51,6 +51,14 @@ export function getSupportedLookupNetworks(
       placeholder: !isMobile ? "Search for passphrase wallet..." : "passphrase",
       iconSrc: "/passphrase.svg",
       iconAlt: "passphrase icon",
+    },
+    farcaster: {
+      id: "farcaster",
+      name: "Farcaster",
+      label: isMobile ? "" : "Farcaster",
+      placeholder: !isMobile ? "Search for farcaster wallet..." : "fid",
+      iconSrc: "/farcaster.svg",
+      iconAlt: "farcaster icon",
     },
   };
 }

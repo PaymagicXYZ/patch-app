@@ -13,7 +13,7 @@ import { isNFT } from "@/libs/utils";
 import { fetchTokenBalance } from "@/libs/actions/tokens";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ArrowUp } from "lucide-react";
-import { client } from "@/libs/client";
+import { resolve } from "@/libs/actions/resolve";
 
 export async function AssetsTab({
   chain,
@@ -22,7 +22,8 @@ export async function AssetsTab({
   chain: Chain;
   userId: UserId;
 }) {
-  const address = (await client.resolve(userId)) as Address;
+  const address = (await resolve(userId)) as Address;
+
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
 
   return (
@@ -72,16 +73,9 @@ const Contents = ({
     <div className="flex-1 rounded-xl bg-gray-1000">
       {tokens.map((token, idx) => {
         if (isNFT(token)) {
-          return (
-            <NFTRow key={token.contractAddress + token.tokenId} {...token} />
-          );
+          return <NFTRow key={`${token.contractAddress}${idx}`} {...token} />;
         }
-        return (
-          <TokenRow
-            key={token.contractAddress + token.tickerSymbol}
-            {...token}
-          />
-        );
+        return <TokenRow key={`${token.contractAddress}${idx}`} {...token} />;
       })}
     </div>
   );
@@ -94,10 +88,7 @@ const TokenRow = ({
   tickerSymbol,
 }: Omit<Token, "contractAddress" | "decimals">) => {
   return (
-    <div
-      key={tickerSymbol}
-      className="rounded border-b border-gray-800 px-4 py-3"
-    >
+    <div className="rounded border-b border-gray-800 px-4 py-3">
       <div className="flex justify-between text-gray-600">
         <div className="flex gap-2">
           <div>
@@ -129,10 +120,7 @@ const NFTRow = ({
   "decimals" | "amount" | "supportedERCStandards" | "logoUrl"
 >) => {
   return (
-    <div
-      key={tickerSymbol}
-      className="rounded border-b border-gray-800 px-4 py-3"
-    >
+    <div className="rounded border-b border-gray-800 px-4 py-3">
       <div className="flex items-center justify-between text-gray-600">
         <div className="flex items-center gap-2">
           <div>

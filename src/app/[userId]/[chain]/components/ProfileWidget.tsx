@@ -16,7 +16,7 @@ import {
   ProfileWidgetMidSectionSkeleton,
 } from "../../../../components/Skeleton";
 import { ArrowUp } from "lucide-react";
-import { client } from "@/libs/client";
+import { resolve } from "@/libs/actions/resolve";
 
 async function ProfileWidget({
   userId,
@@ -28,7 +28,7 @@ async function ProfileWidget({
   className?: string;
 }) {
   const network = userId.split(":")[0];
-
+  const isFarcaster = network === "farcaster";
   const whatToVerify =
     network === "tel"
       ? "phone number"
@@ -56,18 +56,22 @@ async function ProfileWidget({
         </Suspense>
       </div>
       <div className="mt-7 flex justify-center px-4">
-        <GenericDialog
-          dialogId="sendDialog"
-          btnTitle="Send"
-          title="Send"
-          subtitle={`In order to send you need to first verify your ${whatToVerify}`}
-          leftIcon={<ArrowUp />}
-        >
-          <Separator />
-          <Suspense fallback={<Skeleton className="h-80 w-96" />}>
-            <SendDialogContent chain={chain} userId={userId} />
-          </Suspense>
-        </GenericDialog>
+        {!isFarcaster ? (
+          <GenericDialog
+            dialogId="sendDialog"
+            btnTitle="Send"
+            title="Send"
+            subtitle={`In order to send you need to first verify your ${whatToVerify}`}
+            leftIcon={<ArrowUp />}
+          >
+            <Separator />
+            <Suspense fallback={<Skeleton className="h-80 w-96" />}>
+              <SendDialogContent chain={chain} userId={userId} />
+            </Suspense>
+          </GenericDialog>
+        ) : (
+          <></>
+        )}
       </div>
     </WidgetContainer>
   );
@@ -94,7 +98,7 @@ async function ProfileWidgetMiddle({
   userId: UserId;
   chain: Chain;
 }) {
-  const address = (await client.resolve(userId)) as Address;
+  const address = (await resolve(userId)) as Address;
 
   return (
     <div className="flex flex-col items-center justify-center">
