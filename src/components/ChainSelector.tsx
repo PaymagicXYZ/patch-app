@@ -62,12 +62,19 @@ const SelectChain = ({
         <SelectGroup className="flex flex-col gap-2">
           {(supportedShortNames as string[]).map((chain, i) => {
             let formattedChainName: string;
-            if (chain === "maticmum") {
-              formattedChainName = "Mumbai";
-            } else {
-              formattedChainName = capitalize(
-                getChainNameFromShortName(chain).split("-")[0],
-              );
+
+            switch (chain) {
+              case "maticmum":
+                formattedChainName = "Mumbai";
+                break;
+              case "matic":
+                formattedChainName = "Polygon";
+                break;
+              default:
+                formattedChainName = capitalize(
+                  getChainNameFromShortName(chain).split("-")[0],
+                );
+                break;
             }
 
             const _iconUrl = missingSvgs.includes(chain)
