@@ -85,8 +85,9 @@ const SelectChain = ({
                   <Image
                     src={`/${chain}.svg`}
                     onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "/eth.svg";
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = "/eth.svg";
                     }}
                     alt={chain}
                     width={28}
