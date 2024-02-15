@@ -9,7 +9,12 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem } from "../../../../components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+} from "../../../../components/ui/form";
 import { Input } from "../../../../components/ui/input";
 import { Address } from "@patchwallet/patch-sdk";
 import {
@@ -19,12 +24,21 @@ import {
 import { UserContext } from "@/context/user-provider";
 import { InputToken, NFTToken, SocialProfile, Token } from "@/types";
 import { useConstructTx } from "@/libs/hooks/useConstructTx";
-import { NftItem, SelectTokenDropdown } from "../../../../components/SelectTokenDropdown";
+import {
+  NftItem,
+  SelectTokenDropdown,
+} from "../../../../components/SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "../../../../components/Spinner";
 import { useRouter } from "next/navigation";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../../../components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../../../components/ui/tabs";
 import { sendTx } from "@/libs/actions/tx";
+import { useDialogActions } from "@/libs/hooks/useDialog";
 
 type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };
 
@@ -42,6 +56,7 @@ export function ChooseTokensSection({
   const { setTo } = useSendContextActions();
   const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
+  const { open } = useDialogActions();
   const form = useForm<AssetInputs>({ reValidateMode: "onChange" });
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -88,7 +103,10 @@ export function ChooseTokensSection({
 
     if (tx && tx.txHash) {
       resetForm();
-      router.push(`/success?txHash=${tx.txHash}&userId=${profile.patchUserId}`);
+      open("SuccessDialog", {
+        hash: tx.txHash,
+        profile,
+      });
     }
   };
 
