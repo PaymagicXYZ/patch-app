@@ -19,7 +19,7 @@ import {
 import { capitalize, cn } from "@/libs/utils";
 import Image from "next/image";
 
-const missingSvgs = ["base", "linea", "maticmum"];
+const missingSvgs = [];
 
 const ChainSelector = () => {
   const router = useRouter();
