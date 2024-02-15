@@ -5,9 +5,7 @@ function WalletBanner({ type }: { type: "about" | "claim" }) {
     <div className="flex w-full">
       <div className="mx-4 mt-6 flex w-full flex-1 flex-wrap justify-center text-4xl font-normal leading-[3rem] md:mt-24 md:text-5xl">
         <div className="flex flex-1 flex-row flex-wrap justify-center gap-2 text-center text-gray-100 md:gap-4">
-          <div className="">
-            {type === "claim" ? "Claim airdrops" : "Accept tokens"} via your
-          </div>
+          <div className="">A Wallet on top of your</div>
           <div className="inline-flex h-12 w-[129px] justify-center md:justify-start">
             <AnimatedText text="Twitter" className="text-twitter-100" />
             <AnimatedText
