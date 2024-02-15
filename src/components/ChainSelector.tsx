@@ -19,8 +19,6 @@ import {
 import { capitalize, cn } from "@/libs/utils";
 import Image from "next/image";
 
-const missingSvgs = [];
-
 const ChainSelector = () => {
   const router = useRouter();
   const pathname = usePathname();
@@ -76,11 +74,6 @@ const SelectChain = ({
                 );
                 break;
             }
-
-            const _iconUrl = missingSvgs.includes(chain)
-              ? "/eth.svg"
-              : `/${chain}.svg`;
-
             return (
               <SelectItem
                 key={i}
@@ -89,7 +82,16 @@ const SelectChain = ({
               >
                 <div className="flex flex-1 items-center gap-2">
                   {/* TODO: dynamic image once we know all the chains */}
-                  <Image src={_iconUrl} alt={chain} width={28} height={28} />
+                  <Image
+                    src={`/${chain}.svg`}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "/eth.svg";
+                    }}
+                    alt={chain}
+                    width={28}
+                    height={28}
+                  />
                   {capitalize(formattedChainName)}
                 </div>
               </SelectItem>
