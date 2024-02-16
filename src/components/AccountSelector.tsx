@@ -46,8 +46,21 @@ const AccountSelector = ({
     router.push(`/${value}/${chain}`);
   };
 
+  // Note: we could just add <Link> as a child to <SelectItem> to prefetch it, but it seems it's not working if the navigation is done programatically instead of via the Link.
+  const handlePrefetchOnOpen = (isOpen: boolean) => {
+    if (userAddressMap && isOpen) {
+      Object.keys(userAddressMap).map((username) => {
+        router.prefetch(`/${username}/${chain}`);
+      });
+    }
+  };
+
   return (
-    <Select onValueChange={handleUserChange} value={user}>
+    <Select
+      onValueChange={handleUserChange}
+      value={user}
+      onOpenChange={handlePrefetchOnOpen}
+    >
       <SelectTrigger className="w-48 rounded-lg border border-solid bg-gray-950 text-gray-300 md:w-72 ">
         <SelectValue placeholder="Select account" />
       </SelectTrigger>
