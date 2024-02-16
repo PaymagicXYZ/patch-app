@@ -26,7 +26,7 @@ export const HeaderLookupForm = () => {
     prefetch(`/${searchProvider}:${username}/${chain}`);
   };
 
-  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 200);
+  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 100);
 
   const { push } = useRouter();
 

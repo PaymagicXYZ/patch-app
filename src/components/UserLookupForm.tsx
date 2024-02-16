@@ -43,7 +43,7 @@ export const UserLookupClientForm = () => {
     300,
   );
 
-  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 200);
+  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 100);
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
