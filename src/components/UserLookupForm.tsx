@@ -1,10 +1,10 @@
 "use client";
 
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { cn, getSupportedLookupNetworks } from "@/libs/utils";
+import { getSupportedLookupNetworks } from "@/libs/utils";
 import { Button } from "./ui/button";
 import { useDebouncedCallback } from "use-debounce";
-import { FormEvent, use, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { UserContext } from "@/context/user-provider";
 import { SupportedSocialNetworkIds, UserLookupBy } from "@/types";
 import { useModifyQueryParams } from "@/libs/hooks/useModifyQueryParams";
@@ -15,16 +15,35 @@ import { LookupInput } from "./ui/lookup-input";
  */
 export const UserLookupClientForm = () => {
   const searchParams = useSearchParams();
-  const { push } = useRouter();
+  const { push, prefetch } = useRouter();
   const { chain } = useContext(UserContext);
+
   // Note: If the user hasn't selected a provider, it should default to 'twitter'
   const lookupProviderId =
     (searchParams.get("provider")?.toString() as SupportedSocialNetworkIds) ??
     "twitter";
+  const queryString = searchParams.get("query")?.toString() ?? "";
+
   const lookupProviderDetails = getSupportedLookupNetworks()[lookupProviderId];
   const { modifyQueryParams } = useModifyQueryParams();
+  const [inputValue, setInputValue] = useState<string>(queryString);
 
-  const withDebounce = useDebouncedCallback(modifyQueryParams, 300);
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    modifyQueryParamsWithDebounce("query", e.target.value);
+    prefetchWithDebounce(e.target.value);
+  };
+
+  const prefetchUser = (username: string) => {
+    prefetch(`/${lookupProviderId}:${username}/${chain}`);
+  };
+
+  const modifyQueryParamsWithDebounce = useDebouncedCallback(
+    modifyQueryParams,
+    300,
+  );
+
+  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 200);
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,12 +54,9 @@ export const UserLookupClientForm = () => {
     }
 
     const _provider = params.get("provider");
-    const _user = params.get("query");
 
-    push(`/${_provider}:${_user}/${chain}`);
+    push(`/${_provider}:${inputValue}/${chain}`);
   };
-
-  const queryString = searchParams.get("query")?.toString();
 
   return (
     <div className="flex sm:w-4/6 sm:max-w-[520px]">
@@ -49,7 +65,7 @@ export const UserLookupClientForm = () => {
         onSubmit={handleOnSubmit}
       >
         <LookupInput
-          onInputChange={(e) => modifyQueryParams("query", e.target.value)}
+          onInputChange={handleOnChange}
           onSelectChange={(value) => modifyQueryParams("provider", value)}
           defaultValue={queryString}
           placeholder={lookupProviderDetails.placeholder}
@@ -57,7 +73,7 @@ export const UserLookupClientForm = () => {
         />
         <Button
           type="submit"
-          disabled={!queryString}
+          disabled={!inputValue}
           className="rounded-lg bg-orange-100 text-gray-1000"
         >
           Look up wallet

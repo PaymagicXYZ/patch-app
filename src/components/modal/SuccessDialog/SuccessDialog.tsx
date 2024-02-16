@@ -13,14 +13,14 @@ import { Button } from "@/components/ui/button";
 import { SocialProfile } from "@/types";
 import { useDialogActions } from "@/libs/hooks/useDialog";
 
-export interface ITestModalProps {
+export interface ISuccessDialogProps {
   onClose?: () => void;
   isOpen: boolean;
   hash: string;
   profile: SocialProfile;
 }
 
-export default function SuccessDialog(props: ITestModalProps) {
+export default function SuccessDialog(props: ISuccessDialogProps) {
   const { close } = useDialogActions();
 
   const handleOnClose = () => {
