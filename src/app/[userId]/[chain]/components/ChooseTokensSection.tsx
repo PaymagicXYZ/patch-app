@@ -56,7 +56,7 @@ export function ChooseTokensSection({
   const { setTo } = useSendContextActions();
   const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
-  const { open } = useDialogActions();
+  const { open, close } = useDialogActions();
   const form = useForm<AssetInputs>({ reValidateMode: "onChange" });
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -105,7 +105,10 @@ export function ChooseTokensSection({
       resetForm();
       open("SuccessDialog", {
         hash: tx.txHash,
-        profile,
+        userId: profile.patchUserId,
+        customOnClose: () => {
+          close("sendDialog");
+        },
       });
     }
   };

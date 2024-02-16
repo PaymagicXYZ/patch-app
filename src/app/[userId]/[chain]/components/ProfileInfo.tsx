@@ -33,7 +33,6 @@ type Props = {
   small?: boolean;
   checkMark?: boolean;
 };
-
 // TODO
 function ProfileInfo({ profile, size, small, checkMark }: Props) {
   // const { isVerified } = useIsVerified(); // TODO

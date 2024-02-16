@@ -12,21 +12,25 @@ import ViewAddressBtn from "@/components/ViewAddressBtn";
 import { Button } from "@/components/ui/button";
 import { SocialProfile } from "@/types";
 import { useDialogActions } from "@/libs/hooks/useDialog";
+import { UserId } from "@patchwallet/patch-sdk";
 
 export interface ISuccessDialogProps {
   onClose?: () => void;
   isOpen: boolean;
   hash: string;
   profile: SocialProfile;
+  userId: UserId;
+  customOnClose?: () => void;
 }
 
 export default function SuccessDialog(props: ISuccessDialogProps) {
-  const { close } = useDialogActions();
-
   const handleOnClose = () => {
     props.onClose?.();
-    close("sendDialog");
+    props.customOnClose?.();
   };
+
+  const userId = props.userId;
+  const [network, handle] = userId.split(":");
   return (
     <BaseModal onClose={handleOnClose} isOpen={props.isOpen}>
       <DialogContent className="flex min-w-[260px] max-w-[660px] flex-col justify-center overflow-hidden border-none bg-gray-900 bg-gradient-to-b from-[#213409] to-black p-0">
@@ -44,8 +48,8 @@ export default function SuccessDialog(props: ISuccessDialogProps) {
             <div className="mt-2 grid w-full text-center text-xl md:grid-cols-1 md:text-2xl ">
               <div className="">You just sent funds from</div>
               <div className="text-orange-300">
-                {props.profile?.network === "twitter" ? "@" : ""}
-                {props.profile?.handle}
+                {network === "twitter" ? "@" : ""}
+                {handle}
                 <span className="text-white">!</span>
               </div>
             </div>

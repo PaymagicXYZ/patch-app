@@ -44,3 +44,20 @@ export const fetchTokenBalance = unstable_cache(
     tags: ["token_balance"],
   },
 );
+
+export const fetchNativeTokenBalance = unstable_cache(
+  async (address: Address, chain: Chain) => {
+    const chainName = getChainNameFromShortName(chain);
+    const response =
+      await covalentInstance.BalanceService.getNativeTokenBalance(
+        chainName,
+        address,
+      );
+
+    return {
+      data: response.data.items,
+      error: response.error_message,
+    };
+  },
+  ["fetch_native_tokens"],
+);
