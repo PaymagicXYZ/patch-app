@@ -1,11 +1,12 @@
-"use client"
+"use client";
 
 import { UserContext } from "@/context/user-provider";
 import { cn, getSupportedLookupNetworks } from "@/libs/utils";
 import { SupportedSocialNetworkIds } from "@/types";
 import { usePathname, useRouter } from "next/navigation";
-import { FormEvent, useContext, useState } from "react";
+import { ChangeEvent, FormEvent, useContext, useState } from "react";
 import { LookupInput } from "../ui/lookup-input";
+import { useDebouncedCallback } from "use-debounce";
 
 export const HeaderLookupForm = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -14,6 +15,18 @@ export const HeaderLookupForm = () => {
   const { chain } = useContext(UserContext);
   const lookupProviderDetails = getSupportedLookupNetworks()[searchProvider];
   const pathname = usePathname();
+  const { prefetch } = useRouter();
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+    prefetchWithDebounce(e.target.value);
+  };
+
+  const prefetchUser = (username: string) => {
+    prefetch(`/${searchProvider}:${username}/${chain}`);
+  };
+
+  const prefetchWithDebounce = useDebouncedCallback(prefetchUser, 200);
 
   const { push } = useRouter();
 
@@ -29,7 +42,7 @@ export const HeaderLookupForm = () => {
       onSubmit={handleOnSubmit}
     >
       <LookupInput
-        onInputChange={(e) => setSearchValue(e.target.value)}
+        onInputChange={handleOnChange}
         onSelectChange={(value) =>
           setSearchProvider(value as SupportedSocialNetworkIds)
         }
