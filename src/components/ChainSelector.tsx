@@ -1,41 +1,105 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import type { Chain } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
-import { isSupportedChain, supportedShortNames } from "@/utils/chain";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
+import { UserContext } from "@/context/user-provider";
+import isUserId from "@/libs/utils/checkUserId";
+import {
+  getChainNameFromShortName,
+  supportedShortNames,
+} from "@patchwallet/patch-sdk/utils";
+import { capitalize, cn } from "@/libs/utils";
+import Image from "next/image";
 
 const ChainSelector = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedChain, setSelectedChain] = useState<Chain>("matic");
-  const user = pathname.split("/")[2];
-  const chain = pathname.split("/")[3];
-  useEffect(() => {
-    if (isSupportedChain(chain)) {
-      setSelectedChain(chain as Chain);
+  const { setChain, chain: selectedChain } = useContext(UserContext);
+
+  const handleChainChange = (value: string) => {
+    setChain(value as Chain);
+    const _user = pathname.split("/")[1];
+    if (isUserId(_user)) {
+      router.replace(`/${_user}/${value}`);
     }
-  }, [chain]);
+  };
 
   return (
     <div>
-      <select
-        value={selectedChain}
-        onChange={(e) => {
-          setSelectedChain((e.target.value as Chain) || "");
-          router.push(`/user/${user}/${e.target.value}`);
-        }}
-      >
-        <option value="" disabled>
-          Select a wallet
-        </option>
-        {supportedShortNames.map((chain, i) => (
-          <option key={i} value={chain}>
-            {chain}
-          </option>
-        ))}
-      </select>
+      <SelectChain
+        onValueChange={handleChainChange}
+        selectedChain={selectedChain}
+      />
     </div>
   );
 };
 
 export default ChainSelector;
+
+const SelectChain = ({
+  onValueChange,
+  selectedChain,
+}: {
+  onValueChange: (value: string) => void;
+  selectedChain: Chain;
+}) => {
+  return (
+    <Select onValueChange={onValueChange} defaultValue={selectedChain}>
+      <SelectTrigger className="w-44 rounded-lg border border-solid bg-gray-950 text-gray-300 md:w-60">
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent className="px-1">
+        <SelectGroup className="flex flex-col gap-2">
+          {(supportedShortNames as string[]).map((chain, i) => {
+            let formattedChainName: string;
+
+            switch (chain) {
+              case "maticmum":
+                formattedChainName = "Mumbai";
+                break;
+              case "matic":
+                formattedChainName = "Polygon";
+                break;
+              default:
+                formattedChainName = capitalize(
+                  getChainNameFromShortName(chain).split("-")[0],
+                );
+                break;
+            }
+            return (
+              <SelectItem
+                key={i}
+                value={chain}
+                className={cn("focus:bg-gray-850 text-gray-100 px-2")}
+              >
+                <div className="flex flex-1 items-center gap-2">
+                  {/* TODO: dynamic image once we know all the chains */}
+                  <Image
+                    src={`/${chain}.svg`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = "/eth.svg";
+                    }}
+                    alt={chain}
+                    width={28}
+                    height={28}
+                  />
+                  {capitalize(formattedChainName)}
+                </div>
+              </SelectItem>
+            );
+          })}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  );
+};

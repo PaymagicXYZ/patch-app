@@ -1,36 +1,40 @@
-import { currentUser, auth } from "@clerk/nextjs";
-import { TokenBalance } from "@/components/TokenBalance";
-import { NFTBalance } from "@/components/NFTBalance";
-import { isSupportedChain } from "@/utils/chain";
-import isUserId from "@/utils/checkUserId";
-import isAuthed from "@/utils/isAuthed";
-import { Chain } from "@patchwallet/patch-sdk";
-import { redirect } from "next/navigation";
-import { User } from "@clerk/nextjs/server";
-import { SignBtn } from "@/components/SignBtn";
+import { Chain, UserId } from "@patchwallet/patch-sdk";
+import ProfileWidget from "@/app/[userId]/[chain]/components/ProfileWidget";
+import { AssetsTab } from "@/app/[userId]/[chain]/components/AssetsTabs";
+import { Suspense } from "react";
+import { InventoryTabsSkeleton } from "@/components/Skeleton";
 
-export default async function Page({
+export default async function Wallet({
   params,
 }: {
-  params: { userId: string; chain: string };
+  params: { userId: UserId; chain: Chain };
 }) {
-  const userId = decodeURIComponent(params.userId);
-  const chain = params.chain;
+  const _userId = decodeURIComponent(params.userId);
 
-  if (isUserId(userId) && isSupportedChain(chain)) {
-    const user: User | null = await currentUser();
-    const { getToken } = auth();
-    const token = (await getToken({ template: "patchwallet" })) || "";
-    return (
-      <main className="m-4">
-        <TokenBalance wallet={userId} chain={chain as Chain} />
-        <NFTBalance wallet={userId} chain={chain as Chain} />
-        {user && isAuthed(userId, user) && (
-          <SignBtn userId={userId} token={token} />
-        )}
-      </main>
-    );
-  } else {
-    redirect("/user");
-  }
+  return (
+    <main className="flex-1">
+      <div>
+        <div className="relative mx-5 flex h-full flex-col md:mx-10">
+          <div className="mb-auto mt-6 flex justify-center md:mt-[108px] ">
+            <div className="flex w-full flex-col gap-4 md:w-[600px]">
+              <div className="flex basis-0 flex-col flex-wrap md:flex-nowrap">
+                <Suspense fallback={<div className="w-full md:w-[600px] h-[328px] rounded-2xl bg-gray-900"></div>}>
+                  <ProfileWidget
+                    userId={_userId as UserId}
+                    chain={params.chain}
+                    className="w-full"
+                  />
+                </Suspense>
+              </div>
+              <div>
+                <Suspense fallback={<InventoryTabsSkeleton />}>
+                  <AssetsTab chain={params.chain} userId={_userId as UserId} />
+                </Suspense>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }

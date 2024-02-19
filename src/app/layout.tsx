@@ -2,8 +2,11 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
-import Nav from "../components/Nav";
-
+import Nav from "../components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
+import UserProvider from "@/context/user-provider";
+import { cn } from "@/libs/utils";
+import { ModalProvider } from "@/context/modal-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,13 +21,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          <Nav />
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <body className={cn(inter.className, "light")}>
+        <div className="flex min-h-screen flex-col">
+          <UserProvider>
+            <ModalProvider>
+              <ClerkProvider>
+                <Nav />
+                {children}
+                <Footer />
+                <div id="modal" />
+              </ClerkProvider>
+            </ModalProvider>
+          </UserProvider>
+        </div>
+      </body>
+    </html>
   );
 }
