@@ -56,7 +56,7 @@ export default function Home() {
             />
           </div>
           <div className="mx-auto md:w-[680px]">
-            <Separator className="mb-12 mt-12 md:mt-14" />
+            <Separator className="my-12 md:mt-14" />
             <div className="flex flex-wrap gap-3 text-gray-200 md:flex-nowrap">
               <Feature
                 btnHref={
