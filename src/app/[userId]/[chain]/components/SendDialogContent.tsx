@@ -4,8 +4,6 @@ import isAuthed from "@/libs/utils/isAuthed";
 import { Chain, UserId } from "@patchwallet/patch-sdk";
 import { Separator } from "../../../../components/ui/separator";
 import { ChooseTokensSection } from "./ChooseTokensSection";
-import { formatUnits } from "viem";
-import { sortCovalentAssetsByType } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 import { ChooseRecipientSection } from "./ChooseRecipientSection";
 import { DialogNonAuth } from "./DialogNonAuth";

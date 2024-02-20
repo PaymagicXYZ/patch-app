@@ -179,7 +179,7 @@ export function ChooseTokensSection({
                         },
                         validate: {
                           sufficient: (v) =>
-                            +v < +item.balance || "Insufficient balance",
+                            +v <= +item.balance || "Insufficient balance",
                           positive: (v) =>
                             +v > 0 || "Please provide a positive number",
                         },

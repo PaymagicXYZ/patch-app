@@ -17,6 +17,7 @@ import {
 } from "../../../../components/Skeleton";
 import { ArrowUp } from "lucide-react";
 import { resolve } from "@/libs/actions/resolve";
+import { LoadingSpinner } from "@/components/Spinner";
 
 async function ProfileWidget({
   userId,
@@ -58,7 +59,13 @@ async function ProfileWidget({
             leftIcon={<ArrowUp />}
           >
             <Separator />
-            <Suspense fallback={<Skeleton className="h-80 w-96" />}>
+            <Suspense
+              fallback={
+                <Skeleton className="flex h-80 w-full items-center justify-center">
+                  <LoadingSpinner />
+                </Skeleton>
+              }
+            >
               <SendDialogContent chain={chain} userId={userId} />
             </Suspense>
           </GenericDialog>
