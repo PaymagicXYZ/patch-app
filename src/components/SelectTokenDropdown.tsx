@@ -45,15 +45,7 @@ export function SelectTokenDropdown({
           <CommandEmpty>No tokens found.</CommandEmpty>
           <ScrollArea>
             <CommandGroup className="bg-gray-900">
-              {[
-                ...tokens,
-                ...tokens,
-                ...tokens,
-                ...tokens,
-                ...tokens,
-                ...tokens,
-                ...tokens,
-              ]?.map((token) =>
+              {tokens?.map((token) =>
                 !isNFT(token) ? (
                   <TokenItem
                     key={token.tickerSymbol}
