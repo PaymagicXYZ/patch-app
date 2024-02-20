@@ -39,7 +39,7 @@ export function SelectTokenDropdown({
           {title}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="relative bottom-8 h-48 w-full bg-gray-900 p-0 sm:w-96 md:w-[600px]">
+      <PopoverContent className="relative bottom-8 max-h-48 w-full bg-gray-900 p-0 sm:w-96 md:w-[600px]">
         <Command className="w-80 bg-gray-900 text-gray-100 sm:w-full">
           <CommandInput placeholder="Search for tokens..." />
           <CommandEmpty>No tokens found.</CommandEmpty>

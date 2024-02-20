@@ -1,4 +1,4 @@
-import { fetchTokenBalance } from "@/libs/actions/tokens";
+import { fetchFiatBalance, fetchTokenBalance } from "@/libs/actions/tokens";
 import { Address, Chain } from "@patchwallet/patch-sdk";
 
 export async function TotalBalanceUSD({
@@ -9,7 +9,7 @@ export async function TotalBalanceUSD({
   chain: Chain;
 }) {
   // Note: We are fetching the with nft=true because that spares us 1 additional call to covalent, as we are already fetching all nfts for the AssetsTabs
-  const { fiatBalance } = await fetchTokenBalance(address, chain, true, true);
+  const { fiatBalance } = await fetchFiatBalance(address, chain);
   return (
     <h2 className="mb-4 mt-1 flex items-center text-4xl">{`$ ${fiatBalance?.toFixed(
       2,

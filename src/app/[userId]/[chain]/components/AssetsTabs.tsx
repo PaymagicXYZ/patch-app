@@ -25,7 +25,6 @@ export async function AssetsTab({
   const address = (await resolve(userId)) as Address;
 
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
-
   return (
     <WidgetContainer className="h-[416px]">
       <Tabs defaultValue="tokens" className="flex h-full flex-col gap-2">
