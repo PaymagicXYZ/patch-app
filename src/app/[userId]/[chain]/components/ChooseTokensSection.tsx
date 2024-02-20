@@ -74,6 +74,7 @@ export function ChooseTokensSection({
 
   useEffect(() => {
     resetForm(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetForm = (resetSelectedAddress = false) => {
