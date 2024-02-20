@@ -13,6 +13,7 @@ import {
 import Image from "next/image";
 import { isNFT } from "@/libs/utils";
 import { minifyAddress } from "@/libs/utils/checkUserId";
+import { ScrollArea } from "./ui/scroll-area";
 
 export function SelectTokenDropdown({
   tokens,
@@ -24,8 +25,9 @@ export function SelectTokenDropdown({
   title: string;
 }) {
   const [open, setOpen] = React.useState(false);
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={setOpen} modal>
       <PopoverTrigger asChild>
         <Button
           variant="outline"
@@ -37,33 +39,43 @@ export function SelectTokenDropdown({
           {title}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-full bg-gray-900 p-0 sm:w-96 md:w-[600px]">
-        <Command className="bg-gray-900 text-gray-100">
+      <PopoverContent className="relative bottom-8 h-48 w-full bg-gray-900 p-0 sm:w-96 md:w-[600px]">
+        <Command className="w-80 bg-gray-900 text-gray-100 sm:w-full">
           <CommandInput placeholder="Search for tokens..." />
           <CommandEmpty>No tokens found.</CommandEmpty>
-          <CommandGroup className="bg-gray-900">
-            {tokens?.map((token) =>
-              !isNFT(token) ? (
-                <TokenItem
-                  key={token.tickerSymbol}
-                  token={token}
-                  onSelect={() => {
-                    onTokenSelect(token);
-                    setOpen(false);
-                  }}
-                />
-              ) : (
-                <NftCommandItem
-                  key={token.tickerSymbol}
-                  token={token}
-                  onSelect={() => {
-                    onTokenSelect(token);
-                    setOpen(false);
-                  }}
-                />
-              ),
-            )}
-          </CommandGroup>
+          <ScrollArea>
+            <CommandGroup className="bg-gray-900">
+              {[
+                ...tokens,
+                ...tokens,
+                ...tokens,
+                ...tokens,
+                ...tokens,
+                ...tokens,
+                ...tokens,
+              ]?.map((token) =>
+                !isNFT(token) ? (
+                  <TokenItem
+                    key={token.tickerSymbol}
+                    token={token}
+                    onSelect={() => {
+                      onTokenSelect(token);
+                      setOpen(false);
+                    }}
+                  />
+                ) : (
+                  <NftCommandItem
+                    key={token.tickerSymbol}
+                    token={token}
+                    onSelect={() => {
+                      onTokenSelect(token);
+                      setOpen(false);
+                    }}
+                  />
+                ),
+              )}
+            </CommandGroup>
+          </ScrollArea>
         </Command>
       </PopoverContent>
     </Popover>
@@ -81,7 +93,7 @@ const NftCommandItem = ({
     <CommandItem
       key={token.tickerSymbol}
       value={token.tickerSymbol}
-      className="flex items-center justify-between bg-gray-900 text-gray-300 aria-selected:text-gray-100"
+      className="flex w-full items-center justify-between bg-gray-900 text-gray-300 aria-selected:text-gray-100"
       onSelect={onSelect}
     >
       <NftItem token={token} />
@@ -91,7 +103,7 @@ const NftCommandItem = ({
 
 export const NftItem = ({ token }: { token: NFTToken }) => {
   return (
-    <div className="flex flex-1 justify-between rounded-xl bg-gray-800 px-2 py-1.5">
+    <div className="flex w-full flex-1 justify-between rounded-xl bg-gray-800 px-2 py-1.5">
       <div className="flex gap-2">
         <Image
           src={token.tokenUrl ?? "/app_icon.svg"}
@@ -100,12 +112,14 @@ export const NftItem = ({ token }: { token: NFTToken }) => {
           height={24}
           unoptimized
         />
-        <div className="flex flex-col items-start md:items-center md:flex-row md:gap-2">
+        <div className="flex flex-col items-start md:flex-row md:items-center md:gap-2">
           <div>{token.tickerSymbol}</div>
-          <div className="rounded-md  bg-gray-700 text-gray-400">#{token.tokenId}</div>
+          <div className="rounded-md  bg-gray-700 text-gray-400">
+            #{token.tokenId}
+          </div>
         </div>
       </div>
-      <div className="flex-col gap-1 md:flex-row text-gray-500">
+      <div className="flex-col gap-1 text-gray-500 md:flex-row">
         <div>{minifyAddress(token.contractAddress)}</div>
       </div>
     </div>
@@ -123,20 +137,24 @@ const TokenItem = ({
     <CommandItem
       key={token.tickerSymbol}
       value={token.tickerSymbol}
-      className="flex items-center justify-between bg-gray-900 text-gray-50"
+      className="flex w-full items-center justify-between bg-gray-900 text-gray-300 aria-selected:text-gray-100 "
       onSelect={onSelect}
     >
-      <div className="flex gap-2">
-        <Image
-          src={token.logoUrl}
-          alt={token.tickerSymbol}
-          width={24}
-          height={24}
-          unoptimized
-        />
-        <div>{token.tickerSymbol}</div>
+      <div className="flex w-full flex-1 justify-between rounded-xl bg-gray-800 px-2 py-1.5">
+        <div className="flex gap-2">
+          <Image
+            src={token.logoUrl}
+            alt={token.tickerSymbol}
+            width={24}
+            height={24}
+            unoptimized
+          />
+          <div>{token.tickerSymbol}</div>
+        </div>
+        <div className="flex-col gap-1 md:flex-row">
+          <div className="text-gray-100">{token.balance}</div>
+        </div>
       </div>
-      <div className="text-gray-100">{token.balance}</div>
     </CommandItem>
   );
 };
