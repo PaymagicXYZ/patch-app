@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Nav from "../components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
@@ -11,7 +11,12 @@ export const metadata: Metadata = {
   title: "Patch Wallet",
   description:
     "A Wallet on top of your social handle. Use your Twitter, GitHub, Email, or Phone as your personal crypto wallet without the complexity. Let anyone send you tokens via your social handle.",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
