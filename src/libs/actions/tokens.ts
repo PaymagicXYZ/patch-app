@@ -56,7 +56,3 @@ export const fetchFiatBalance = unstable_cache(
 		revalidate: 300,
 	},
 );
-
-export const revalidate = (tag: string) => {
-	revalidateTag(tag);
-};

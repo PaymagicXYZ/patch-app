@@ -39,7 +39,7 @@ import {
 import { sendTx } from "@/libs/actions/tx";
 import { useDialogActions } from "@/libs/hooks/useDialog";
 import { toast } from "react-toastify";
-import { revalidate } from "@/libs/actions/tokens";
+import { revalidate } from "@/libs/actions/utils";
 
 type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };
 
