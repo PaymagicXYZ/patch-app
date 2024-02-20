@@ -1,12 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "../components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
-import UserProvider from "@/context/user-provider";
 import { cn } from "@/libs/utils";
-import { ModalProvider } from "@/context/modal-provider";
+import { Providers } from "@/context/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,18 +21,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "light")}>
+      <body className={cn(inter.className)}>
         <div className="flex min-h-screen flex-col">
-          <UserProvider>
-            <ModalProvider>
-              <ClerkProvider>
-                <Nav />
-                {children}
-                <Footer />
-                <div id="modal" />
-              </ClerkProvider>
-            </ModalProvider>
-          </UserProvider>
+          <Providers>
+            <Nav />
+            {children}
+            <Footer />
+          </Providers>
         </div>
       </body>
     </html>

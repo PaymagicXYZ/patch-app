@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { FormSubmissionLoader } from "@/components/FormSubmissionLoader";
 import { LookupInput } from "@/components/ui/lookup-input";
@@ -15,7 +15,7 @@ export const UserLookupServerForm = ({
   const isDefault = by === "default";
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full flex-col">
       <form
         action={formAction}
         ref={formRef}
@@ -36,10 +36,10 @@ export const UserLookupServerForm = ({
           }
         />
         <FormSubmissionLoader className="absolute right-4 text-gray-300" />
-        <p className="absolute -bottom-6 left-2 text-sm text-red-600">
-          {state.errorMessage}
-        </p>
       </form>
+      <p className="relative left-2 top-2 text-sm text-red-600">
+        {state.errorMessage}
+      </p>
     </div>
   );
 };

@@ -38,13 +38,6 @@ async function ProfileWidget({
 
   return (
     <WidgetContainer className={cn("", className)}>
-      {/*For testing purposes */}
-      {/* <Link
-        href={`/success?txHash=0x8f9c8d8347a909e0c7d6bf79087fcda0e298519fc0bd2f3055f8c82792bfb28f&userId=${profile.patchUserId}`}
-      >
-        Go
-      </Link> */}
-
       <Suspense fallback={<ProfileWidgetHeaderSkeleton />}>
         <ProfileWidgetHeader userId={userId} />
       </Suspense>

@@ -30,7 +30,6 @@ import {
 } from "../../../../components/SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "../../../../components/Spinner";
-import { useRouter } from "next/navigation";
 import {
   Tabs,
   TabsContent,
@@ -51,8 +50,8 @@ export function ChooseTokensSection({
   nfts: NFTToken[];
   profile: SocialProfile;
 }) {
-  const router = useRouter();
   const to = useSendContextTo();
+  const { close } = useDialogActions();
   const { setTo } = useSendContextActions();
   const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
@@ -101,13 +100,23 @@ export function ChooseTokensSection({
       formattedTxData.data,
     );
 
-    if (tx && tx.txHash) {
-      resetForm();
-      open("SuccessDialog", {
-        hash: tx.txHash,
-        profile,
+    if (!tx?.txHash) {
+      console.log("tx", tx);
+      form.setError("root", {
+        message: "Something went wrong. Please try again",
       });
+      return;
     }
+
+    resetForm();
+    open("SuccessDialog", {
+      hash: tx.txHash,
+      profile,
+      onClose: () => {
+        close("SuccessDialog");
+        close("sendDialog");
+      },
+    });
   };
 
   const filteredTokens = tokens.filter((token) => {
@@ -248,7 +257,10 @@ export function ChooseTokensSection({
               </div>
             </TabsContent>
           </Tabs>
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 flex items-center justify-end gap-2">
+            <div className="text-sm text-red-600">
+              {form.formState.errors?.root?.message}
+            </div>
             <SendButton
               hidden={!to}
               disabled={
