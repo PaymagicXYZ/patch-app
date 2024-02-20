@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/enforces-shorthand */
 import Link from "next/link";
 
 export const Footer = () => {
