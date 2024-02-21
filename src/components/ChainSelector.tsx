@@ -99,17 +99,15 @@ const SelectChain = ({
                 className={cn("focus:bg-gray-850 text-gray-100 px-2")}
               >
                 <div className="flex flex-1 items-center gap-2">
-                  {/* TODO: dynamic image once we know all the chains */}
                   <Image
                     src={`/${chain}.svg`}
-                    onError={(e) => {
+                    onError={(e: { target: HTMLImageElement }) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
                       target.src = "/eth.svg";
                     }}
                     alt={chain}
                     width={28}
-                    height={28}
                   />
                   {capitalize(formattedChainName)}
                 </div>
