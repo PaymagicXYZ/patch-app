@@ -117,7 +117,7 @@ export function ChooseTokensSection({
       chain,
       onClose: () => {
         close("SuccessDialog");
-        close("sendDialog");
+        close("SendDialog");
       },
     });
 

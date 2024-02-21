@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export type DialogId = "SuccessDialog" | "sendDialog";
+export type DialogId = "SuccessDialog" | "sendDialog" | "SendDialog";
 
 interface Meta {
 	[name: string]: unknown;
@@ -27,6 +27,10 @@ const useDialogStore = create<DialogProps>((set) => ({
 			opened: false,
 		},
 		SuccessDialog: {
+			opened: false,
+			meta: {},
+		},
+		SendDialog: {
 			opened: false,
 			meta: {},
 		},

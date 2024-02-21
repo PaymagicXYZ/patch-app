@@ -2,23 +2,19 @@ import { Suspense } from "react";
 import ViewAddressBtn from "../../../../components/ViewAddressBtn";
 import ProfileInfo from "./ProfileInfo";
 import WidgetContainer from "../../../../components/WidgetContainer";
-import { Skeleton } from "../../../../components/ui/skeleton";
 import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
 import { AddressTooltip } from "../../../../components/AddressTooltip";
 import { TotalBalanceUSD } from "./TotalBalance";
-import { GenericDialog } from "../../../../components/GenericDialog";
-import { SendDialogContent } from "./SendDialogContent";
-import { Separator } from "../../../../components/ui/separator";
 import { cn } from "@/libs/utils";
 import { resolveSocialProfile } from "@/libs/actions/utils";
 import {
   ProfileWidgetHeaderSkeleton,
   ProfileWidgetMidSectionSkeleton,
 } from "../../../../components/Skeleton";
-import { ArrowUp } from "lucide-react";
 import { resolve } from "@/libs/actions/resolve";
-import { LoadingSpinner } from "@/components/Spinner";
 import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
+import { SendEntryPoint } from "../../../../components/modal/SendDialog/SendEntryPoint";
+import { SendDialogTrigger } from "../../../../components/modal/SendDialog/SendDialogTrigger";
 
 async function ProfileWidget({
   userId,
@@ -31,12 +27,6 @@ async function ProfileWidget({
 }) {
   const network = userId.split(":")[0];
   const isFarcaster = network === "farcaster";
-  const whatToVerify =
-    network === "tel"
-      ? "phone number"
-      : network === "email"
-      ? "email"
-      : "social account";
 
   return (
     <WidgetContainer className={cn("", className)}>
@@ -52,24 +42,9 @@ async function ProfileWidget({
       </div>
       <div className="mt-7 flex justify-center px-4">
         {!isFarcaster ? (
-          <GenericDialog
-            dialogId="sendDialog"
-            btnTitle="Send"
-            title="Send"
-            subtitle={`In order to send you need to first verify your ${whatToVerify}`}
-            leftIcon={<ArrowUp />}
-          >
-            <Separator />
-            <Suspense
-              fallback={
-                <Skeleton className="flex h-80 w-full items-center justify-center">
-                  <LoadingSpinner />
-                </Skeleton>
-              }
-            >
-              <SendDialogContent chain={chain} userId={userId} />
-            </Suspense>
-          </GenericDialog>
+          <Suspense fallback={<SendDialogTrigger disabled />}>
+            <SendEntryPoint chain={chain} userId={userId} />
+          </Suspense>
         ) : (
           <></>
         )}
