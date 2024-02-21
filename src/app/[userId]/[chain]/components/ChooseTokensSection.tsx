@@ -104,7 +104,6 @@ export function ChooseTokensSection({
     );
 
     if (!tx?.txHash) {
-      console.log("tx", tx);
       form.setError("root", {
         message: "Something went wrong. Please try again",
       });

@@ -4,7 +4,7 @@ import { Address, Chain } from "@patchwallet/patch-sdk";
 import { getChainNameFromShortName } from "@patchwallet/patch-sdk/utils";
 import { covalentInstance } from "../client";
 import { sortCovalentAssetsByType } from "../utils";
-import { revalidateTag, unstable_cache } from "next/cache";
+import { unstable_cache } from "next/cache";
 
 export const fetchTokenBalance = unstable_cache(
 	async (
