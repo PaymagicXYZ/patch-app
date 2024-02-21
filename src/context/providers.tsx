@@ -14,7 +14,7 @@ export function Providers(props: IProvidersProps) {
       <UserProvider>
         <ClerkProvider>{props.children}</ClerkProvider>
         <ModalProvider />
-        <ToastContainer />
+        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
       </UserProvider>
     </>
   );
