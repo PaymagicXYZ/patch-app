@@ -11,6 +11,8 @@ import ViewAddressBtn from "@/components/ViewAddressBtn";
 import { Button } from "@/components/ui/button";
 import { SocialProfile } from "@/types";
 import { useDialogIsOpen, useDialogMeta } from "@/libs/hooks/useDialog";
+import { Chain } from "@patchwallet/patch-sdk";
+import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
 
 export default function SuccessDialogLocal() {
   const isOpen = useDialogIsOpen("SuccessDialog");
@@ -19,10 +21,13 @@ export default function SuccessDialogLocal() {
     | {
         hash: string;
         profile: SocialProfile;
+        chain: Chain;
         onClose: () => void;
       }
     | undefined
   >("SuccessDialog");
+
+  const blockExplorerUrl = BLOCK_EXPLORERS[meta?.chain ?? "matic"];
 
   return (
     <Dialog open={isOpen} onOpenChange={meta?.onClose}>
@@ -56,7 +61,7 @@ export default function SuccessDialogLocal() {
             <div className="flex flex-1 justify-between">
               <ViewAddressBtn
                 text="Block Explorer"
-                url={`https://polygonscan.com/tx/${meta?.hash}`}
+                url={`${blockExplorerUrl}/tx/${meta?.hash}`}
               />
               <DialogClose asChild>
                 <Button

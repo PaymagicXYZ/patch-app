@@ -18,6 +18,7 @@ import {
 import { ArrowUp } from "lucide-react";
 import { resolve } from "@/libs/actions/resolve";
 import { LoadingSpinner } from "@/components/Spinner";
+import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
 
 async function ProfileWidget({
   userId,
@@ -40,7 +41,7 @@ async function ProfileWidget({
   return (
     <WidgetContainer className={cn("", className)}>
       <Suspense fallback={<ProfileWidgetHeaderSkeleton />}>
-        <ProfileWidgetHeader userId={userId} />
+        <ProfileWidgetHeader userId={userId} chain={chain} />
       </Suspense>
 
       <div className="mt-8 flex w-full flex-col items-center justify-center">
@@ -77,14 +78,22 @@ async function ProfileWidget({
   );
 }
 
-async function ProfileWidgetHeader({ userId }: { userId: UserId }) {
+async function ProfileWidgetHeader({
+  userId,
+  chain,
+}: {
+  userId: UserId;
+  chain: Chain;
+}) {
   const { address, profile } = await resolveSocialProfile(userId as UserId);
+  const blockExplorerUrl = BLOCK_EXPLORERS[chain];
+
   return (
     <div className="flex flex-wrap justify-between">
       <ProfileInfo profile={profile} checkMark />
       <ViewAddressBtn
         disabled={!address}
-        url={`https://polygonscan.com/address/${address}`}
+        url={`${blockExplorerUrl}/address/${address}`}
         text="Block Explorer"
       />
     </div>

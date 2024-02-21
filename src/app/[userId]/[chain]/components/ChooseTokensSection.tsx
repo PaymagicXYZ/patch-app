@@ -114,6 +114,7 @@ export function ChooseTokensSection({
     open("SuccessDialog", {
       hash: tx.txHash,
       profile,
+      chain,
       onClose: () => {
         close("SuccessDialog");
         close("sendDialog");
