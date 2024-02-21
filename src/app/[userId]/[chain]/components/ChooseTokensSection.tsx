@@ -30,7 +30,6 @@ import {
 } from "../../../../components/SelectTokenDropdown";
 import { useEffect } from "react";
 import { LoadingSpinner } from "../../../../components/Spinner";
-import { useRouter } from "next/navigation";
 import {
   Tabs,
   TabsContent,
@@ -39,6 +38,8 @@ import {
 } from "../../../../components/ui/tabs";
 import { sendTx } from "@/libs/actions/tx";
 import { useDialogActions } from "@/libs/hooks/useDialog";
+import { toast } from "react-toastify";
+import { revalidate } from "@/libs/actions/utils";
 
 type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };
 
@@ -51,8 +52,8 @@ export function ChooseTokensSection({
   nfts: NFTToken[];
   profile: SocialProfile;
 }) {
-  const router = useRouter();
   const to = useSendContextTo();
+  const { close } = useDialogActions();
   const { setTo } = useSendContextActions();
   const { chain, selectedAddress } = React.useContext(UserContext);
   const { bundleTxns, formatTxData } = useConstructTx();
@@ -73,6 +74,7 @@ export function ChooseTokensSection({
 
   useEffect(() => {
     resetForm(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const resetForm = (resetSelectedAddress = false) => {
@@ -101,13 +103,34 @@ export function ChooseTokensSection({
       formattedTxData.data,
     );
 
-    if (tx && tx.txHash) {
-      resetForm();
-      open("SuccessDialog", {
-        hash: tx.txHash,
-        profile,
+    if (!tx?.txHash) {
+      form.setError("root", {
+        message: "Something went wrong. Please try again",
       });
+      return;
     }
+
+    resetForm();
+    open("SuccessDialog", {
+      hash: tx.txHash,
+      profile,
+      chain,
+      onClose: () => {
+        close("SuccessDialog");
+        close("sendDialog");
+      },
+    });
+
+    toast.info(
+      "Token balances are updating. Please wait 10 seconds for updates.",
+      {
+        autoClose: 30000,
+        onClose: () => {
+          revalidate("token_balance");
+          revalidate("fiat_balance");
+        },
+      },
+    );
   };
 
   const filteredTokens = tokens.filter((token) => {
@@ -170,7 +193,7 @@ export function ChooseTokensSection({
                         },
                         validate: {
                           sufficient: (v) =>
-                            +v < +item.balance || "Insufficient balance",
+                            +v <= +item.balance || "Insufficient balance",
                           positive: (v) =>
                             +v > 0 || "Please provide a positive number",
                         },
@@ -248,7 +271,10 @@ export function ChooseTokensSection({
               </div>
             </TabsContent>
           </Tabs>
-          <div className="mt-4 flex justify-end">
+          <div className="mt-4 flex items-center justify-end gap-2">
+            <div className="text-sm text-red-600">
+              {form.formState.errors?.root?.message}
+            </div>
             <SendButton
               hidden={!to}
               disabled={

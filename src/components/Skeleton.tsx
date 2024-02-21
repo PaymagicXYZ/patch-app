@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/enforces-shorthand */
 import { Skeleton } from "./ui/skeleton";
 
 export const InventoryTabsSkeleton = () => {

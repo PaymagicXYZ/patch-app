@@ -25,7 +25,6 @@ export async function AssetsTab({
   const address = (await resolve(userId)) as Address;
 
   const { data, error } = (await fetchTokenBalance(address, chain, true)) ?? [];
-
   return (
     <WidgetContainer className="h-[416px]">
       <Tabs defaultValue="tokens" className="flex h-full flex-col gap-2">
@@ -93,7 +92,7 @@ const TokenRow = ({
         <div className="flex gap-2">
           <div>
             <Image
-              src={logoUrl}
+              src={logoUrl ?? "/app_icon.svg"}
               alt={tickerSymbol}
               width={24}
               height={24}

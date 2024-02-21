@@ -17,6 +17,8 @@ import {
 } from "../../../../components/Skeleton";
 import { ArrowUp } from "lucide-react";
 import { resolve } from "@/libs/actions/resolve";
+import { LoadingSpinner } from "@/components/Spinner";
+import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
 
 async function ProfileWidget({
   userId,
@@ -38,15 +40,8 @@ async function ProfileWidget({
 
   return (
     <WidgetContainer className={cn("", className)}>
-      {/*For testing purposes */}
-      {/* <Link
-        href={`/success?txHash=0x8f9c8d8347a909e0c7d6bf79087fcda0e298519fc0bd2f3055f8c82792bfb28f&userId=${profile.patchUserId}`}
-      >
-        Go
-      </Link> */}
-
       <Suspense fallback={<ProfileWidgetHeaderSkeleton />}>
-        <ProfileWidgetHeader userId={userId} />
+        <ProfileWidgetHeader userId={userId} chain={chain} />
       </Suspense>
 
       <div className="mt-8 flex w-full flex-col items-center justify-center">
@@ -65,7 +60,13 @@ async function ProfileWidget({
             leftIcon={<ArrowUp />}
           >
             <Separator />
-            <Suspense fallback={<Skeleton className="h-80 w-96" />}>
+            <Suspense
+              fallback={
+                <Skeleton className="flex h-80 w-full items-center justify-center">
+                  <LoadingSpinner />
+                </Skeleton>
+              }
+            >
               <SendDialogContent chain={chain} userId={userId} />
             </Suspense>
           </GenericDialog>
@@ -77,14 +78,22 @@ async function ProfileWidget({
   );
 }
 
-async function ProfileWidgetHeader({ userId }: { userId: UserId }) {
+async function ProfileWidgetHeader({
+  userId,
+  chain,
+}: {
+  userId: UserId;
+  chain: Chain;
+}) {
   const { address, profile } = await resolveSocialProfile(userId as UserId);
+  const blockExplorerUrl = BLOCK_EXPLORERS[chain];
+
   return (
     <div className="flex flex-wrap justify-between">
       <ProfileInfo profile={profile} checkMark />
       <ViewAddressBtn
         disabled={!address}
-        url={`https://polygonscan.com/address/${address}`}
+        url={`${blockExplorerUrl}/address/${address}`}
         text="Block Explorer"
       />
     </div>

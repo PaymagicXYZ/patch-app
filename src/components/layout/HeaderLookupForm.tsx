@@ -14,8 +14,8 @@ export const HeaderLookupForm = () => {
     useState<SupportedSocialNetworkIds>("twitter");
   const { chain } = useContext(UserContext);
   const lookupProviderDetails = getSupportedLookupNetworks()[searchProvider];
-  const pathname = usePathname();
   const { prefetch } = useRouter();
+  const pathname = usePathname();
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
@@ -34,6 +34,7 @@ export const HeaderLookupForm = () => {
     e.preventDefault();
     push(`/${searchProvider}:${searchValue}/${chain}`);
   };
+
   return (
     <form
       className={cn("flex w-full flex-1 items-center gap-2", {

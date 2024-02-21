@@ -1,18 +1,22 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import Nav from "../components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
-import UserProvider from "@/context/user-provider";
 import { cn } from "@/libs/utils";
-import { ModalProvider } from "@/context/modal-provider";
+import { Providers } from "@/context/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Patch Wallet Integration Example",
+  title: "Patch Wallet",
   description:
-    "An example of how to integrate Patch Wallet into your app with clerk as auth provider.",
+    "A Wallet on top of your social handle. Use your Twitter, GitHub, Email, or Phone as your personal crypto wallet without the complexity. Let anyone send you tokens via your social handle.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({
@@ -22,18 +26,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "light")}>
+      <body className={cn(inter.className)}>
         <div className="flex min-h-screen flex-col">
-          <UserProvider>
-            <ModalProvider>
-              <ClerkProvider>
-                <Nav />
-                {children}
-                <Footer />
-                <div id="modal" />
-              </ClerkProvider>
-            </ModalProvider>
-          </UserProvider>
+          <Providers>
+            <Nav />
+            {children}
+            <Footer />
+          </Providers>
         </div>
       </body>
     </html>

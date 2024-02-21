@@ -15,6 +15,11 @@ function WalletBanner({ type }: { type: "about" | "claim" }) {
             />
             <AnimatedText text="Email" delay="5000" />
             <AnimatedText text="Phone" delay="7500" />
+            <AnimatedText
+              text="Farcaster"
+              delay="10000"
+              className="text-farcaster-100"
+            />
           </div>
         </div>
       </div>
@@ -40,6 +45,7 @@ const AnimatedText = ({
           "animation-delay-[2500ms]": delay === "2500",
           "animation-delay-[5000ms]": delay === "5000",
           "animation-delay-[7500ms]": delay === "7500",
+          "animation-delay-[10000ms]": delay === "10000",
         },
       )}
     >

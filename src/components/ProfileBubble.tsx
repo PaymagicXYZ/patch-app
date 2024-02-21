@@ -25,7 +25,7 @@ function ProfileBubble({ userId, name, imageUrl }: Props) {
             alt={name}
             width={80}
             height={80}
-            className="h-12 w-12 rounded-full md:h-6 md:w-6"
+            className="size-12 rounded-full md:size-6"
           />
         </div>
         <ArrowRight

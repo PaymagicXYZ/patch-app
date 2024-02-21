@@ -1,6 +1,6 @@
-// ./components/modal/TestModal/TestModal.tsx
 "use client";
 import {
+  Dialog,
   DialogClose,
   DialogContent,
   DialogFooter,
@@ -10,26 +10,27 @@ import { ConfettiEffect } from "@/components/ConfettiEffect";
 import ViewAddressBtn from "@/components/ViewAddressBtn";
 import { Button } from "@/components/ui/button";
 import { SocialProfile } from "@/types";
-import { useDialogActions } from "@/libs/hooks/useDialog";
-import { BaseModal } from "../lazy-setup(deprecated)/BaseModal";
+import { useDialogIsOpen, useDialogMeta } from "@/libs/hooks/useDialog";
+import { Chain } from "@patchwallet/patch-sdk";
+import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
 
-export interface ISuccessDialogProps {
-  onClose?: () => void;
-  isOpen: boolean;
-  hash: string;
-  profile: SocialProfile;
-}
+export default function SuccessDialogLocal() {
+  const isOpen = useDialogIsOpen("SuccessDialog");
 
-// Note: this is deprecated for now because it's part of the lazy-setup with global portals provider, which was causing some issues when dynamically importing the modals on demand. More info in context/modal-provider
-export default function SuccessDialog(props: ISuccessDialogProps) {
-  const { close } = useDialogActions();
+  const meta = useDialogMeta<
+    | {
+        hash: string;
+        profile: SocialProfile;
+        chain: Chain;
+        onClose: () => void;
+      }
+    | undefined
+  >("SuccessDialog");
 
-  const handleOnClose = () => {
-    props.onClose?.();
-    close("sendDialog");
-  };
+  const blockExplorerUrl = BLOCK_EXPLORERS[meta?.chain ?? "matic"];
+
   return (
-    <BaseModal onClose={handleOnClose} isOpen={props.isOpen}>
+    <Dialog open={isOpen} onOpenChange={meta?.onClose}>
       <DialogContent className="flex min-w-[260px] max-w-[660px] flex-col justify-center overflow-hidden border-none bg-gray-900 bg-gradient-to-b from-[#213409] to-black p-0">
         <div className="flex w-full flex-1 flex-col overflow-hidden rounded-xl px-8 py-4 pt-12">
           <ConfettiEffect />
@@ -47,8 +48,8 @@ export default function SuccessDialog(props: ISuccessDialogProps) {
             <div className="mt-2 grid w-full text-center text-xl md:grid-cols-1 md:text-2xl ">
               <div className="">You just sent funds from</div>
               <div className="text-orange-300">
-                {props.profile?.network === "twitter" ? "@" : ""}
-                {props.profile?.handle}
+                {meta?.profile?.network === "twitter" ? "@" : ""}
+                {meta?.profile?.handle}
                 <span className="text-white">!</span>
               </div>
             </div>
@@ -60,7 +61,7 @@ export default function SuccessDialog(props: ISuccessDialogProps) {
             <div className="flex flex-1 justify-between">
               <ViewAddressBtn
                 text="Block Explorer"
-                url={`https://polygonscan.com/tx/${props.hash}`}
+                url={`${blockExplorerUrl}/tx/${meta?.hash}`}
               />
               <DialogClose asChild>
                 <Button
@@ -74,6 +75,6 @@ export default function SuccessDialog(props: ISuccessDialogProps) {
           </DialogFooter>
         </div>
       </DialogContent>
-    </BaseModal>
+    </Dialog>
   );
 }

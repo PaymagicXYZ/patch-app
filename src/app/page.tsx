@@ -20,7 +20,7 @@ export default function Home() {
         className="cursor-pointer"
         width={168}
       />
-      <WalletBanner type="about"></WalletBanner>
+      <WalletBanner type="about" />
       <p className="mt-4 text-center text-sm text-gray-600 md:w-[475px]">
         Use your Twitter, Email, or Phone as your personal crypto wallet without
         the complexity. Let anyone send you tokens via your social handle.
@@ -56,7 +56,7 @@ export default function Home() {
             />
           </div>
           <div className="mx-auto md:w-[680px]">
-            <Separator className="mb-12 mt-12 md:mt-14" />
+            <Separator className="my-12 md:mt-14" />
             <div className="flex flex-wrap gap-3 text-gray-200 md:flex-nowrap">
               <Feature
                 btnHref={
