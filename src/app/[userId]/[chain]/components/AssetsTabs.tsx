@@ -92,7 +92,7 @@ const TokenRow = ({
         <div className="flex gap-2">
           <div>
             <Image
-              src={logoUrl}
+              src={logoUrl ?? "/app_icon.svg"}
               alt={tickerSymbol}
               width={24}
               height={24}

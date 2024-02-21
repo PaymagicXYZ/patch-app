@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import type { Chain } from "@patchwallet/patch-sdk";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -14,6 +14,7 @@ import { UserContext } from "@/context/user-provider";
 import isUserId from "@/libs/utils/checkUserId";
 import {
   getChainNameFromShortName,
+  isSupportedChain,
   supportedShortNames,
 } from "@patchwallet/patch-sdk/utils";
 import { capitalize, cn } from "@/libs/utils";
@@ -24,7 +25,20 @@ const ChainSelector = () => {
   const pathname = usePathname();
   const { setChain, chain: selectedChain } = useContext(UserContext);
 
+  useEffect(() => {
+    if (pathname === "/") {
+      return;
+    }
+
+    const [_, _user, _chain] = pathname.split("/");
+
+    if (isSupportedChain(_chain)) {
+      setChain(_chain as Chain);
+    }
+  }, [pathname, setChain]);
+
   const handleChainChange = (value: string) => {
+    console.log("chain changed");
     setChain(value as Chain);
     const _user = pathname.split("/")[1];
     if (isUserId(_user)) {
@@ -52,7 +66,11 @@ const SelectChain = ({
   selectedChain: Chain;
 }) => {
   return (
-    <Select onValueChange={onValueChange} defaultValue={selectedChain}>
+    <Select
+      onValueChange={onValueChange}
+      defaultValue={selectedChain}
+      value={selectedChain}
+    >
       <SelectTrigger className="w-44 rounded-lg border border-solid bg-gray-950 text-gray-300 md:w-60">
         <SelectValue />
       </SelectTrigger>
