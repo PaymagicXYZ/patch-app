@@ -82,8 +82,11 @@ export const sortCovalentAssetsByType = (
 					supportedERCStandards: curr.supports_erc as unknown as string[],
 				});
 			}
-			if (curr.type === "cryptocurrency") {
-				acc["tokens"].push({
+			if (
+				(curr.type === "cryptocurrency" || curr.type === "dust") &&
+				curr.balance
+			) {
+				acc[tokens].push({
 					tickerSymbol: curr.contract_ticker_symbol,
 					balance: curr.balance
 						? formatUnits(curr.balance, curr.contract_decimals)

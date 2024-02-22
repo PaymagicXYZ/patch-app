@@ -108,6 +108,7 @@ const SelectChain = ({
                     }}
                     alt={chain}
                     width={28}
+                    height={28}
                   />
                   {capitalize(formattedChainName)}
                 </div>
