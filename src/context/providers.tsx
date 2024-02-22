@@ -14,7 +14,11 @@ export function Providers(props: IProvidersProps) {
       <UserProvider>
         <ClerkProvider>{props.children}</ClerkProvider>
         <ModalProvider />
-        <ToastContainer pauseOnFocusLoss={false} pauseOnHover={false} />
+        <ToastContainer
+          pauseOnFocusLoss={false}
+          pauseOnHover={false}
+          toastClassName={"bg-gray-950 border-l-4 border-blue-500"}
+        />
       </UserProvider>
     </>
   );

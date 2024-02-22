@@ -40,6 +40,7 @@ import { sendTx } from "@/libs/actions/tx";
 import { useDialogActions } from "@/libs/hooks/useDialog";
 import { toast } from "react-toastify";
 import { revalidate } from "@/libs/actions/utils";
+import { Toast } from "@/components/Toast";
 
 type AssetInputs = { tokens: InputToken[]; nfts: NFTToken[] };
 
@@ -121,16 +122,13 @@ export function ChooseTokensSection({
       },
     });
 
-    toast.info(
-      "Token balances are updating. Please wait 10 seconds for updates.",
-      {
-        autoClose: 30000,
-        onClose: () => {
-          revalidate("token_balance");
-          revalidate("fiat_balance");
-        },
+    toast.info(<Toast />, {
+      autoClose: 30000,
+      onClose: () => {
+        revalidate("token_balance");
+        revalidate("fiat_balance");
       },
-    );
+    });
   };
 
   const filteredTokens = tokens.filter((token) => {
