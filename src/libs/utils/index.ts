@@ -71,18 +71,21 @@ export const sortCovalentAssetsByType = (
 		(acc, curr) => {
 			if (curr.type === "nft") {
 				acc["nfts"].push({
-					tickerSymbol: curr.contract_display_name,
-					contractAddress: curr.contract_address,
-					price: curr.quote_rate?.toFixed(2) ?? 0,
-					tokenUrl: curr.nft_data[0]?.external_data?.image,
-					tokenId: curr.nft_data[0]?.token_id?.toString() ?? "0",
-					balance: curr.balance?.toString() ?? "1",
-					logoUrl: curr.logo_url,
-					decimals: curr.contract_decimals,
-					supportedERCStandards: curr.supports_erc as unknown as string[],
-				});
+          tickerSymbol: curr.contract_display_name,
+          contractAddress: curr.contract_address,
+          price: curr.quote_rate?.toFixed(2) ?? 0,
+          tokenUrl: curr.nft_data[0]?.external_data?.image,
+          tokenId: curr.nft_data[0]?.token_id?.toString() ?? "0",
+          balance: curr.balance?.toString() ?? "1",
+          logoUrl: curr.logo_url,
+          decimals: curr.contract_decimals,
+          supportedERCStandards: curr.supports_erc as unknown as string[],
+        });
 			}
-			if (curr.type === "cryptocurrency" || curr.type === "dust") {
+			if (
+				(curr.type === "cryptocurrency" || curr.type === "dust") &&
+				curr.balance
+			) {
 				acc["tokens"].push({
 					tickerSymbol: curr.contract_ticker_symbol,
 					balance: curr.balance

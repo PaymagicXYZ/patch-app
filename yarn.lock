@@ -740,14 +740,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@patchwallet/patch-sdk@npm:0.0.10":
-  version: 0.0.10
-  resolution: "@patchwallet/patch-sdk@npm:0.0.10"
+"@patchwallet/patch-sdk@npm:0.0.12":
+  version: 0.0.12
+  resolution: "@patchwallet/patch-sdk@npm:0.0.12"
   dependencies:
     typescript: "npm:^5.3.3"
   peerDependencies:
     typescript: ^5.0.0
-  checksum: 10c0/905ff916383710c537a8ba6fe3a3f5509a4fbca7a3a1dee447ff44f9a1602d0b58552df1602cefc491f87b46cc864bda14a2918daad824ef75a156071dca3d1e
+  checksum: 10c0/bc63a1a04ae244e7aa7b5386b304359ce076ea46089564adf8fdbebfb32d80a478731c5d469ddee820932839bf95304abdfc8ee565c7df8d956bec903ba9c313
   languageName: node
   linkType: hard
 
@@ -6619,7 +6619,7 @@ __metadata:
     "@covalenthq/client-sdk": "npm:^0.8.5"
     "@hookform/resolvers": "npm:^3.3.4"
     "@moonpay/moonpay-react": "npm:^1.5.3"
-    "@patchwallet/patch-sdk": "npm:0.0.10"
+    "@patchwallet/patch-sdk": "npm:0.0.12"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@radix-ui/react-label": "npm:^2.0.2"
     "@radix-ui/react-popover": "npm:^1.0.7"
@@ -6658,7 +6658,7 @@ __metadata:
     tailwind-merge: "npm:^2.2.1"
     tailwindcss: "npm:3.4.1"
     tailwindcss-animate: "npm:^1.0.7"
-    typescript: "npm:5.2.2"
+    typescript: "npm:^5.3.3"
     use-debounce: "npm:^10.0.0"
     vercel: "npm:^33.5.1"
     viem: "npm:^2.7.1"
@@ -8397,16 +8397,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.2.2":
-  version: 5.2.2
-  resolution: "typescript@npm:5.2.2"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/91ae3e6193d0ddb8656d4c418a033f0f75dec5e077ebbc2bd6d76439b93f35683936ee1bdc0e9cf94ec76863aa49f27159b5788219b50e1cd0cd6d110aa34b07
-  languageName: node
-  linkType: hard
-
 "typescript@npm:^5.1.6, typescript@npm:^5.3.3":
   version: 5.3.3
   resolution: "typescript@npm:5.3.3"
@@ -8424,16 +8414,6 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10c0/e3333f887c6829dfe0ab6c1dbe0dd1e3e2aeb56c66460cb85c5440c566f900c833d370ca34eb47558c0c69e78ced4bfe09b8f4f98b6de7afed9b84b8d1dd06a1
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>":
-  version: 5.2.2
-  resolution: "typescript@patch:typescript@npm%3A5.2.2#optional!builtin<compat/typescript>::version=5.2.2&hash=f3b441"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 10c0/062c1cee1990e6b9419ce8a55162b8dc917eb87f807e4de0327dbc1c2fa4e5f61bc0dd4e034d38ff541d1ed0479b53bcee8e4de3a4075c51a1724eb6216cb6f5
   languageName: node
   linkType: hard
 

@@ -26,7 +26,7 @@ export default function SuccessDialog(props: ISuccessDialogProps) {
 
   const handleOnClose = () => {
     props.onClose?.();
-    close("sendDialog");
+    close("SendDialog");
   };
   return (
     <BaseModal onClose={handleOnClose} isOpen={props.isOpen}>

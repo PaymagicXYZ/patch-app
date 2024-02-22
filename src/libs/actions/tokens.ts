@@ -48,7 +48,7 @@ export const fetchTokenBalance = unstable_cache(
 
 export const fetchFiatBalance = unstable_cache(
 	async (address: Address, chain: Chain) => {
-		return fetchTokenBalance(address, chain, false, true);
+		return (await fetchTokenBalance(address, chain, false, true)).fiatBalance;
 	},
 	["fetch_fiat"],
 	{
