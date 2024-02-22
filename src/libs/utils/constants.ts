@@ -12,7 +12,7 @@ export const NATIVE_TOKEN_ADDRESSES = [
 export const BLOCK_EXPLORERS: Record<Chain, string> = {
 	matic: "https://polygonscan.com",
 	arb1: "https://arbiscan.io",
-	oeth: "https://optimistic.etherscan.io",
+	// oeth: "https://optimistic.etherscan.io",
 	bnb: "https://bscscan.com",
 	linea: "https://lineascan.build",
 	base: "https://basescan.org",

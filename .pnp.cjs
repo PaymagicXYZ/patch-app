@@ -30,7 +30,7 @@ const RAW_RUNTIME_STATE =
           ["@covalenthq/client-sdk", "npm:0.8.5"],\
           ["@hookform/resolvers", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.3.4"],\
           ["@moonpay/moonpay-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.4"],\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.10"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.12"],\
           ["@radix-ui/react-dialog", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-popover", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.7"],\
@@ -1010,17 +1010,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["@patchwallet/patch-sdk", [\
-      ["npm:0.0.10", {\
-        "packageLocation": "../../../.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.10-f04b784369-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
+      ["npm:0.0.12", {\
+        "packageLocation": "../../../.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.12-157b81280e-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
         "packageDependencies": [\
-          ["@patchwallet/patch-sdk", "npm:0.0.10"]\
+          ["@patchwallet/patch-sdk", "npm:0.0.12"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.10", {\
-        "packageLocation": "./.yarn/__virtual__/@patchwallet-patch-sdk-virtual-1feaa38a64/4/.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.10-f04b784369-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
+      ["virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.12", {\
+        "packageLocation": "./.yarn/__virtual__/@patchwallet-patch-sdk-virtual-d15eb9c278/4/.yarn/berry/cache/@patchwallet-patch-sdk-npm-0.0.12-157b81280e-10c0.zip/node_modules/@patchwallet/patch-sdk/",\
         "packageDependencies": [\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.10"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.12"],\
           ["@types/typescript", null],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"]\
         ],\
@@ -8080,7 +8080,7 @@ const RAW_RUNTIME_STATE =
           ["@covalenthq/client-sdk", "npm:0.8.5"],\
           ["@hookform/resolvers", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:3.3.4"],\
           ["@moonpay/moonpay-react", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.5.4"],\
-          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.10"],\
+          ["@patchwallet/patch-sdk", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:0.0.12"],\
           ["@radix-ui/react-dialog", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.5"],\
           ["@radix-ui/react-label", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:2.0.2"],\
           ["@radix-ui/react-popover", "virtual:45b103d6e8bf83d17af37b055d668afb234dc6928199bcebbe9823ca9d2d6e59f56a9b7d3d18e36a470ce526912b410ff1e599dba15ece76fe21f5b719adef7f#npm:1.0.7"],\
