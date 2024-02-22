@@ -101,7 +101,7 @@ const SelectChain = ({
                 <div className="flex flex-1 items-center gap-2">
                   <Image
                     src={`/${chain}.svg`}
-                    onError={(e: { target: HTMLImageElement }) => {
+                    onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
                       target.src = "/eth.svg";
