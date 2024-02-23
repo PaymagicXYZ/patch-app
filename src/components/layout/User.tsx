@@ -36,5 +36,11 @@ export default async function UserDetail() {
         <ChainSelector />
       </div>
     );
+  } else {
+    return (
+      <div className="flex w-full flex-wrap justify-end gap-2">
+        <ChainSelector />
+      </div>
+    );
   }
 }
