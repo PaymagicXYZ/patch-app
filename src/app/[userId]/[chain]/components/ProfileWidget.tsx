@@ -3,6 +3,7 @@ import ViewAddressBtn from "../../../../components/ViewAddressBtn";
 import ProfileInfo from "./ProfileInfo";
 import WidgetContainer from "../../../../components/WidgetContainer";
 import { Address, Chain, UserId } from "@patchwallet/patch-sdk";
+import { getExplorerFromShortName } from "@patchwallet/patch-sdk/utils";
 import { AddressTooltip } from "../../../../components/AddressTooltip";
 import { TotalBalanceUSD } from "./TotalBalance";
 import { cn } from "@/libs/utils";
@@ -12,7 +13,6 @@ import {
   ProfileWidgetMidSectionSkeleton,
 } from "../../../../components/Skeleton";
 import { resolve } from "@/libs/actions/resolve";
-import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
 import { SendEntryPoint } from "../../../../components/modal/SendDialog/SendEntryPoint";
 import { SendDialogTrigger } from "../../../../components/modal/SendDialog/SendDialogTrigger";
 
@@ -61,7 +61,7 @@ async function ProfileWidgetHeader({
   chain: Chain;
 }) {
   const { address, profile } = await resolveSocialProfile(userId as UserId);
-  const blockExplorerUrl = BLOCK_EXPLORERS[chain];
+  const blockExplorerUrl = getExplorerFromShortName(chain);
 
   return (
     <div className="flex flex-wrap justify-between">
