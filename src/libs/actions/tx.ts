@@ -3,7 +3,6 @@ import type { UserId, Chain, Address, HexString } from "@patchwallet/patch-sdk";
 import { auth } from "@clerk/nextjs";
 import { client } from "../client";
 
-export const maxDuration = 300;
 export async function sendTx(
   chain: Chain,
   userId: UserId,
