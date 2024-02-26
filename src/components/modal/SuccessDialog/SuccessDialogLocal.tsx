@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { SocialProfile } from "@/types";
 import { useDialogIsOpen, useDialogMeta } from "@/libs/hooks/useDialog";
 import { Chain } from "@patchwallet/patch-sdk";
-import { BLOCK_EXPLORERS } from "@/libs/utils/constants";
+import { getExplorerFromShortName } from "@patchwallet/patch-sdk/utils";
 
 export default function SuccessDialogLocal() {
   const isOpen = useDialogIsOpen("SuccessDialog");
@@ -27,7 +27,7 @@ export default function SuccessDialogLocal() {
     | undefined
   >("SuccessDialog");
 
-  const blockExplorerUrl = BLOCK_EXPLORERS[meta?.chain ?? "matic"];
+  const blockExplorerUrl = getExplorerFromShortName(meta?.chain ?? "matic");
 
   return (
     <Dialog open={isOpen} onOpenChange={meta?.onClose}>

@@ -740,14 +740,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@patchwallet/patch-sdk@npm:0.0.12":
-  version: 0.0.12
-  resolution: "@patchwallet/patch-sdk@npm:0.0.12"
+"@patchwallet/patch-sdk@npm:0.1.0":
+  version: 0.1.0
+  resolution: "@patchwallet/patch-sdk@npm:0.1.0"
   dependencies:
     typescript: "npm:^5.3.3"
   peerDependencies:
     typescript: ^5.0.0
-  checksum: 10c0/bc63a1a04ae244e7aa7b5386b304359ce076ea46089564adf8fdbebfb32d80a478731c5d469ddee820932839bf95304abdfc8ee565c7df8d956bec903ba9c313
+  checksum: 10c0/046fc9eb51c95fc4bb4f243c4697cb5981b2ebc085e34f6274b598779d1ea6f3c7bf51e635ccadb3c2c90e79e0871e27b9583c965777771684bee9aea1a77f4c
   languageName: node
   linkType: hard
 
@@ -6619,7 +6619,7 @@ __metadata:
     "@covalenthq/client-sdk": "npm:^0.8.5"
     "@hookform/resolvers": "npm:^3.3.4"
     "@moonpay/moonpay-react": "npm:^1.5.3"
-    "@patchwallet/patch-sdk": "npm:0.0.12"
+    "@patchwallet/patch-sdk": "npm:0.1.0"
     "@radix-ui/react-dialog": "npm:^1.0.5"
     "@radix-ui/react-label": "npm:^2.0.2"
     "@radix-ui/react-popover": "npm:^1.0.7"
