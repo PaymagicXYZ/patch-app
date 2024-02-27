@@ -15,9 +15,8 @@ export async function resolve(userId: UserId): Promise<Address | null> {
 
   // Note: Check to see if the farcaster username still hasn't been resolved (to fid)
   if (provider === "farcaster" && isNaN(Number(userName))) {
-    const profile = await supportedSocialNetworks[provider].resolveByUsername(
-      userName,
-    );
+    const profile =
+      await supportedSocialNetworks[provider].resolveByUsername(userName);
     if ("error" in profile) {
       _userId = null;
     } else {

@@ -10,7 +10,7 @@ export default function isUserId(value: any): value is UserId {
     "github",
     "passphrase",
     "discord",
-    "farcaster"
+    "farcaster",
   ];
   return (
     validPrefixes.includes(prefix as SocialNetwork) && rest.join(":").length > 0

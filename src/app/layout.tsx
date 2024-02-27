@@ -19,6 +19,8 @@ export const viewport: Viewport = {
   maximumScale: 1,
 };
 
+export const maxDuration = 300;
+
 export default function RootLayout({
   children,
 }: {

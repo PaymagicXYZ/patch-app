@@ -1,6 +1,9 @@
 import { UserId, Chain } from "@patchwallet/patch-sdk";
 import { client } from "./client";
-import { getChainNameFromShortName, getNetworkfromShortName } from "@patchwallet/patch-sdk/utils";
+import {
+  getChainNameFromShortName,
+  getNetworkfromShortName,
+} from "@patchwallet/patch-sdk/utils";
 
 export const fetchNFTAssets = async (userId: UserId, chain: Chain) => {
   const address = await client.resolve(userId);
