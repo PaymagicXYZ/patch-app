@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 export async function signedMoonPayURL(
   currency: string,
-  walletAddress: string
+  walletAddress: string,
 ) {
   const originalUrl = `https://buy${
     process.env.NEXT_PUBLIC_VERCEL_ENV !== "production" && "-sandbox"
@@ -15,7 +15,7 @@ export async function signedMoonPayURL(
     .update(new URL(originalUrl).search)
     .digest("base64");
   const urlWithSignature = `${originalUrl}&signature=${encodeURIComponent(
-    signature
+    signature,
   )}`;
   return urlWithSignature;
 }

@@ -4,7 +4,7 @@ export const fetchNFTDetail = async (
   assets: {
     Address: string;
     TokenID: string;
-  }[]
+  }[],
 ) => {
   const assetsURL = `https://api.center.dev/v1/${network}/assets?fallbackToChain=true`;
   const CENTER_API_HEADERS = {
